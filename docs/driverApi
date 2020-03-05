@@ -1,0 +1,18 @@
+/driver/Login 
+  purpose: authenticates the driver to the system for all communications
+  params: 
+    username  type:string
+    password  type:encrypted string
+  return:
+    driverID  type: 12 digit "driver ID" identifying the driver in all future comms. Should be randomly generated and unique 
+/driver/setActive
+  purpose: sets the driver as "active" letting the system know that the driver is available for deliveries. 
+  params: 
+    driverID  type:driverID 
+    
+/driver/sendLocation
+/driver/ackOrderRequest
+/driver/ackCollectedOrder
+/driver/ntfDeliveredOrder
+/driver/ntfInactive
+/driver/Logout
