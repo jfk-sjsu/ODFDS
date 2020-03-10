@@ -5,14 +5,68 @@
     password  type:encrypted string
   return:
     driverID  type: 12 digit "driver ID" identifying the driver in all future comms. Should be randomly generated and unique 
+
 /driver/setActive
   purpose: sets the driver as "active" letting the system know that the driver is available for deliveries. 
   params: 
     driverID  type:driverID 
+    driverLoc type:web based location coordinates
+  return: 
+    boolean True if no error else Error message. 
+  Notes: internal system calls /driver/sendLocation with driverID and location prior to return. 
     
 /driver/sendLocation
+  purpose: sends the drivers location for recording in the DB. 
+  params: 
+    driverID  type:driverID 
+    driverLoc type:web based location coordinates
+  return: 
+    boolean True if no error else Error message. 
+  Notes: 
+  
 /driver/ackOrderRequest
+  purpose: When an order is sent to a driver, the drivers calls this function to accept of decline 
+  params: 
+    driverID  type:driverID 
+    accept  type:Boolean
+  return: 
+    orderID type: numeric ID for an order else -1 if order was declined. 
+  Notes: If order is declined, system must find another driver. 
+  
 /driver/ackCollectedOrder
+  purpose: When driver is at restaurant, the system passes the order to the driver. This call acknowledges that the order is received.  
+  params: 
+    driverID  type:driverID 
+    driverLoc type:web based location coordinates
+    acknowledge type:boolean
+  return: 
+    boolean True if no error else Error message. 
+  Notes: IF driver fails to ack, order goes back out for bid. 
+  
 /driver/ntfDeliveredOrder
+  purpose: sets the driver as "active" letting the system know that the driver is available for deliveries. 
+  params: 
+    driverID  type:driverID 
+    driverLoc type:web based location coordinates
+    orderID type:numeric ID for particular order
+  return: 
+    boolean True if no error else Error message. 
+  Notes: 
 /driver/ntfInactive
+  purpose: sets the driver as "inactive" letting the system know that the driver is not available for deliveries. 
+  params: 
+    driverID  type:driverID 
+    driverLoc type:web based location coordinates
+  return: 
+    boolean True if no error else Error message. 
+  Notes: 
 /driver/Logout
+  purpose: sets the driver as "inactive" letting the system know that the driver is not available for deliveries. Also, removes the 
+    driver's ID from the system. For future calls, Login will be required. 
+  params: 
+    driverID  type:driverID 
+    driverLoc type:web based location coordinates
+  return: 
+    boolean True if no error else Error message. 
+  Notes: calls ntfInactive to ensure driver is set inactive. 
+  
