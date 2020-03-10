@@ -12,4 +12,10 @@ Step 2) Install Git
 https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
 
 Step 3) Clone this project. 
-git clone jfk-sjsu
+git clone https://github.com/jfk-sjsu/ODFDS.git
+
+Step 4) cd to the project directory
+cd ODFDS
+
+Step 5) Run Docker
+docker run ...<figure this out>
