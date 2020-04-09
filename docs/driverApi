@@ -48,7 +48,7 @@
   params: 
     driverID  type:driverID 
     driverLoc type:web based location coordinates
-    orderID type:numeric ID for particular order
+    orderID   type:numeric ID for particular order
   return: 
     boolean True if no error else Error message. 
   Notes: 
@@ -69,4 +69,14 @@
   return: 
     boolean True if no error else Error message. 
   Notes: calls ntfInactive to ensure driver is set inactive. 
-  
+ /driver/SignUp
+   Purpose: puts a new user into the database for access
+   params: 
+      firstname type:text
+      lastname  type:text
+      password  type:text
+   return:
+      boolean success or fail
+      driverId
+      
+      
