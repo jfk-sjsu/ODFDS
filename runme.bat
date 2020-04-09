@@ -1,1 +1,1 @@
-docker run -p 3000:3000 -d none/odfds
+docker-compose up 
