@@ -17,5 +17,8 @@ git clone https://github.com/jfk-sjsu/ODFDS.git
 Step 4) cd to the project directory
 cd ODFDS
 
-Step 5) Run Docker
-docker run ...<figure this out>
+Step 5) Run the script file
+./runme.bat
+
+Now you have the environment. point your browser at http://localhost:3000 to see the app! 
+
