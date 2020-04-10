@@ -1,0 +1,43 @@
+<script>
+
+import axios from 'axios'
+export default{
+  methods: {
+    locatorButtonPressed(){
+      if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosiition(
+          position => {
+            this.getAddressFrom(position.coords.latitude, position.coords.longitude);
+            console.log(position.coords.latitude);
+            console.log(position.coords.longitude);
+          },
+          error => {
+            console.log(error.message);
+          }
+        );
+      }else{
+        console.log("Your browser does not support geolocation API ");
+      }
+    },
+    getAddressFrom(lat, long){
+      axios.get("https://maps.googleapis.com/maps/api/geocode/json?latlng="
+      + lat +
+      ","
+      + long
+      + "&key=InputKeyLater")
+      .then(response =>{
+        if(response.data.error_message){
+          console.log(response.data.error_message);
+        }else{
+          console.log(response.data.results[0].formatted_address);
+        }
+
+      })
+      .catch(error => {
+        console.log(error.message);
+      })
+    }
+
+  }
+}
+</script>
