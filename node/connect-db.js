@@ -1,15 +1,28 @@
-exports.connect = function () {
-	var mysql = require('mysql');
+var mysql = require('mysql');
 
+
+
+
+exports.test = function() { 
+	return "test";
+}
+
+
+exports.connect = function () {
 	var con = mysql.createConnection({
-	  host: "localhost",
+	  host: "db",
 	  user: "root",
-	  password: "example"
+	  password: "example",
+	  port: "3306"
 	});
+	var ret = "not connected"; 
+	
+	console.log("accessing db");
 
 	con.connect(function(err) {
-	  if (err) return "no db!";
+	if (err) throw err; 
 	  console.log("Connected!");
-	  return "connected!"
+	  ret =  "connected!"
 	});
+	return ret; 
 }

@@ -1,13 +1,12 @@
 version: '3'
 services:
   db:
-    image: mysql
+    build: ./db
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: example
-    ports:
-      - "3306:3306"
+ 
   web:
     build: . 
     ports:
