@@ -1,0 +1,44 @@
+// simple database value
+let infoObj=[
+    {
+        name:'A',
+        locationLatitude: 1,
+        locationLongitude:1,
+        
+    
+    },
+    {
+        name:'B',
+        locationLatitude: 2,
+        locationLongitude:2,
+    },
+    {
+        name:'C',
+        locationLatitude: 3,
+        locationLongitude:3,
+ 
+    }
+
+]
+
+
+// type the the driver name that you want to know
+// For type step in our app, we can just get their name from their account 
+// for the Latitude and longitude we can show them by google map
+function information()
+{
+    // let x be a driver name
+    var x=document.getElementById("input");
+    
+    // find the driver name in database and return their location and name 
+    for(let i in infoObj)
+    {
+        if (x.value==infoObj[i].name)
+        {
+            alert(infoObj[i].name + '' + infoObj[i].locationLatitude +' '+ infoObj[i].locationLongtitude );
+            break; 
+        }
+       
+    }
+    
+}
