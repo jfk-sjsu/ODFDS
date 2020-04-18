@@ -6,7 +6,7 @@ function registerRestaurant(restLogin, restPW, restName, restLong, restLat, rest
     host: "localhost",
     user: "root",
     password: "",
-    database: "test"
+    database: "odfdsdb"
   });
 
   con.connect(function(err) {
