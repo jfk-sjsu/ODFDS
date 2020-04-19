@@ -6,7 +6,7 @@ function getDriverInfo (email) {
 		email: "driver@nowhere.com",
 		password: "example", 
 	driverId: "ABCDEFG1234"}
-	
+}
 exports.login = function ( email,  password) { 
 // logs the driver in for work. requires password to be validated 
 
@@ -16,10 +16,11 @@ exports.login = function ( email,  password) {
 // if true, send back their driver id and let them see the drivers' page I guess
 // if false, send them to a "you failed to login" page. 
 	var realPass = "example" ; // this will be replaced with a call to the db
-	if(password = realpass) {
+	if(password == realpass) {
+		return "login stubb"; 
+		}
+}
 		
-	return "login stubb"; 
-} 
 
 exports.setActive = function( id,  driverLat,  driverLong) { 
 	// set's driver as active and records position. 
@@ -91,14 +92,24 @@ exports.logout = function ( id){
 
 	return "Logout stub";
 }
+
+exports.SignUp = function ( name, username, email, password, secQ, secA, carMakeModel, licPlate) {
 /*
-function SignUp( email,  
    Purpose: puts a new user into the database for access
    params: 
-      firstname type:text
-      lastname  type:text
-      password  type:text
+      name type:text
+      username  type:text
+      email  type:text
+	  password 	type: text
+	  secQ: 	type: text
+	  secA:		type: text
+	  carMakeModel	type: text
+	  licPlate		type: text
+	  
    return:
       boolean success or fail
       driverId
 */
+	return "signup stubb";
+}
+

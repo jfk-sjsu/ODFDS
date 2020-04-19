@@ -1,11 +1,11 @@
 var mysql = require('mysql');
 
-function registerRestaurant(restLogin, restPW, restName, restLong, restLat, restPhone) {
+exports.restReg = function (restLogin, restPW, restName, restLong, restLat, restPhone) {
   
   var con = mysql.createConnection({
-    host: "localhost",
+    host: "db",
     user: "root",
-    password: "",
+    password: "example",
     database: "odfdsdb"
   });
 
@@ -18,6 +18,7 @@ function registerRestaurant(restLogin, restPW, restName, restLong, restLat, rest
     con.query(sql, { login: restLogin, pw: restPW, name: restName, rlong: restLong, rlat: restLat, phone: restPhone }, function (err, result) {
       if (err) throw err;
       console.log("1 record inserted, ID: " + result.insertId);
+	  return true; 
     });
   
   });
