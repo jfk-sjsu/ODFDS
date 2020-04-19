@@ -1,7 +1,23 @@
 // driver.js all the driver functions in one spot
-
+function getDriverInfo (email) {
+	// function for getting the driver info and returning an object with the driver data from 
+	// database 
+	return {
+		email: "driver@nowhere.com",
+		password: "example", 
+	driverId: "ABCDEFG1234"}
+	
 exports.login = function ( email,  password) { 
 // logs the driver in for work. requires password to be validated 
+
+// connect to db 
+// get the driver's password
+// compare to given password 
+// if true, send back their driver id and let them see the drivers' page I guess
+// if false, send them to a "you failed to login" page. 
+	var realPass = "example" ; // this will be replaced with a call to the db
+	if(password = realpass) {
+		
 	return "login stubb"; 
 } 
 
