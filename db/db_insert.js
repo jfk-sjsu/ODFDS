@@ -1,6 +1,6 @@
-var mysql = require('mysql');
-
 exports.restReg = function (restLogin, restPW, restName, restLong, restLat, restPhone) {
+	
+  var mysql = require('mysql');
   
   var con = mysql.createConnection({
     host: "db",
