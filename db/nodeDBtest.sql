@@ -24,7 +24,7 @@ CREATE TABLE restaurant (RestID INT NOT NULL AUTO_INCREMENT,
 						RestName VARCHAR(15),
 						RestLong INT,
 						RestLat INT,
-						RestPhone VARCHAR(12),
+						RestPhone VARCHAR(20),
 						PRIMARY KEY (RestID));
 
 CREATE TABLE driver (DriverID INT NOT NULL AUTO_INCREMENT,

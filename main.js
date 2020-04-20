@@ -12,11 +12,15 @@ app.use(express.static('/website/'))
 app.post('/driver/Login', (req,res) => res.send(driver.login("email","password")));
 app.get('/', (req, res) => req.send(index.html));
 app.post('/rest/Reg', function (req, res) {
-	var ret = db.restReg(req.query.name, 
-						req.query.uname, 
-						req.query.email, req.query.psw, 
-						req.query.securityQ, req.query.Spsw);
-	if(ret) res.send("registration worked!"); 
+	var ret = db.restReg(req.query.uname, 
+						req.query.psw, 
+						req.query.name, 10, 
+						11, "(408)379-3333", 
+						function(results) { 
+						console.log(results);
+						res.send(results)});
+	 console.log("back to main");
+	 
 });
 													
     
