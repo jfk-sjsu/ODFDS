@@ -33,7 +33,7 @@ CREATE TABLE driver (DriverID INT NOT NULL AUTO_INCREMENT,
 					DriverName VARCHAR(15),
 					DriverLong INT,
 					DriverLat INT,
-					DriverPhone VARCHAR(12),
+					DriverPhone VARCHAR(20),
 					Available BOOLEAN,
 					DriverPay INT,
 					PRIMARY KEY (DriverID));

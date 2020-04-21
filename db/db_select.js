@@ -1,5 +1,9 @@
-exports.driverAuth =function (dLogin, dPW, callback) {
-    var mysql = require('mysql');
+var mysql = require('mysql');
+	
+exports.driverGet = function (dLogin, callback) {
+	console.log("driverGet called");
+	
+
     var con = mysql.createConnection({
         host: "db",
         user: "root",
@@ -10,24 +14,23 @@ exports.driverAuth =function (dLogin, dPW, callback) {
     con.connect(function(err) {
         if (err) throw err;
     });
-        
-        var sql = "SELECT DriverLogin, DriverPW from driver WHERE driverLogin = ?;";
-            
-        con.query(sql, [ dLogin ], function (err, result, fields) {
-            if (err) throw err;
-            
-            if (result[0].DriverLogin === dLogin && result[0].DriverPW === dPW) {
-                return callback(true);
-            }
-            else {
-                return callback(false);
-            }
-            
-        });
+ //   con.query("SELECT * from driver;",function (err, result,fields) { 
+	//	if (err) throw err;
+//		console.log(result);
+//	});
+	var sql = "SELECT DriverLogin, DriverPW from driver WHERE driverLogin = ?;";
+	console.log(" dLogin = " + dLogin);
+	con.query(sql, [ dLogin ], function (err, result, fields) {
+		if (err) throw err;
+		console.log(result[0]);
+		callback(result[0]);
+	});
+
     con.end();
+
 }
 
-exports.restAuth =function (rLogin, rPW, callback) {
+exports.restGet = function (rLogin, callback) {
     var mysql = require('mysql');
     var con = mysql.createConnection({
         host: "db",
@@ -44,13 +47,7 @@ exports.restAuth =function (rLogin, rPW, callback) {
             
         con.query(sql, { login: rLogin }, function (err, result, fields) {
             if (err) throw err;
-            
-            if (result[0].RestLogin === rLogin && result[0].DriverPW === rPW) {
-                return callback(true);
-            }
-            else {
-                return callback(false);
-            }
+            return callback(result);
             
         });
         

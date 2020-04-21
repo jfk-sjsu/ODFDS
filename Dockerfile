@@ -1,5 +1,6 @@
 FROM node:10
 RUN npm install express
+RUN npm install body-parser
 RUN npm install mysql
 EXPOSE 3000/tcp 
 CMD mkdir /website

@@ -1,24 +1,27 @@
-// driver.js all the driver functions in one spot
-function getDriverInfo (email) {
-	// function for getting the driver info and returning an object with the driver data from 
-	// database 
-	return {
-		email: "driver@nowhere.com",
-		password: "example", 
-	driverId: "ABCDEFG1234"}
-}
-exports.login = function ( email,  password) { 
-// logs the driver in for work. requires password to be validated 
+const dbIns = require('../db/db_insert')
+const dbSel = require('../db/db_select')
+const dbUpd = require('../db/db_update')
 
+// driver.js all the driver functions in one spot
+
+exports.login = function ( email,  password, callback) { 
+// logs the driver in for work. requires password to be validated 
+	//console.log("login called: " + email + "," + password);
 // connect to db 
 // get the driver's password
 // compare to given password 
 // if true, send back their driver id and let them see the drivers' page I guess
 // if false, send them to a "you failed to login" page. 
-	var realPass = "example" ; // this will be replaced with a call to the db
-	if(password == realpass) {
-		return "login stubb"; 
-		}
+	dbSel.driverGet(email, function (result) { 
+					var auth = false;
+					//console.log("driverGet says " + Object.keys(result) );
+					if(result == null) {
+						callback(false);
+						return; 
+					}
+					if(result.DriverPW == password) {auth = true;}; 
+					callback(auth);
+	});
 }
 		
 
@@ -93,7 +96,7 @@ exports.logout = function ( id){
 	return "Logout stub";
 }
 
-exports.SignUp = function ( name, username, email, password, secQ, secA, carMakeModel, licPlate) {
+exports.SignUp = function ( name, username, email, password, carMakeModel, licPlate, callback) {
 /*
    Purpose: puts a new user into the database for access
    params: 
@@ -110,6 +113,13 @@ exports.SignUp = function ( name, username, email, password, secQ, secA, carMake
       boolean success or fail
       driverId
 */
+	var ret = dbIns.driverReg(email, 
+						password, name, 10, 
+						11, "(408)379-3333",
+						true,1.00, 
+						function(results) { 
+						console.log(results);
+						callback(results)});
 	return "signup stubb";
 }
 

@@ -22,7 +22,7 @@ exports.restReg = function (restLogin, restPW, restName, restLong, restLat, rest
   con.end();
 }
 
-exports.driverReg = function (driverLogin, driverPW, driverName, driverLong, driverLat, drivePhone, driverPay, callback) {
+exports.driverReg = function (driverLogin, driverPW, driverName, driverLong, driverLat, driverPhone, driverAvailable, driverPay, callback) {
   var mysql = require('mysql');
   var con = mysql.createConnection({
     host: "db",
@@ -37,8 +37,8 @@ exports.driverReg = function (driverLogin, driverPW, driverName, driverLong, dri
     });
     
     var sql = "INSERT INTO driver(DriverLogin, DriverPW, DriverName, DriverLong, DriverLat, DriverPhone, Available, DriverPay) VALUES (?,?,?,?,?,?,?,?);";
-    
-    con.query(sql, [driverLogin, driverPW, driverName, driverLong, driverLat, drivePhone, true, driverPay], function (err, result) {
+
+	con.query(sql, [driverLogin, driverPW, driverName, driverLong, driverLat, driverPhone, true, driverPay], function (err, result) {
       if (err) throw err;
       console.log("1 record inserted to driver, ID: " + result.insertId);
       return callback(result);
