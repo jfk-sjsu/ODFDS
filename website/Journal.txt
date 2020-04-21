@@ -1,0 +1,45 @@
+Scrum Journal
+
+2/17/20 
+We spend time going over the project require.  Afterward we thought about what technology we needed to use to complete the project.  We broke up the requirement document and architecture design for each members to complete.
+
+2/24/20
+Created the backlog.  Started to decide who wants to do the front end, middle, and back end.  Also talked about using html, css, javascript, node, express, and mysql.  Started adding those in the low level design and high level test.
+
+2/26/20
+
+3/2/20
+
+3/4/20
+
+3/9/20
+
+3/12/20
+
+3/16/20
+
+3/18/20
+
+3/23/20
+
+3/30/20
+
+4/1/20
+Meet with professor to talk about progress. Everyone said progress was good.
+
+4/6/20
+
+4/8/20
+
+4/13/20
+
+4/15/20
+
+4/16/20
+Planned to meet on zoom but things came up and we were not able to meet.
+
+4/17/20
+We talked over slack to see how everyone was doing.
+
+4/20/20
+ We went over the progress we made so far.  Also talked about things we needed to finished by the due today,  like maps and connecting everything to the back end.
