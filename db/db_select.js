@@ -1,4 +1,4 @@
-function verifyDriver(dLogin, dPW, callback) {
+exports.driverAuth =function (dLogin, dPW, callback) {
     var mysql = require('mysql');
     var con = mysql.createConnection({
         host: "db",
@@ -27,7 +27,7 @@ function verifyDriver(dLogin, dPW, callback) {
     con.end();
 }
 
-function verifyRest(rLogin, rPW, callback) {
+exports.restAuth =function (rLogin, rPW, callback) {
     var mysql = require('mysql');
     var con = mysql.createConnection({
         host: "db",
