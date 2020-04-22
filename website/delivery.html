@@ -93,6 +93,37 @@ default:
 alert("Unknown error");
 break;
 }
+
+function findDist()
+{
+function onSuccess(position)
+{
+
+var latSource = 37.387146;
+var longSource = -121.885008;
+//var addr = document.getElementById("destination").value;
+//var latlong = getLatLong(addr);
+var latDest = 37.338911;
+var longDest = -121.885008;
+var dist = Math.round(calculateDist(latSource, longSource, latDest, longDest)*100)/100;
+document.getElementById("distance").innerHTML = "<b>You are " + dist + " miles away from your destination.</b>";
+}
+function calculateDist(latSource, longSource, latDest, longDest)
+{
+latSourceRadians = latSource*Math.PI/180;
+longSourceRadians = longSource*Math.PI/180;
+latDestRadians = latDest*Math.PI/180;
+longDestRadians = longDest*Math.PI/180;
+var distance = 3959 * Math.acos(
+Math.cos(latSourceRadians) * Math.cos(latDestRadians) *
+Math.cos(longSourceRadians - longDestRadians) +
+Math.sin(latSourceRadians) * Math.sin(latDestRadians)
+);
+distance = distance * 1.609344;
+return distance;
+}
+
+}
 }
 </script>
   </script>
@@ -137,14 +168,12 @@ break;
 		    <br>
             <br>
             <div class="map">
-            
-
         </div>
-          <div id="result"></div>
-    
-                <li><a class="button1"href="path.html">Map</a></li>
+                <li><a class="button1"href="distance.html">Distance</a></li>
+                
+                <br/>
+                <li><a class="button2"href="path.html">Map</a></li>
         
-
       </div> <!-- end of main content -->
     </div> <!-- end of container -->
     <footer class="footer"> <!-- footer -->
