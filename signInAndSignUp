@@ -1,0 +1,68 @@
+let infoObject=[
+    {
+        username:'A',
+        password: 1,
+        phonenumber:1,
+        
+    
+    },
+    {
+        username:'B',
+        password: 2,
+        phonenumber:2,
+    },
+    {
+        username:'C',
+        password: 3,
+        phonenumber:3,
+ 
+    }
+
+]
+
+function signIn(){
+	let x=document.getElementById("input1");
+	let y=document.getElementById("input2");
+	for(let i in infoObject)
+    {
+        if (x.value==infoObject[i].username)
+        {
+			if(y.value==infoObject[i].password)
+			{
+				alert("you already signed in");
+				return true;
+			}
+			else{
+			alert("password not right");
+			return false;
+			}
+
+		}
+		
+		
+       
+	}
+	alert("username is not right")
+
+}
+
+function signUp(){
+
+	let x=document.getElementById("input3");
+	let y=document.getElementById("input4");
+	let z=document.getElementById("input5");
+	for(let i in infoObject)
+	if(x.value==infoObject[i].username)
+	{
+		alert('already existed')
+		
+		
+	}
+	else{
+		infoObject.push(x,y,z)
+		
+		
+	}
+}
+	
+
