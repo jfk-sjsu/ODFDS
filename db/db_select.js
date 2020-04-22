@@ -114,7 +114,7 @@ function getDriverInfo(driverID, callback) {
         if (err) throw err;
     });
      
-     var sql = "SELECT DriverName, DriverPhone, Available from driver WHERE DriverID = ?;";
+     var sql = "SELECT DriverName, DriverPhone, Available, DriverCar, DriverLicense from driver WHERE DriverID = ?;";
      
     con.query(sql, [ driverID ], function (err, result, fields) {
         if (err) throw err;
