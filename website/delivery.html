@@ -4,9 +4,70 @@
   <script src = "script.js" defer></script>
   <head>
     <meta charset="utf-8">
-    <title>ODFDS | Sample Template</title>
+    <title>ODFDS | Delivery</title>
+   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1uaPWn7851oKj8qouSiO64mMb1PovYXQ"></script>
+  <script type="text/javascript">
+    
+    window.onload = function()
+    {
+        var mapOptions = {
+        center: new google.maps.LatLng(37.388292199999999, -121.8997299),
+        zoom:18,
+        mapTypeId: google.maps.MapTypeId.HYBRID
+        };
+        var map = new google.maps.Map(document.getElementById("interactivemap"), mapOptions);
+        var marker = new google.maps.Marker({
+    position: new google.maps.LatLng(37.39, -121.90),
+    map: map
+    });
+
+    }
+    
+    var watchId;
+    function getPosition()
+    {
+        if(navigator.geolocation)
+        {
+          navigator.geolocation.getCurrentPosition(successPosition);
+        }
+        else
+          document.getElemetById("result").innerHTML = "Your browser does not support Geolocation"    
+                    
+    }
+    function successPosition(position)
+    {
+        var lat = position.coords.latitude;
+        var long = position.coords.longitude;
+
+        document.getElementById("result").innerHTML = "Latitude: " + lat + "<br />Logitude: " + long
+        
+    }
+    function watchPosition()
+    {
+        if(navigator.geolocation)
+        {
+          watchId = navigator.geolocation.watchPosition(successPosition, failurePosition,
+                                                        {enableHighAccuracy: false,
+                                                        timeout: 5000,
+                                                        maximumAge: 5000,
+                                                        });
+        }
+        else
+          document.getElemetById("result").innerHTML = "Your browser does not support Geolocation"              
+    }
+    function failurePosition(error)
+    {
+        alert("Error Code: " +error.code + " Error Message: " + error.message);
+    }
+    function stopWatching()
+    {
+        clearWatch(watchId);
+    }
+    
+  </script>
   </head>
   <body>
+   
     <div class="container"> <!-- wrapper -->
       <div class ="main"> <!-- all content goes here -->
         <nav class = "navbar"> <!-- navbar -->
@@ -26,12 +87,36 @@
           </div> <!-- end of navbar-links -->
         </nav> <!-- end of navbar -->
 
+            </span>
+            <input class="input100" type="text" name="orderNumber" placeholder="Enter the order Number">
+            <span class="focus-input100"></span>
+            <br>
+            <div class="jumbotron">
+		    <h3 class="display-6">Order #: "order#" </h3>
+                <p class="lead">Restaurant Name: "Name"</p>
+                <p class="lead">Restaurant Address: ""</p>
+                <p class="lead">Destination: ""</p>
+                <p class="lead">Distance: ""</p>
+                <p class="lead">Time: ""</p>
+		            <p class="lead">Cost: $""</p>
+                <hr class="my-4">
+            </div>
+		    <br>
+            <div class="map">
+            
 
-
-
-          <!-- WHERE PAGE CONTENT IS INSERTED -->
-
-
+        </div>
+          <div id="result"></div>
+    <div class="wrap-input100 validate-input" data-validate="Order ID is required">
+                </span>
+                    <input class="input100" type="text" name="orderId" placeholder="Enter the order Number">
+                    <span class="focus-input100"></span>
+                </div>
+<button id="btnPosition" onclick="getPosition();">Get Current Position</button>
+<button id="btnStartTracking" onclick="watchPosition();">Start Tracking Location</button>
+<button id="btnStopTracking" onclick="stopWatching();">Stop Tracking Position</button>
+<div id="interactivemap" style="height:500px;width:600px"></div>
+        
 
       </div> <!-- end of main content -->
     </div> <!-- end of container -->
