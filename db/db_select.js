@@ -1,6 +1,5 @@
-var mysql = require('mysql');
-	
 exports.driverGet = function (dLogin, callback) {
+	var mysql = require('mysql');
 	console.log("driverGet called");
 	
 
@@ -125,4 +124,54 @@ function getDriverInfo(driverID, callback) {
     });
     con.end();
 }
+
+function getDriverDelivCount(driverID, callback) {
+    var mysql = require('mysql');
+    var con = mysql.createConnection({
+        host: "db",
+        user: "root",
+        password: "example",
+        database: "odfdsdb"
+    });
+    
+     con.connect(function(err) {
+        if (err) throw err;
+    });
+     
+     var sql = "SELECT COUNT(*) AS NumDeliv from orders WHERE DriverID = ? AND OrderComplete = TRUE;";
+     
+    con.query(sql, [ driverID ], function (err, result, fields) {
+        if (err) throw err;
+            
+        return callback(result.NumDeliv);
+            
+    });
+    con.end();
+}
+
+function getRestDelivCount(restID, callback) {
+    var mysql = require('mysql');
+    var con = mysql.createConnection({
+        host: "db",
+        user: "root",
+        password: "example",
+        database: "odfdsdb"
+    });
+    
+     con.connect(function(err) {
+        if (err) throw err;
+    });
+     
+     var sql = "SELECT COUNT(*) AS NumDeliv from orders WHERE RestID = ?;";
+     
+    con.query(sql, [ restID ], function (err, result, fields) {
+        if (err) throw err;
+            
+        return callback(result.NumDeliv);
+            
+    });
+    con.end();
+}
+
+
 
