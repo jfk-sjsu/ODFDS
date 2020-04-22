@@ -36,12 +36,12 @@ app.post('/rest/Reg', function (req, res) {
 app.post('/driver/SignUp', function (req, res) {
 	console.log(req.body.uname, req.body.psw);
 	
-	var ret = driver.SignUp(req.body.name, 
-						req.body.uname, 
-						req.body.email, 
+	var ret = driver.SignUp(req.body.name, req.body.email, 
 						req.body.psw, 
 						req.body.carMake, 
-						req.body.license, 
+						req.body.license,
+						req.body.phone,
+						req.body.pay,
 						function(results) { 
 						console.log(results);
 						res.send(results)});
