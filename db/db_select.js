@@ -54,3 +54,75 @@ exports.restGet = function (rLogin, callback) {
     con.end();
 }
 
+function retrieveOrder(orderID, callback) {
+    var mysql = require('mysql');
+    var con = mysql.createConnection({
+        host: "db",
+        user: "root",
+        password: "example",
+        database: "odfdsdb"
+    });
+    
+     con.connect(function(err) {
+        if (err) throw err;
+    });
+     
+     var sql = "SELECT * from orders WHERE OrderID = ?;";
+     
+    con.query(sql, { login: rLogin }, function (err, result, fields) {
+        if (err) throw err;
+            
+        return callback(result);
+            
+    });
+    con.end();
+}
+
+function getRestInfo(restID, callback) {
+    var mysql = require('mysql');
+    var con = mysql.createConnection({
+        host: "db",
+        user: "root",
+        password: "example",
+        database: "odfdsdb"
+    });
+    
+     con.connect(function(err) {
+        if (err) throw err;
+    });
+     
+     var sql = "SELECT RestName, RestAddr from restaurant WHERE RestID = ?;";
+     
+    con.query(sql, [ restID ], function (err, result, fields) {
+        if (err) throw err;
+            
+        return callback(result);
+            
+    });
+    con.end();
+}
+
+function getDriverInfo(driverID, callback) {
+    var mysql = require('mysql');
+    var con = mysql.createConnection({
+        host: "db",
+        user: "root",
+        password: "example",
+        database: "odfdsdb"
+    });
+    
+     con.connect(function(err) {
+        if (err) throw err;
+    });
+     
+     var sql = "SELECT DriverName from driver WHERE DriverID = ?;";
+     
+    con.query(sql, [ driverID ], function (err, result, fields) {
+        if (err) throw err;
+            
+        return callback(result);
+            
+    });
+    con.end();
+}
+
