@@ -96,7 +96,7 @@ exports.logout = function ( id){
 	return "Logout stub";
 }
 
-exports.SignUp = function ( name, username, email, password, carMakeModel, licPlate, callback) {
+exports.SignUp = function ( name, username, password, carMakeModel, licPlate, phone, callback) {
 /*
    Purpose: puts a new user into the database for access
    params: 
@@ -113,10 +113,9 @@ exports.SignUp = function ( name, username, email, password, carMakeModel, licPl
       boolean success or fail
       driverId
 */
-	var ret = dbIns.driverReg(email, 
-						password, name, 10, 
-						11, "(408)379-3333",
-						true,1.00, 
+	var ret = dbIns.driverReg(email, password, name, 10, 
+						11, phone,
+						true, 666, carMakeModel, licPlate, 
 						function(results) { 
 						console.log(results);
 						callback(results)});
