@@ -1,3 +1,7 @@
+.credits a{
+  color:#CF0015;
+}
+
 .left
 {
   margin-top: 75px;
@@ -26,7 +30,9 @@
 }
 
 .singular{
+  text-align: center;
   margin-left: 50px;
+  margin-right: 50px;
 }
 
 .pageTitle{
@@ -41,18 +47,22 @@
   margin: 0 auto;
   display: inline-block;
   max-width: 250px;
-  max-height: 362px;
+  max-height: 395px;
   position: relative;
   color: black;
+  text-align: left;
 }
 
 .squareBackground{
-  margin: 0 auto;
+  margin: 20px auto;
+  margin-left: 20px;
+  margin-right: 20px;
   display: inline-block;
   max-width: 250px;
   max-height: 261;
   position: relative;
   color: black;
+  text-align: left;
 }
 
 .imageText{
@@ -71,3 +81,90 @@
   font-weight: 500;
   margin-bottom: 10px;
 }
+
+.activity{
+  border-radius: 25px 0px 0px 0px;
+  border: 2px solid #C5A173;
+  padding: 20px;
+  width: 200px;
+  height: 300px;
+  position: relative;
+  z-index: 100;
+}
+
+.driverBlurb{
+  font-size: 10px;
+  font-weight: 400;
+  z-index: 150;
+}
+
+.deliveryText{
+  margin-top: 5px;
+  margin-bottom: 3px;
+}
+
+.deliveryDirection{
+  text-align: left;
+  font-size: 15px;
+}
+
+.deliveryName{
+  margin-top: 5px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.deliveryInfo {
+  text-align: left;
+  font-size: 12px;
+}
+
+.mapBox{
+  border-radius: 25px;
+  border: 2px solid #C5A173;
+  width: 315px;
+  height: 375px;
+  position: relative;
+  z-index: -100;
+}
+
+.profile{
+  float: left;
+  margin: 20px 20px 20px 0px;
+  text-align: left;
+}
+
+.profile p{
+  font-size: 11px;
+}
+
+.google-maps {
+        position: relative;
+        padding-bottom: 75%; // This is the aspect ratio
+        height: 0;
+        overflow: hidden;
+    }
+    .google-maps iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%; !important
+        height: 100%; !important
+    }
+
+    .mapBox iframe{
+      border-radius: 25px;
+    }
+
+    @media (max-width: 600px){
+      .left, .pageTitle{
+        width:auto;
+        margin-top: 50px;
+        margin-right: 50px;
+      }
+
+      .left h1{
+        font-size: 25px;
+      }
+    }
