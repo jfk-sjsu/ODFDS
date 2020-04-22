@@ -68,7 +68,55 @@ function retrieveOrder(orderID, callback) {
      
      var sql = "SELECT * from orders WHERE OrderID = ?;";
      
-    con.query(sql, { login: rLogin }, function (err, result, fields) {
+    con.query(sql, [ orderID ], function (err, result, fields) {
+        if (err) throw err;
+            
+        return callback(result);
+            
+    });
+    con.end();
+}
+
+function retrieveDriverOrder(driverID, callback) {
+    var mysql = require('mysql');
+    var con = mysql.createConnection({
+        host: "db",
+        user: "root",
+        password: "example",
+        database: "odfdsdb"
+    });
+    
+     con.connect(function(err) {
+        if (err) throw err;
+    });
+     
+     var sql = "SELECT * from orders WHERE DriverID = ?;";
+     
+    con.query(sql, [ driverID ] , function (err, result, fields) {
+        if (err) throw err;
+            
+        return callback(result);
+            
+    });
+    con.end();
+}
+
+function retrieveRestOrder(restID, callback) {
+    var mysql = require('mysql');
+    var con = mysql.createConnection({
+        host: "db",
+        user: "root",
+        password: "example",
+        database: "odfdsdb"
+    });
+    
+     con.connect(function(err) {
+        if (err) throw err;
+    });
+     
+     var sql = "SELECT * from orders WHERE RestID = ?;";
+     
+    con.query(sql, [ restID ] , function (err, result, fields) {
         if (err) throw err;
             
         return callback(result);
