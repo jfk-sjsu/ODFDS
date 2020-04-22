@@ -17,7 +17,7 @@ exports.driverGet = function (dLogin, callback) {
 	//	if (err) throw err;
 //		console.log(result);
 //	});
-	var sql = "SELECT DriverLogin, DriverPW from driver WHERE driverLogin = ?;";
+	var sql = "SELECT * from driver WHERE driverLogin = ?;";
 	console.log(" dLogin = " + dLogin);
 	con.query(sql, [ dLogin ], function (err, result, fields) {
 		if (err) throw err;
@@ -42,7 +42,7 @@ exports.restGet = function (rLogin, callback) {
         if (err) throw err;
     });
         
-        var sql = "SELECT RestLogin, RestPW from restaurant WHERE RestLogin = ?";
+        var sql = "SELECT * from restaurant WHERE RestLogin = ?";
             
         con.query(sql, [ rLogin ], function (err, result, fields) {
             if (err) throw err;
