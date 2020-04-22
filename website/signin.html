@@ -27,14 +27,15 @@
           </div> <!-- end of navbar-links -->
         </nav> <!-- end of navbar -->
 
-        <div class="pageTitle"><h2>  </h2>
+        <div class="pageTitle"><h2>Login</h2>
+          <p>We’re excited to have you back!</p>
         </div>
         <div class = "singular"> <!-- div where content goes -->
         <div class = "squareBackground"> <!-- Login  -->
           <img src="media/squareBackground.png" width="250">
           <div class="imageText">
-              <form action="/action_page.php">
-                <h1>Login</h1>
+              <form action="/driver/Login">
+                <h1>Driver Login</h1>
 
                 <label for="email"><b>Email</b></label><br>
                 <input type="text" placeholder="Enter Email" name="email" required><br><br>
@@ -46,6 +47,23 @@
               </form>
         </div>
       </div> <!-- Login  Ends -->
+
+      <div class = "squareBackground"> <!-- Login  -->
+        <img src="media/squareBackground.png" width="250">
+        <div class="imageText">
+            <form action="/restaurant/Login">
+              <h1>Restaurant Login</h1>
+
+              <label for="email"><b>Email</b></label><br>
+              <input type="text" placeholder="Enter Email" name="email" required><br><br>
+
+              <label for="psw"><b>Password</b></label><br>
+              <input type="password" placeholder="Enter Password" name="psw" required><br><br>
+
+              <center><button type="submit" class="button2">Login</button></center>
+            </form>
+      </div>
+    </div> <!-- Login  Ends -->
     </div>
 
     </div> <!-- end of main content -->
