@@ -19,7 +19,7 @@ SET FOREIGN_KEY_CHECKS = 1;
 \! echo ""
 
 CREATE TABLE restaurant (RestID INT NOT NULL AUTO_INCREMENT,
-            					RestLogin VARCHAR(20),
+            					RestLogin VARCHAR(30),
             					RestPW VARCHAR(15),
 						RestName VARCHAR(15),
 						RestAddr VARCHAR (30),
@@ -29,7 +29,7 @@ CREATE TABLE restaurant (RestID INT NOT NULL AUTO_INCREMENT,
 						PRIMARY KEY (RestID));
 
 CREATE TABLE driver (DriverID INT NOT NULL AUTO_INCREMENT,
-          				DriverLogin VARCHAR(20),
+          				DriverLogin VARCHAR(30),
           				DriverPW VARCHAR(20),
 					DriverName VARCHAR(15),
 					DriverLong INT,
@@ -37,6 +37,8 @@ CREATE TABLE driver (DriverID INT NOT NULL AUTO_INCREMENT,
 					DriverPhone VARCHAR(12),
 					Available BOOLEAN,
 					DriverPay INT,
+					DriverCar VARCHAR(25),
+					DriverLicense VARCHAR(15),
 					PRIMARY KEY (DriverID));
 
 CREATE TABLE orders (OrderID INT NOT NULL AUTO_INCREMENT,
