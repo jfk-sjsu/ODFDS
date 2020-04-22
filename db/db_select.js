@@ -17,7 +17,7 @@ exports.driverGet = function (dLogin, callback) {
 	//	if (err) throw err;
 //		console.log(result);
 //	});
-	var sql = "SELECT * from driver WHERE driverLogin = ?;";
+	var sql = "SELECT DriverID, DriverLogin, DriverPW, DriverName from driver WHERE DriverLogin = ?;";
 	console.log(" dLogin = " + dLogin);
 	con.query(sql, [ dLogin ], function (err, result, fields) {
 		if (err) throw err;
