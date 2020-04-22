@@ -43,9 +43,9 @@ exports.restGet = function (rLogin, callback) {
         if (err) throw err;
     });
         
-        var sql = "SELECT RestLogin, RestPW from restaurant WHERE RestLogin = :login";
+        var sql = "SELECT RestLogin, RestPW from restaurant WHERE RestLogin = ?";
             
-        con.query(sql, { login: rLogin }, function (err, result, fields) {
+        con.query(sql, [ rLogin ], function (err, result, fields) {
             if (err) throw err;
             return callback(result);
             
