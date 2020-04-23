@@ -53,5 +53,5 @@ CREATE TABLE orders (OrderID INT NOT NULL AUTO_INCREMENT,
 					FOREIGN KEY (RestID) REFERENCES restaurant(RestID),
 					FOREIGN KEY (DriverID) REFERENCES driver(DriverID)
 					);
-
-# EOF
+CREATE USER 'dbuser'@'%' IDENTIFIED WITH mysql_native_password BY 'example';
+GRANT ALL PRIVILEGES ON odfdsdb.* TO 'dbuser'@'%';

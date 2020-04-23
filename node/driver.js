@@ -13,13 +13,17 @@ exports.login = function ( email,  password, callback) {
 // if true, send back their driver id and let them see the drivers' page I guess
 // if false, send them to a "you failed to login" page. 
 	dbSel.driverGet(email, function (result) { 
-					var auth = false;
+					var auth = "bad response";
 					//console.log("driverGet says " + Object.keys(result) );
 					if(result == null) {
-						callback(false);
+						callback("No such driver");
 						return; 
 					}
-					if(result.DriverPW == password) {auth = true;}; 
+					if(result.DriverPW == password) {
+						{auth = "Authenticated"};
+					}else {
+						auth = "Bad password";
+					}
 					callback(auth);
 	});
 }
@@ -96,7 +100,7 @@ exports.logout = function ( id){
 	return "Logout stub";
 }
 
-exports.SignUp = function ( name, username, password, carMakeModel, licPlate, phone, pay, callback) {
+exports.SignUp = function ( name, email, password, carMakeModel, licPlate, phone, pay, callback) {
 /*
    Purpose: puts a new user into the database for access
    params: 
@@ -118,7 +122,7 @@ exports.SignUp = function ( name, username, password, carMakeModel, licPlate, ph
 						true, pay, carMakeModel, licPlate, 
 						function(results) { 
 						console.log(results);
-						callback(results)});
-	return "signup stubb";
+						callback("Authenticated")});
+	 
 }
 

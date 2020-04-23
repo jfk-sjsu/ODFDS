@@ -4,8 +4,8 @@ exports.driverGet = function (dLogin, callback) {
 	
 
     var con = mysql.createConnection({
-        host: "db",
-        user: "root",
+		host: "172.17.0.2",
+		user: "dbuser",
         password: "example",
         database: "odfdsdb"
     });

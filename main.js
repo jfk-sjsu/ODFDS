@@ -13,9 +13,17 @@ app.use(express.static('/website/'))
 app.post('/driver/Login', function (req,res) { 
 
 	var ret = driver.login(req.body.email,req.body.psw,
-							function (boolAuth) { 
-								res.send(boolAuth.toString());
-							});
+							req.body.lat, 
+							req.body.long, 
+							function(results) { 
+							console.log(results);
+							if(results == "Authenticated") {
+								res.redirect('/driverPage.html');
+							} else 
+							{
+								res.send(results);
+							}
+						});
 	
 });
 app.get('/', (req, res) => req.send(index.html));
@@ -42,9 +50,15 @@ app.post('/driver/SignUp', function (req, res) {
 						req.body.license,
 						req.body.phone,
 						req.body.pay,
-						function(results) { 
-						console.log(results);
-						res.send(results)});
+							function(results) { 
+							console.log(results);
+							if(results == "Authenticated") {
+								res.redirect('/driverPage.html');
+							} else 
+							{
+								res.send(results);
+							}
+						});
 	 console.log("back to main");
 	 
 });

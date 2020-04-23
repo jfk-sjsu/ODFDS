@@ -23,10 +23,11 @@ exports.restReg = function (restLogin, restPW, restName, restAddr, restLong, res
 }
 
 exports.driverReg = function (driverLogin, driverPW, driverName, driverLong, driverLat, driverPhone, driverAvailable, driverPay, driverCar, driverLicense, callback) {
+ 
   var mysql = require('mysql');
   var con = mysql.createConnection({
-    host: "db",
-    user: "root",
+    host: "172.17.0.2",
+    user: "dbuser",
     password: "example",
     database: "odfdsdb"
   });
