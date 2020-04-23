@@ -32,12 +32,17 @@ exports.login = function ( email,  password, lat, longitude, callback) {
 
 exports.setActive = function( id,  driverLat,  driverLong) { 
 	// set's driver as active and records position. 
-	
+	setDriverAvailable(id, function (results) {});
+	sendLocation(id,  driverLat,  driverLong); 
 	return " setActive stub"; 
 }
 
 exports.sendLocation = function ( id,  driverLat,  driverLong) { 
 // sends the drivers location to the database. 
+	updateDriverLocation(id,  driverLat,  driverLong, function (results) { }); 
+	
+													
+	
 	return "sendLocation stub";
 }
 

@@ -18,7 +18,7 @@ app.post('/driver/Login', function (req,res) {
 							function(results) { 
 							console.log(results);
 							if(results == "Authenticated") {
-								res.redirect('/driverPage.html');
+								res.redirect('/mainDriver.html');
 							} else 
 							{
 								res.send(results);
@@ -53,7 +53,7 @@ app.post('/driver/SignUp', function (req, res) {
 							function(results) { 
 							console.log(results);
 							if(results == "Authenticated") {
-								res.redirect('/driverPage.html');
+								res.redirect('/mainDriver.html');
 							} else 
 							{
 								res.send(results);

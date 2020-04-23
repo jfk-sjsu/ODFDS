@@ -48,7 +48,7 @@ function orderPickedUp(orderID, callback) {
   con.end();
 }
 
-function setDriverAvailable(driverID, callback) {
+exports.setDriverAvailable = function setDriverAvailable(driverID, callback) {
   var mysql = require('mysql');
   var con = mysql.createConnection({
     host: "172.17.0.2",
@@ -73,7 +73,7 @@ function setDriverAvailable(driverID, callback) {
   con.end();
 }
 
-function updateDriverLocation(driverID, driverLat, driverLong, callback) {
+exports.updateDriverLocation =  function(driverID, driverLat, driverLong, callback) {
   var mysql = require('mysql');
   var con = mysql.createConnection({
     host: "172.17.0.2",
