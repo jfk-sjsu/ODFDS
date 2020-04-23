@@ -1,8 +1,8 @@
 function completeOrder(orderID, callback) {
   var mysql = require('mysql');
   var con = mysql.createConnection({
-    host: "db",
-    user: "root",
+    host: "172.17.0.2",
+    user: "dbuser",
     password: "example",
     database: "odfdsdb"
   });
@@ -26,8 +26,8 @@ function completeOrder(orderID, callback) {
 function orderPickedUp(orderID, callback) {
   var mysql = require('mysql');
   var con = mysql.createConnection({
-    host: "db",
-    user: "root",
+    host: "172.17.0.2",
+    user: "dbuser",
     password: "example",
     database: "odfdsdb"
   });
@@ -51,8 +51,8 @@ function orderPickedUp(orderID, callback) {
 function setDriverAvailable(driverID, callback) {
   var mysql = require('mysql');
   var con = mysql.createConnection({
-    host: "db",
-    user: "root",
+    host: "172.17.0.2",
+    user: "dbuser",
     password: "example",
     database: "odfdsdb"
   });
@@ -76,8 +76,8 @@ function setDriverAvailable(driverID, callback) {
 function setDriverUnavailable(driverID, callback) {
   var mysql = require('mysql');
   var con = mysql.createConnection({
-    host: "db",
-    user: "root",
+    host: "172.17.0.2",
+    user: "dbuser",
     password: "example",
     database: "odfdsdb"
   });
