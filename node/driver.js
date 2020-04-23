@@ -4,7 +4,7 @@ const dbUpd = require('../db/db_update')
 
 // driver.js all the driver functions in one spot
 
-exports.login = function ( email,  password, callback) { 
+exports.login = function ( email,  password, lat, longitude, callback) { 
 // logs the driver in for work. requires password to be validated 
 	//console.log("login called: " + email + "," + password);
 // connect to db 
@@ -21,6 +21,7 @@ exports.login = function ( email,  password, callback) {
 					}
 					if(result.DriverPW == password) {
 						{auth = "Authenticated"};
+						setActive(result.DriverId, lat, longitude);
 					}else {
 						auth = "Bad password";
 					}
@@ -31,6 +32,7 @@ exports.login = function ( email,  password, callback) {
 
 exports.setActive = function( id,  driverLat,  driverLong) { 
 	// set's driver as active and records position. 
+	
 	return " setActive stub"; 
 }
 

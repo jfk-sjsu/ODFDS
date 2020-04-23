@@ -14,7 +14,7 @@ app.post('/driver/Login', function (req,res) {
 
 	var ret = driver.login(req.body.email,req.body.psw,
 							req.body.lat, 
-							req.body.long, 
+							req.body.longitude, 
 							function(results) { 
 							console.log(results);
 							if(results == "Authenticated") {
