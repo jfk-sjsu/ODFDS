@@ -1,8 +1,8 @@
 exports.restReg = function (restLogin, restPW, restName, restAddr, restLong, restLat, restPhone, callback) {
   var mysql = require('mysql');
   var con = mysql.createConnection({
-    host: "db",
-    user: "root",
+    host: "172.17.0.2",
+    user: "dbuser",
     password: "example",
     database: "odfdsdb"
   });
@@ -50,8 +50,8 @@ exports.driverReg = function (driverLogin, driverPW, driverName, driverLong, dri
 exports.restNewOrder = function (orderVal, customer, custAddr, restID, driverID, callback) {
   var mysql = require('mysql');
   var con = mysql.createConnection({
-    host: "db",
-    user: "root",
+    host: "172.17.0.2",
+    user: "dbuser",
     password: "example",
     database: "odfdsdb"
   });

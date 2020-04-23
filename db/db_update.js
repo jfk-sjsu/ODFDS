@@ -1,8 +1,8 @@
 function completeOrder(orderID, callback) {
   var mysql = require('mysql');
   var con = mysql.createConnection({
-    host: "db",
-    user: "root",
+    host: "172.17.0.2",
+    user: "dbuser",
     password: "example",
     database: "odfdsdb"
   });
@@ -26,8 +26,8 @@ function completeOrder(orderID, callback) {
 function orderPickedUp(orderID, callback) {
   var mysql = require('mysql');
   var con = mysql.createConnection({
-    host: "db",
-    user: "root",
+    host: "172.17.0.2",
+    user: "dbuser",
     password: "example",
     database: "odfdsdb"
   });
@@ -51,8 +51,8 @@ function orderPickedUp(orderID, callback) {
 function setDriverAvailable(driverID, callback) {
   var mysql = require('mysql');
   var con = mysql.createConnection({
-    host: "db",
-    user: "root",
+    host: "172.17.0.2",
+    user: "dbuser",
     password: "example",
     database: "odfdsdb"
   });
@@ -73,11 +73,36 @@ function setDriverAvailable(driverID, callback) {
   con.end();
 }
 
+function updateDriverLocation(driverID, driverLat, driverLong, callback) {
+  var mysql = require('mysql');
+  var con = mysql.createConnection({
+    host: "172.17.0.2",
+    user: "dbuser",
+    password: "example",
+    database: "odfdsdb"
+  });
+
+  con.connect(function(err) {
+    if (err) throw err;
+    console.log("Connected to DB");
+  });
+    
+    var sql = "UPDATE driver SET DriverLong = ? AND DriverLat = ? WHERE DriverID = ?;";
+    
+    con.query(sql, [ driverLong, driverLat, driverID ], function (err, result) {
+      if (err) throw err;
+      console.log("Driver ID = " + DriverID + " location updated");
+      return callback(result);
+    });
+  
+  con.end();
+}
+
 function setDriverUnavailable(driverID, callback) {
   var mysql = require('mysql');
   var con = mysql.createConnection({
-    host: "db",
-    user: "root",
+    host: "172.17.0.2",
+    user: "dbuser",
     password: "example",
     database: "odfdsdb"
   });

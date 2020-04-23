@@ -32,10 +32,10 @@ exports.driverGet = function (dLogin, callback) {
 exports.restGet = function (rLogin, callback) {
     var mysql = require('mysql');
     var con = mysql.createConnection({
-        host: "db",
-        user: "root",
-        password: "example",
-        database: "odfdsdb"
+	    host: "172.17.0.2",
+	    user: "dbuser",
+	    password: "example",
+	    database: "odfdsdb"
     });
     
     con.connect(function(err) {
@@ -56,10 +56,10 @@ exports.restGet = function (rLogin, callback) {
 function retrieveOrder(orderID, callback) {
     var mysql = require('mysql');
     var con = mysql.createConnection({
-        host: "db",
-        user: "root",
-        password: "example",
-        database: "odfdsdb"
+	    host: "172.17.0.2",
+	    user: "dbuser",
+	    password: "example",
+	    database: "odfdsdb"
     });
     
      con.connect(function(err) {
@@ -80,10 +80,10 @@ function retrieveOrder(orderID, callback) {
 function retrieveDriverOrder(driverID, callback) {
     var mysql = require('mysql');
     var con = mysql.createConnection({
-        host: "db",
-        user: "root",
-        password: "example",
-        database: "odfdsdb"
+	    host: "172.17.0.2",
+	    user: "dbuser",
+	    password: "example",
+	    database: "odfdsdb"
     });
     
      con.connect(function(err) {
@@ -104,10 +104,10 @@ function retrieveDriverOrder(driverID, callback) {
 function retrieveRestOrder(restID, callback) {
     var mysql = require('mysql');
     var con = mysql.createConnection({
-        host: "db",
-        user: "root",
-        password: "example",
-        database: "odfdsdb"
+	    host: "172.17.0.2",
+	    user: "dbuser",
+	    password: "example",
+	    database: "odfdsdb"
     });
     
      con.connect(function(err) {
@@ -128,10 +128,10 @@ function retrieveRestOrder(restID, callback) {
 function getRestInfo(restID, callback) {
     var mysql = require('mysql');
     var con = mysql.createConnection({
-        host: "db",
-        user: "root",
-        password: "example",
-        database: "odfdsdb"
+	    host: "172.17.0.2",
+	    user: "dbuser",
+	    password: "example",
+	    database: "odfdsdb"
     });
     
      con.connect(function(err) {
@@ -152,10 +152,10 @@ function getRestInfo(restID, callback) {
 function getDriverInfo(driverID, callback) {
     var mysql = require('mysql');
     var con = mysql.createConnection({
-        host: "db",
-        user: "root",
-        password: "example",
-        database: "odfdsdb"
+	    host: "172.17.0.2",
+	    user: "dbuser",
+	    password: "example",
+	    database: "odfdsdb"
     });
     
      con.connect(function(err) {
@@ -176,10 +176,10 @@ function getDriverInfo(driverID, callback) {
 function getDriverDelivCount(driverID, callback) {
     var mysql = require('mysql');
     var con = mysql.createConnection({
-        host: "db",
-        user: "root",
-        password: "example",
-        database: "odfdsdb"
+	    host: "172.17.0.2",
+	    user: "dbuser",
+	    password: "example",
+	    database: "odfdsdb"
     });
     
      con.connect(function(err) {
@@ -200,10 +200,10 @@ function getDriverDelivCount(driverID, callback) {
 function getRestDelivCount(restID, callback) {
     var mysql = require('mysql');
     var con = mysql.createConnection({
-        host: "db",
-        user: "root",
-        password: "example",
-        database: "odfdsdb"
+	    host: "172.17.0.2",
+	    user: "dbuser",
+	    password: "example",
+	    database: "odfdsdb"
     });
     
      con.connect(function(err) {
