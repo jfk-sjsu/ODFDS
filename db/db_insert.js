@@ -31,17 +31,17 @@ exports.driverReg = function (driverLogin, driverPW, driverName, driverLong, dri
     password: "example",
     database: "odfdsdb"
   });
-
+	console.log("driverReg", driverLogin, driverPW, driverName, driverLong, driverLat, driverPhone, driverAvailable, driverPay, driverCar, driverLicense);
   con.connect(function(err) {
     if (err) throw err;
-    console.log("Connected to DB");
+ 
     });
     
     var sql = "INSERT INTO driver(DriverLogin, DriverPW, DriverName, DriverLong, DriverLat, DriverPhone, Available, DriverPay, DriverCar, DriverLicense) VALUES (?,?,?,?,?,?,?,?,?,?);";
 
-	con.query(sql, [ driverLogin, driverPW, driverName, driverLong, driverLat, driverPhone, true, driverPay, driverCar, driverLicense ], function (err, result) {
+	con.query(sql, [ driverLogin, driverPW, driverName, driverLong, driverLat, driverPhone, false, driverPay, driverCar, driverLicense ], function (err, result) {
       if (err) throw err;
-      console.log("1 record inserted to driver, ID: " + result.insertId);
+
       return callback(result);
     });
   con.end();

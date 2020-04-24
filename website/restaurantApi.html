@@ -1,0 +1,148 @@
+<html>
+<script src = "geolocation.js" ></script>
+<body> 
+
+<!---------------- How to call the restaurant apis ---------------------------------------------------------->
+<!--           These snippets give the restaurant apis and examples of how to reach them via HTTP 
+				Each one uses a 'route' to access a particular function for a restaurant. 
+				See the other api.html files for driver, order (customer) and db access for testing -->
+<!--
+/rest/Login 
+  purpose: authenticates the restaurant to the system for all communications
+  params: 
+    username  type:string
+    password  type:encrypted string
+	dLat	type: long
+	dLong	type: long
+  return:
+    restId  type:  "rest ID" identifying the restaurant in all future comms. Should be randomly generated and unique 
+-->
+<!-- we need to get our geolocation data before we post -->
+<script>
+function setLatLong(address,zip,toLat,toLong) {
+	var add = document.getElementById(address).value + " " + document.getElementById(zip).value;
+	var latLong = getLatLong(add);
+	document.getElementById(toLat).value = latLong.latitude; 
+	document.getElementById(toLong).value = latLong.longitude;
+	return true;
+}
+</script>
+<div id="err"></div>
+<form action="/rest/login" method="post" > <!-- action must match route in main.js -->
+	<h1>restaurant login</h1>
+	<label for="username">email address</label><br>
+    <input type="text" placeholder="Enter username"  name="username" required><br> <!-- name= must match parameter in main.js, as described above -->
+	<label for="psw">Password</label><br>
+    <input type="password" placeholder="Enter Password" id="psw" name="password"><br>
+
+	<!-- here we need to call a script to get the lat and longitude --> 
+
+	<input type="submit" value="Submit">
+</form>
+<!-- 
+	
+/rest/logout
+  purpose: logs the restaurant off duty
+  params: 
+	restId  
+  return: 
+	sends the you are logged off page 
+--> 
+<form action="/rest/logoff" method="post" > <!-- action must match route in main.js -->
+	<h1>restaurant logoff</h1>
+	<label for="restId">restaurant Id</label><br>
+    <input type="text" placeholder="Enter Restaurant Id"  name="restId" required><br> <!-- name= must match parameter in main.js, as described above -->
+
+	<input type="submit" value="Submit">
+</form>
+
+
+<!--
+/rest/newOrder
+  purpose: Logs in a new order 
+  params: 
+    restId  type:restId 
+	custName 	type:varchar[40]
+	custLat		type:Latitude
+	custLong	type:Longitude
+     
+  return: 
+    orderID type: numeric ID for an order   
+  Notes: System will log the data and time that the order was placed. System will set the order as ready for delivery. 
+-->
+<form action="/rest/newOrder" method="post" onsubmit="return setLatLong('address','zip','lat2','long2')"> <!-- action must match route in main.js -->
+	<h1>New Order</h1>
+	<label for="username">Name</label><br>
+    <input type="text" placeholder="Enter name"  name="name" required><br> <!-- name= must match parameter in main.js, as described above -->
+	<label for="email">email address</label><br>
+    <input type="text" placeholder="Enter email"  name="email" required><br> <!-- name= must match parameter in main.js, as described above -->
+	
+	<label for="address">Street Address</label><br>
+    <input type="text" placeholder="Enter Street address"  name="address" required><br> <!-- name= must match parameter in main.js, as described above -->
+	
+	<label for="zip">Zip Code</label><br>
+    <input type="text" placeholder="Enter Zip"  name="zip" required><br> <!-- name= must match parameter in main.js, as described above -->
+	
+
+	<!-- here we need to call a script to get the lat and longitude --> 
+
+	<input id="lat2" name="rLat" style="display: none;">
+	<input id="long2" name="rLong" style="display: none;"></input>
+	<input type="submit" value="Submit">
+</form>
+<!--
+/rest/getOrders
+	purpose: gets a list of orders with status 
+	params: 
+		restId 	type:restId
+	return: json object with all orders for that restaurant and data 
+-->
+<form action="/rest/getOrders" method="post" > <!-- action must match route in main.js -->
+	<h1>restaurant getOrders</h1>
+	<label for="restId">restaurant Id</label><br>
+    <input type="text" placeholder="Enter restuarant Id"  name="restId" required><br> <!-- name= must match parameter in main.js, as described above -->
+
+	<input type="submit" value="Submit">
+</form>
+<!--
+ /rest/SignUp
+   Purpose: puts a new restaurant into the database for access
+   params: 
+      email: 	type: email	Used for login Id. 
+	  password	type: password 
+	  rLat:		type: latitude
+	  rLong:	type: longitude
+	  
+	  
+   return:
+      
+      sends them to login page. 
+      -->
+<form action="/rest/SignUp" method="post" onsubmit="return setLatLong('address1','zip1','lat1','long1')"> <!-- action must match route in main.js -->
+	<h1>Retaurant SignUp</h1>
+	<label for="username">Name</label><br>
+    <input type="text" placeholder="Enter name"  name="name" required><br> <!-- name= must match parameter in main.js, as described above -->
+	<label for="email">email address</label><br>
+    <input type="text" placeholder="Enter email"  name="email" required><br> <!-- name= must match parameter in main.js, as described above -->
+	
+	<label for="psw">Password</label><br>
+    <input type="password" placeholder="Enter Full Name" id="psw" name="password"><br>
+
+	<label for="address">Street Address</label><br>
+    <input type="text" placeholder="Enter Street address" id="address1" name="address" required><br> <!-- name= must match parameter in main.js, as described above -->
+	
+	<label for="zip">Zip Code</label><br>
+    <input type="text" placeholder="Enter Zip" id='zip1' name="zip" required><br> <!-- name= must match parameter in main.js, as described above -->
+	
+	<label for="phone">Phone</label><br>
+    <input type="text" placeholder="Enter Phone"  name="phone" required><br> <!-- name= must match parameter in main.js, as described above -->
+	
+
+	<!-- here we need to call a script to get the lat and longitude --> 
+
+	<input id="lat1" name="rLat" style="display: none;">
+	<input id="long1" name="rLong" style="display: none;"></input>
+	<input type="submit" value="Submit">
+</form>
+</body>
+</html>	 

@@ -1,7 +1,7 @@
 const dbIns = require('../db/db_insert')
 const dbSel = require('../db/db_select')
 const dbUpd = require('../db/db_update')
-
+ 
 // driver.js all the driver functions in one spot
 
 exports.login = function ( email,  password, lat, longitude, callback) { 
@@ -12,19 +12,23 @@ exports.login = function ( email,  password, lat, longitude, callback) {
 // compare to given password 
 // if true, send back their driver id and let them see the drivers' page I guess
 // if false, send them to a "you failed to login" page. 
+console.log("login called: email =" + email + "lat=" + lat + "longitude=" + longitude); 
 	dbSel.driverGet(email, function (result) { 
 					var auth = "bad response";
 					//console.log("driverGet says " + Object.keys(result) );
 					if(result == null) {
-						callback("No such driver");
+						callback("No such driver: " + email);
 						return; 
 					}
 					if(result.DriverPW == password) {
-						{auth = "Authenticated"};
-						setActive(result.DriverId, lat, longitude);
+						{
+							auth = result.DriverID;
+						};
+						
 					}else {
 						auth = "Bad password";
 					}
+					console.log("login Auth = : " + auth.toString());
 					callback(auth);
 	});
 }
@@ -32,18 +36,34 @@ exports.login = function ( email,  password, lat, longitude, callback) {
 
 exports.setActive = function( id,  driverLat,  driverLong) { 
 	// set's driver as active and records position. 
-	setDriverAvailable(id, function (results) {});
-	sendLocation(id,  driverLat,  driverLong); 
-	return " setActive stub"; 
+	//driver.setDriverAvailable(id, function (results) {});
+	console.log("setActive called"); 
+	console.log("id = " + id); 
+	dbUpd.setDriverAvailable(id, function (results) {
+							_sendLocation(id, driverLat, driverLong);
+	});
+	 
 }
 
-exports.sendLocation = function ( id,  driverLat,  driverLong) { 
+exports.setNotActive = function( id) { 
+	// set's driver as not active 
+	
+	console.log("setNotActive called"); 
+	console.log("id = " + id); 
+	dbUpd.setDriverUnavailable(id, function (results) {});
+ 	 
+}
+
+
+exports.sendLocation = _sendLocation;
+
+ function _sendLocation( id,  driverLat,  driverLong) { 
 // sends the drivers location to the database. 
-	updateDriverLocation(id,  driverLat,  driverLong, function (results) { }); 
+	console.log("_sendLocation: " + id + "," + driverLat + "," + driverLong);
+	dbUpd.updateDriverLocation(id,  driverLat,  driverLong, function (results) {
+								console.log("updated driver location results" + results)}); 
 	
-													
-	
-	return "sendLocation stub";
+
 }
 
 exports.ackOrderRequest = function( id,  accept) {
@@ -107,7 +127,7 @@ exports.logout = function ( id){
 	return "Logout stub";
 }
 
-exports.SignUp = function ( name, email, password, carMakeModel, licPlate, phone, pay, callback) {
+exports.SignUp = function ( name, email, password, carMakeModel, licPlate, phone, pay, latitude, longitude, callback) {
 /*
    Purpose: puts a new user into the database for access
    params: 
@@ -124,12 +144,13 @@ exports.SignUp = function ( name, email, password, carMakeModel, licPlate, phone
       boolean success or fail
       driverId
 */
-	var ret = dbIns.driverReg(email, password, name, 10, 
-						11, phone,
-						true, pay, carMakeModel, licPlate, 
+	console.log(name, email, password, carMakeModel, licPlate, phone, pay, latitude, longitude);
+	var ret = dbIns.driverReg(email, password, name, latitude, 
+						longitude, phone,
+						false, pay, carMakeModel, licPlate, 
 						function(results) { 
-						console.log(results);
-						callback("Authenticated")});
+						
+						callback(results)});
 	 
 }
 

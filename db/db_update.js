@@ -66,7 +66,7 @@ exports.setDriverAvailable = function setDriverAvailable(driverID, callback) {
     
     con.query(sql, [ driverID ], function (err, result) {
       if (err) throw err;
-      console.log("Driver ID = " + DriverID + " set to available");
+      console.log("Driver ID = " + driverID + " set to available");
       return callback(result);
     });
   
@@ -86,19 +86,20 @@ exports.updateDriverLocation =  function(driverID, driverLat, driverLong, callba
     if (err) throw err;
     console.log("Connected to DB");
   });
-    
+
     var sql = "UPDATE driver SET DriverLong = ? AND DriverLat = ? WHERE DriverID = ?;";
-    
+    console.log("updateDriverLocation called:   " + driverID + "," + driverLat + "," + driverLong);
+	
     con.query(sql, [ driverLong, driverLat, driverID ], function (err, result) {
       if (err) throw err;
-      console.log("Driver ID = " + DriverID + " location updated");
-      return callback(result);
+      console.log( result);
+      callback(result);
     });
   
   con.end();
 }
 
-function setDriverUnavailable(driverID, callback) {
+exports.setDriverUnavailable = function(driverID, callback) {
   var mysql = require('mysql');
   var con = mysql.createConnection({
     host: "172.17.0.2",
@@ -116,7 +117,7 @@ function setDriverUnavailable(driverID, callback) {
     
     con.query(sql, [ driverID ], function (err, result) {
       if (err) throw err;
-      console.log("Driver ID = " + DriverID + " set to unavailable");
+      console.log("Driver ID = " + driverID + " set to unavailable");
       return callback(result);
     });
   

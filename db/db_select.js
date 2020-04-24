@@ -1,6 +1,6 @@
 exports.driverGet = function (dLogin, callback) {
 	var mysql = require('mysql');
-	console.log("driverGet called");
+	console.log("driverGet called. dLogin = : " + dLogin);
 	
 
     var con = mysql.createConnection({
@@ -18,9 +18,12 @@ exports.driverGet = function (dLogin, callback) {
 //		console.log(result);
 //	});
 	var sql = "SELECT DriverID, DriverLogin, DriverPW, DriverName from driver WHERE DriverLogin = ?;";
-	console.log(" dLogin = " + dLogin);
+
 	con.query(sql, [ dLogin ], function (err, result, fields) {
-		if (err) throw err;
+		if (err) { 
+			console.log("err in driverGet" + err.message);
+			callback(null);
+		}
 		console.log(result[0]);
 		callback(result[0]);
 	});
