@@ -1,1 +1,2 @@
-docker-compose up --build
+start_db.bat
+start_web.bat
