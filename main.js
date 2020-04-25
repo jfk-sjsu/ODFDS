@@ -28,7 +28,7 @@ app.post('/driver/Login', function (req,res) {
 						sess.did = results;
 						console.log('sess.did = ' + sess.did);
 						driver.setActive(results, req.body.dLat, req.body.dLong);
-						res.redirect('/mainDriver.html');
+						res.redirect('/driverMain.html');
 					} else 
 					{
 						res.send(results);
@@ -62,7 +62,7 @@ app.post('/rest/SignUp', function (req, res) {
 						req.body.rLong,
 						function(results) { 
 						console.log(results);
-						res.send(results)});
+						res.redirect('/signin.html')});
 	 console.log("back to main");
 	 
 });
@@ -81,7 +81,7 @@ app.post('/driver/SignUp', function (req, res) {
 						function(results) { 
 						console.log(results.insertId);
 						driver.setActive(results.insertId,req.body.dLat,req.body.dLong);
-						res.redirect('/mainDriver.html');
+						res.redirect('/signin.html');
 						
 					});
 	} catch (err)
@@ -91,7 +91,26 @@ app.post('/driver/SignUp', function (req, res) {
 	
 });
 app.post('/rest/newOrder', function (req,res) {
-	res.send("newOrder called");
+	var orderVal = 1.00; 
+	if(sess == null) { 
+		res.send("no one logged in!"); 
+	}
+	else 
+	{
+		var restId = sess.did; 
+			
+		rest.newOrder(orderVal, req.body.name, req.body.address + " " + req.body.zip, 
+		req.body.cLat, req.body.cLong, restId, function (response) { 
+			if(typeof(response) == 'number') { 
+				res.redirect('/restaurantMain.html');
+			} 
+			else 
+			{
+				res.send(response); 
+			}
+		});
+	}
+	
 });
 
 app.post('/rest/getOrders', function (req, res) {
@@ -100,14 +119,14 @@ app.post('/rest/getOrders', function (req, res) {
 
 app.post('/rest/login', function (req,res) { 
 
-	rest.login(req.body.username,req.body.password,
+	rest.login(req.body.email,req.body.psw,
 					function(results) { 
-					if(sess != null) {res.send("already logged in." + sess.username); return);
+					if(sess != null) {res.send("already logged in." + sess.username); return};
 					if(typeof(results) == 'number') {
 						sess=req.session;
-						sess.username = req.body.username; 
+						sess.username = req.body.email; 
 						sess.did=results; 
-						res.redirect('/mainRestaurant.html');
+						res.redirect('/restaurantMain.html');
 					} else 
 					{
 						res.send(results);

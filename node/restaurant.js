@@ -4,12 +4,36 @@ const dbSel = require('../db/db_select')
 const dbUpd = require('../db/db_update')
 
 
-function _newOrder(restId, custName, custLat,custLong, callback) {
-	callback("_newOrder called " + restId); 
+function _newOrder(orderVal, custName, custAddr, custLat, custLong, restId, callback)  {
+	console.log("_newOrder called: ",orderVal, custName, custAddr, custLat, custLong, restId);
+	
+	dbIns.restNewOrder(orderVal, custName, custLat, custLong, custAddr, restId, function (results) {
+		console.log("newOrder  db call results: ", results.insertId); 
+		callback(results.insertId);
+	}); 
+
 }
 
 function _login(email, password, callback) {
-	callback("_loginCalled" + email); 
+	console.log("login called: " + email,  password); 
+	dbSel.restGet(email, function (result) { 
+					var auth = "bad response";
+					console.log("restGet says " + result.RestPW);
+					if(result == null) {
+						callback("No such restaurant: " + email);
+						return; 
+					}
+					if(result.RestPW == password) {
+						{
+							auth = result.RestID;
+						};
+						
+					}else {
+						auth = "Bad password";
+					}
+					console.log("login Auth = : " + auth.toString());
+					callback(auth);
+	});
 }
 function _logoff(email, callback) {
 	callback("_logoffCalled" + email); 

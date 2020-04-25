@@ -50,7 +50,9 @@ exports.driverReg = function (driverLogin, driverPW, driverName, driverLong, dri
   con.end();
 }
 
-exports.restNewOrder = function (orderVal, customer, custAddr, restID, driverID, callback) {
+exports.restNewOrder = function (orderVal, customer, custLat, custLong, custAddr, restID, callback) {
+  console.log("restNewOrder called:", orderVal, customer, custLat, custLong, custAddr, restID);
+  
   var mysql = require('mysql');
   var con = mysql.createConnection({
     host: "172.17.0.2",
@@ -64,12 +66,12 @@ exports.restNewOrder = function (orderVal, customer, custAddr, restID, driverID,
     console.log("Connected to DB");
   });
     
-    var sql = "INSERT INTO orders(OrderVal, CustName, CustAddr, OrderPickedUp, OrderComplete, RestID, DriverID) VALUES (?,?,?,?,?,?,?)";
+    var sql = "INSERT INTO orders(OrderVal, CustName, CustLat, CustLong, CustAddr, OrderPickedUp, OrderComplete, RestID, DriverID) VALUES (?,?,?,?,?,?,?,?,?)";
     
-    con.query(sql, [orderVal, customer, custAddr, false, false, restID, driverID], function (err, result) {
+    con.query(sql, [orderVal, customer, custLat, custLong, custAddr, false, false, restID, 0], function (err, result, fields) {
       if (err) throw err;
       console.log("1 record inserted to orders, ID: " + result.insertId);
-      return callback(result);
+      callback(result);
     });
   con.end();
 }
