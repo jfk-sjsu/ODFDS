@@ -5,7 +5,7 @@
   <script src = "script.js" defer></script>
   <head>
     <meta charset="utf-8">
-    <title>ODFDS | Driver History</title>
+    <title>ODFDS | Restaurant</title>
   </head>
   <body>
     <div class="container"> <!-- wrapper -->
@@ -19,8 +19,8 @@
           </a>
           <div class = "navbar-links"> <!-- navbar-links -->
             <ul>
-              <li><a href="mainDriver.html">Main</a></li>
-              <li><a href="historyDriver.html">History</a></li>
+              <li><a href="mainRestaurant.html">Main</a></li>
+              <li><a href="historyRestaurant.html">History</a></li>
               <li><a href="about.html">About</a></li>
               <li><a href="creatives.html">Creatives</a></li>
               <li><a class="button1"href="index.html">Sign Out</a></li>
@@ -30,15 +30,29 @@
 
   <!-- WHERE PAGE CONTENT IS INSERTED -->
 
-        <div class="pageTitle"><h2>Driver History</h2>
-          <p>Look at all the orders you have worked on! Nice progress!</p>
+        <div class="pageTitle"><h2>Restaurant Activity</h2>
+          <p>Let's get to work! Let us know if there are orders to deliver!</p>
         </div>
         <div class = "singular"> <!-- div where content goes -->
-          <div> <!-- history div -->
-            <h3>Orders</h3>
-            <p>Insert table of orders here!</p>
-          </div> <!-- end of delivery text div -->
-          </div> <!-- end of activity div -->
+        <div class = "rectangleBackground"> <!-- Restaurant Order Form -->
+          <img src="media/rectangleBackground.png" width="250">
+          <div class="imageText">
+            <form action="/rest/newOrder" method="post">
+              <h1>Place an Order</h1><br>
+              <label for="fullname">Customer's Name</label><br>
+              <input type="text" placeholder="Enter Customer's Name" id="fullname" name="name" required><br><br>
+
+
+              <label for="address">Customer's Delivery Address</label><br>
+              <input type="text" placeholder="Enter Customer's Address" id="address" name="Raddress" required><br><br>
+
+              <label for="Raddress">Restaurant's Address</label><br>
+              <input type="text" placeholder="Enter Restaurant's Address" id="Raddress" name="Raddress" required><br><br>
+              <center><button type="submit" class="button2">Submit</button></center>
+            </form>
+        </div>
+      </div> <!-- Restaurant Order Form Ends -->
+
     </div> <!-- end of page content -->
 </div>
 </div>

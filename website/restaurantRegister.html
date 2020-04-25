@@ -35,26 +35,23 @@
         <div class = "rectangleBackground"> <!-- Restaurant Register -->
           <img src="media/rectangleBackground.png" width="250">
           <div class="imageText">
-            <form action="/action_page.php">
+
+            <form action="/rest/SignUp" method="post">
+
               <h1>Restaurant</h1>
               <label for="fullname">Restaurant Name</label><br>
               <input type="text" placeholder="Enter Restaurant Name" id="fullname" name="name" required><br>
-              <label for="username">Username</label><br>
-              <input type="text" id="username" placeholder="Enter Username" name="uname" required><br>
               <label for="email"><b>Email</b></label><br>
               <input type="text" id="email" placeholder="Enter Email" name="email" required><br>
               <label for="psw"><b>Password</b></label><br>
               <input type="password" id="psw" placeholder="Enter Password" name="psw" required><br>
 
-              <label for="securityQuestion">Security Question</label><br>
-              <input type="text" placeholder="Security Question" id="securityQuestion" name="securityQ" required><br>
-              <label for="Spsw">Security Answer</label><br>
-              <input type="password" id="Spsw" placeholder="Enter Security Answer" name="psw" required><br>
+              <label for="phone">Phone Number</label><br>
+              <input type="tel" placeholder="123-456-7890" id="phone" name="phone" required><br>
 
-              <label for="address">Street Address</label><br>
-              <input type="text" placeholder="Enter Street Address" id="address" name="Raddress" required><br>
-              <label for="extraAddress">City, State, Zip Code</label><br>
-              <input type="text" placeholder="City, State, Zip Code" id="extraAddress" name="addressE" required><br><br>
+              <label for="address">Address</label><br>
+              <input type="text" placeholder="Enter Street Address" id="address" name="Raddress" required><br><br>
+
               <center><button type="submit" class="button2">Sign Up</button></center>
             </form>
         </div>

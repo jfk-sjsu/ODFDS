@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>Get Current Position</title>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1uaPWn7851oKj8qouSiO64mMb1PovYXQ"></script>
+  <script type="text/javascript">
+
+    window.onload = function()
+    {
+        var mapOptions = {
+        center: new google.maps.LatLng(37.388292199999999, -121.8997299),
+        zoom:18,
+        mapTypeId: google.maps.MapTypeId.HYBRID
+        };
+        var map = new google.maps.Map(document.getElementById("interactivemap"), mapOptions);
+        var marker = new google.maps.Marker({
+    position: new google.maps.LatLng(37.39, -121.90),
+    map: map
+    });
+
+    }
+
+    var watchId;
+    function getPosition()
+    {
+        if(navigator.geolocation)
+        {
+          navigator.geolocation.getCurrentPosition(successPosition);
+        }
+        else
+          document.getElemetById("result").innerHTML = "Your browser does not support Geolocation"
+
+    }
+    function successPosition(position)
+    {
+        var lat = position.coords.latitude;
+        var long = position.coords.longitude;
+
+        document.getElementById("result").innerHTML = "Latitude: " + lat + "<br />Logitude: " + long
+
+    }
+    function watchPosition()
+    {
+        if(navigator.geolocation)
+        {
+          watchId = navigator.geolocation.watchPosition(successPosition, failurePosition,
+                                                        {enableHighAccuracy: false,
+                                                        timeout: 5000,
+                                                        maximumAge: 5000,
+                                                        });
+        }
+        else
+          document.getElemetById("result").innerHTML = "Your browser does not support Geolocation"
+    }
+    function failurePosition(error)
+    {
+        alert("Error Code: " +error.code + " Error Message: " + error.message);
+    }
+    function stopWatching()
+    {
+        clearWatch(watchId);
+    }
+
+  </script>
+</head>
+
+<body>
+  <div id="result"></div>
+<button id="btnPosition" onclick="getPosition();">Get Current Position</button>
+<button id="btnStartTracking" onclick="watchPosition();">Start Tracking Location</button>
+<button id="btnStopTracking" onclick="stopWatching();">Stop Tracking Position</button>
+<div id="interactivemap" style="height:500px;width:600px"></div>
+
+</body>
+</html>

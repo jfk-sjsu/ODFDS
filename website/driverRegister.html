@@ -35,27 +35,27 @@
         <div class = "rectangleBackground"> <!-- Driver Register -->
           <img src="media/rectangleBackground.png" width="250">
           <div class="imageText">
-            <form action="/driver/SignUp">
+
+            <form action="/driver/SignUp" method="post">
+
               <h1>Driver</h1>
               <label for="fullname">Name</label><br>
               <input type="text" placeholder="Enter Full Name" id="fullname" name="name" required><br>
-              <label for="username">Username</label><br>
-              <input type="text" id="username" placeholder="Enter Username" name="uname" required><br>
               <label for="email"><b>Email</b></label><br>
               <input type="text" id="email" placeholder="Enter Email" name="email" required><br>
               <label for="psw"><b>Password</b></label><br>
               <input type="password" id="psw" placeholder="Enter Password" name="psw" required><br>
+              <label for="phone">Phone Number</label><br>
+              <input type="tel" placeholder="123-456-7890" id="phone" name="phone" required><br>
 
-              <label for="securityQuestion">Security Question</label><br>
-              <input type="text" placeholder="Security Question" id="securityQuestion" name="securityQ" required><br>
-              <label for="Spsw">Security Answer</label><br>
-              <input type="password" id="Spsw" placeholder="Enter Security Answer" name="psw" required><br>
-
-              <label for="securitmakeModelyQuestion">Make and Model of Car</label><br>
+              <label for="makeModel">Make and Model of Car</label><br>
               <input type="text" placeholder="Enter Make and Model" id="makeModel" name="carMake" required><br>
               <label for="licenseplate">License Plate</label><br>
-              <input type="text" placeholder="Enter License Plate" id="licenseplate" name="license" required><br><br>
-              <center><button type="submit" class="button2">Sign Up</button></center>
+              <input type="text" placeholder="Enter License Plate" id="licenseplate" name="license" required><br>
+              <label for="pay">Payment Number</label><br>
+              <input type="text" placeholder="Enter Payment #" id="pay" name="pay" required><br><br>
+              <center><button type="submit" class="button2">Sign Up</button></center><br>
+
             </form>
         </div>
       </div> <!-- Driver Register Ends -->

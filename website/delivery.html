@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <link rel="stylesheet" href="styles1.css">
+  <script src = "script.js" defer></script>
+  <head>
+    <meta charset="utf-8">
+    <title>ODFDS | Delivery</title>
+<script src="http://maps.googleapis.com/maps/api/js?sensor=true&key=AIzaSyA1uaPWn7851oKj8qouSiO64mMb1PovYXQ"></script>
+<script type="text/javascript">
+var points = [{}, {}];
+var map;
+function findPath()
+{
+if (navigator.geolocation)
+{
+navigator.geolocation.getCurrentPosition(onSuccess, onError,
+{maximumAge:60*1000, timeout:5*60*1000, enableHighAccuracy:true});
+}
+else
+document.getElementById("mapArea").innerHTML = "Your browser does not support HTML5 Geolocation!!!";
+}
+function onSuccess(position)
+{
+points[0].lat = 37.387146;
+points[0].long = -121.885008;
+points[1].lat = 37.338911;
+points[1].long = -121.881297;
+var localAddress = document.getElementById("destination").value.replace(" ", "+");
+var xmlhttpAddr = new XMLHttpRequest();
+//Get API key for Google Maps Geocoding API and use it in the place of YOUR-KEY
+var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + localAddress + "&key=AIzaSyA1uaPWn7851oKj8qouSiO64mMb1PovYXQ";
+xmlhttpAddr.open("GET", url, false);
+xmlhttpAddr.send();
+if (xmlhttpAddr.readyState == 4 && xmlhttpAddr.status == 200)
+{
+var result = xmlhttpAddr.responseText;
+var jsResult = eval("(" + result + ")");
+//points[1].lat = jsResult.results[0].geometry.location.lat;
+//points[1].long = jsResult.results[0].geometry.location.lng; 
+}
+var mapOptions = {
+center: new google.maps.LatLng(points[0].lat, points[0].long),
+zoom: 10,
+mapTypeId: google.maps.MapTypeId.ROADMAP
+};
+map = new google.maps.Map(document.getElementById("mapArea"), mapOptions);
+var latlngbounds = new google.maps.LatLngBounds();
+for(var i=0;i<points.length;i++)
+{
+var marker = new google.maps.Marker({
+position: new google.maps.LatLng(points[i].lat, points[i].long),
+map:map
+});
+latlngbounds.extend(marker.position);
+}
+map.fitBounds(latlngbounds);
+drawPath();
+}
+function drawPath()
+{
+var directionsService = new google.maps.DirectionsService();
+var poly = new google.maps.Polyline({strokeColor:"#FF0000", strokeWeight:4});
+var request = {
+origin: new google.maps.LatLng(points[0].lat, points[0].long),
+destination: new google.maps.LatLng(points[1].lat, points[1].long),
+travelMode: google.maps.DirectionsTravelMode.DRIVING
+};
+directionsService.route(request, function(response, status){
+if (status == google.maps.DirectionsStatus.OK)
+{
+new google.maps.DirectionsRenderer({
+map:map,
+polylineOptions: poly,
+directions:response
+});
+}
+});
+}
+function onError(error)
+{
+switch(error.code)
+{
+case PERMISSION_DENIED:
+alert("User denied permission");
+break;
+case TIMEOUT:
+alert("Geolocation timed out");
+break;
+case POSITION_UNAVAILABLE:
+alert("Geolocation information is not available");
+break;
+default:
+alert("Unknown error");
+break;
+}
+
+function findDist()
+{
+function onSuccess(position)
+{
+
+var latSource = 37.387146;
+var longSource = -121.885008;
+//var addr = document.getElementById("destination").value;
+//var latlong = getLatLong(addr);
+var latDest = 37.338911;
+var longDest = -121.885008;
+var dist = Math.round(calculateDist(latSource, longSource, latDest, longDest)*100)/100;
+document.getElementById("distance").innerHTML = "<b>You are " + dist + " miles away from your destination.</b>";
+}
+function calculateDist(latSource, longSource, latDest, longDest)
+{
+latSourceRadians = latSource*Math.PI/180;
+longSourceRadians = longSource*Math.PI/180;
+latDestRadians = latDest*Math.PI/180;
+longDestRadians = longDest*Math.PI/180;
+var distance = 3959 * Math.acos(
+Math.cos(latSourceRadians) * Math.cos(latDestRadians) *
+Math.cos(longSourceRadians - longDestRadians) +
+Math.sin(latSourceRadians) * Math.sin(latDestRadians)
+);
+distance = distance * 1.609344;
+return distance;
+}
+
+}
+}
+</script>
+  </script>
+  </head>
+  <body>
+   
+    <div class="container"> <!-- wrapper -->
+      <div class ="main"> <!-- all content goes here -->
+        <nav class = "navbar"> <!-- navbar -->
+          <div class="logo"><a href="index.html"><img src="media/logo.png" height="50"></a></div>
+          <a href="#" class = "toggle-button">
+          <span class ="bar"></span>
+          <span class ="bar"></span>
+          <span class ="bar"></span>
+          </a>
+          <div class = "navbar-links"> <!-- navbar-links -->
+            <ul>
+              <li><a href="about.html">About</a></li>
+              <li><a href="creatives.html">Creatives</a></li>
+              <li><a class="button1"href="signin.html">Log In</a></li>
+              <li><a class="button1"href="signupOptions.html">Sign Up</a></li>
+            </ul>
+          </div> <!-- end of navbar-links -->
+        </nav> <!-- end of navbar -->
+
+            </span>
+            <input class="input100" type="text" name="driverId" placeholder="Enter the Driver ID">
+            <span class="focus-input100"></span>
+            <br>
+            <div class="jumbotron">
+		    <h3 class="display-9">Order #: {{driverId}} </h3>
+                <p class="lead">Restaurant Name: Gen Korean BBQ House</p>
+                <p class="lead">Restaurant Address: 1628 Hostetter Rd f, San Jose, CA 95131</p>
+                <p class="lead">Destination: 1 Washington Sq, San Jose, CA 95192</p>
+                <p class="lead">Distance: ""</p>
+                <p class="lead">Time: ""</p>
+		        <p class="lead">Delivery Cost: $""</p>
+                <p class="lead">Food Cost: $""</p>
+                <p class="lead">Total Cost: $""</p>
+                <hr class="my-4">
+            </div>
+		    <br>
+            <br>
+            <div class="map">
+        </div>
+                <li><a class="button1"href="distance.html">Distance</a></li>
+                
+                <br/>
+                <li><a class="button1"href="cost.html">Cost</a></li>
+                
+                <br/>
+                <li><a class="button1"href="path.html">Map</a></li>
+        
+      </div> <!-- end of main content -->
+    </div> <!-- end of container -->
+    <footer class="footer"> <!-- footer -->
+      <div class = "bottomLinks">
+        <ul>
+          <li class="headingLinks">Product</li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+        <ul>
+          <li class="headingLinks">Creatives</li>
+          <li><a href="creatives.html">Meet the Team</a></li>
+          <li><a href="https://github.com/jfk-sjsu/ODFDS">View on GitHub</a></li>
+        </ul>
+        <ul>
+          <li class="headingLinks">Legal</li>
+          <li>Terms</li>
+          <li>Privacy</li>
+          <li>Copyright</li>
+        </ul>
+        <ul>
+          <li class="headingLinks">Contact</li>
+          <li>(800) 000-0000</li>
+          <li>odfds@email.com</li>
+        </ul>
+      </div> <!-- end of bottomLinks -->
+    </footer> <!-- end of footer -->
+  </body>
+</html>
