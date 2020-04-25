@@ -20,7 +20,7 @@
 <!-- we need to get our geolocation data before we post -->
 <script>
 function setLatLong(address,zip,toLat,toLong) {
-	var add = document.getElementById(address).value + " " + document.getElementById(zip).value;
+	var add = document.getElementById(address).value + "," + document.getElementById(zip).value;
 	var latLong = getLatLong(add);
 	document.getElementById(toLat).value = latLong.latitude; 
 	document.getElementById(toLong).value = latLong.longitude;
@@ -86,8 +86,8 @@ function setLatLong(address,zip,toLat,toLong) {
 
 	<!-- here we need to call a script to get the lat and longitude --> 
 
-	<input id="lat2" name="rLat" style="display: none;">
-	<input id="long2" name="rLong" style="display: none;"></input>
+	<input id="lat2" name="rLat" style="display: none;"  >
+	<input id="long2" name="rLong" style="display: none;"  ></input>
 	<input type="submit" value="Submit">
 </form>
 <!--

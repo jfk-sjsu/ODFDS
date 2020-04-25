@@ -24,7 +24,8 @@ exports.driverGet = function (dLogin, callback) {
 			console.log("err in driverGet" + err.message);
 			callback(null);
 		}
-		console.log(result[0]);
+		if(result.length == 0) {callback("no such driver")}
+		console.log("driverGet: " + result[0]);
 		callback(result[0]);
 	});
 
@@ -48,15 +49,18 @@ exports.restGet = function (rLogin, callback) {
         var sql = "SELECT * from restaurant WHERE RestLogin = ?";
             
         con.query(sql, [ rLogin ], function (err, result, fields) {
-            if (err) throw err;
-            return callback(result);
-            
-        });
-        
+		if (err) { 
+			console.log("err in restGet" + err.message);
+			callback(null);
+		}
+		if(result.length == 0) {callback("no such restaurant")}
+		console.log("restGet: " + result[0]);
+		callback(result[0]);
     con.end();
+	});
 }
 
-function retrieveOrder(orderID, callback) {
+function orderGet(orderID, callback) {
     var mysql = require('mysql');
     var con = mysql.createConnection({
 	    host: "172.17.0.2",
@@ -103,8 +107,9 @@ function retrieveDriverOrder(driverID, callback) {
     });
     con.end();
 }
+exports.retrieveRestOrder = _retrieveRestOrder;
 
-function retrieveRestOrder(restID, callback) {
+function _retrieveRestOrder(restID, callback) {
     var mysql = require('mysql');
     var con = mysql.createConnection({
 	    host: "172.17.0.2",

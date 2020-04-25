@@ -24,8 +24,8 @@ CREATE TABLE restaurant (RestID INT NOT NULL AUTO_INCREMENT,
 						RestName VARCHAR(15),
 
 						RestAddr VARCHAR (30),
-						RestLong FLOAT,
-						RestLat FLOAT,
+						RestLong DOUBLE,
+						RestLat DOUBLE,
 						RestPhone VARCHAR(12),
 						PRIMARY KEY (RestID));
 
@@ -33,8 +33,8 @@ CREATE TABLE driver (DriverID INT NOT NULL AUTO_INCREMENT,
           				DriverLogin VARCHAR(30),
           				DriverPW VARCHAR(20),
 					DriverName VARCHAR(15),
-					DriverLong FLOAT,
-					DriverLat FLOAT,
+					DriverLong DOUBLE,
+					DriverLat DOUBLE,
 					DriverPhone VARCHAR(12),
 					Available BOOLEAN,
 					DriverPay INT,
@@ -45,16 +45,16 @@ CREATE TABLE driver (DriverID INT NOT NULL AUTO_INCREMENT,
 CREATE TABLE orders (OrderID INT NOT NULL AUTO_INCREMENT,
 					OrderVal INT,
 					CustName VARCHAR (30),
-					CustLat FLOAT,
-					CustLong FLOAT,
+					CustLat DOUBLE,
+					CustLong DOUBLE,
 					CustAddr VARCHAR (50),
 					OrderPickedUp BOOLEAN,
 					OrderComplete BOOLEAN,
 					RestID INT,
 					DriverID INT,
 					PRIMARY KEY (OrderID),
-					FOREIGN KEY (RestID) REFERENCES restaurant(RestID),
-					FOREIGN KEY (DriverID) REFERENCES driver(DriverID)
+					FOREIGN KEY (RestID) REFERENCES restaurant(RestID)
+\! cant have foreign key here. causes order to require a driver on creation before one is assigned. 					FOREIGN KEY (DriverID) REFERENCES driver(DriverID)
 					);
 CREATE USER 'dbuser'@'%' IDENTIFIED WITH mysql_native_password BY 'example';
 GRANT ALL PRIVILEGES ON odfdsdb.* TO 'dbuser'@'%';

@@ -47,14 +47,26 @@
 --> 
 <form action="/driver/logoff" method="post" > <!-- action must match route in main.js -->
 	<h1>Driver logoff</h1>
-	<label for="driverId">Driver Id</label><br>
-    <input type="text" placeholder="Enter DriverId"  name="driverId" required><br> <!-- name= must match parameter in main.js, as described above -->
 
 	<input type="submit" value="Submit">
 </form>
 
 
 <!--
+/driver/getDriverDetails
+  purpose: gets the information from the database about this driver. 
+  params: 
+	none (uses session management)
+  return: 
+    text of drivers details. 
+--> 
+<form action="/driver/getDriverDetails" method="post" > <!-- action must match route in main.js -->
+	<h1>get Driver Details</h1>
+
+	<input type="submit" value="Submit">
+</form>
+<!--
+
 /driver/sendLocation
   purpose: sends the drivers location for recording in the DB. 
   params: 
@@ -100,16 +112,6 @@
   return: 
     boolean True if no error else Error message. 
   Notes: 
-/driver/Logout
-  purpose: sets the driver as "inactive" letting the system know that the driver is not available for deliveries. Also, removes the 
-    driver's ID from the system. For future calls, Login will be required. 
-  params: 
-    driverID  type:driverID 
-    driverLoc type:web based location coordinates
-  return: 
-    boolean True if no error else Error message. 
-  Notes: calls ntfInactive to ensure driver is set inactive. 
-  
 
  /driver/SignUp
    Purpose: puts a new user into the database for access

@@ -3,6 +3,16 @@
 <link rel="stylesheet" href="mainStyle.css">
   <link rel="stylesheet" href="styles1.css">
   <script src = "script.js" defer></script>
+  <script src = "geolocation.js"></script>
+  <script>
+	function setLatLong(address,zip,toLat,toLong) {
+		var add = document.getElementById(address).value + "," + document.getElementById(zip).value;
+		var latLong = getLatLong(add);
+		document.getElementById(toLat).value = latLong.latitude; 
+		document.getElementById(toLong).value = latLong.longitude;
+		return true;
+	}
+  </script>
   <head>
     <meta charset="utf-8">
     <title>ODFDS | Restaurant Registration</title>
@@ -35,25 +45,32 @@
         <div class = "rectangleBackground"> <!-- Restaurant Register -->
           <img src="media/rectangleBackground.png" width="250">
           <div class="imageText">
+			<form action="/rest/SignUp" method="post" onsubmit="return setLatLong('address1','zip1','lat1','long1')"> <!-- action must match route in main.js -->
+				<h1>Retaurant SignUp</h1>
+				<label for="username">Name</label><br>
+				<input type="text" placeholder="Enter name"  name="name" required><br> <!-- name= must match parameter in main.js, as described above -->
+				<label for="email">email address</label><br>
+				<input type="text" placeholder="Enter email"  name="email" required><br> <!-- name= must match parameter in main.js, as described above -->
+				
+				<label for="psw">Password</label><br>
+				<input type="password" placeholder="Enter Full Name" id="psw" name="password"><br>
 
-            <form action="/rest/SignUp" method="post">
+				<label for="address">Street Address</label><br>
+				<input type="text" placeholder="Enter Street address" id="address1" name="address" required><br> <!-- name= must match parameter in main.js, as described above -->
+				
+				<label for="zip">Zip Code</label><br>
+				<input type="text" placeholder="Enter Zip" id='zip1' name="zip" required><br> <!-- name= must match parameter in main.js, as described above -->
+				
+				<label for="phone">Phone</label><br>
+				<input type="text" placeholder="Enter Phone"  name="phone" required><br> <!-- name= must match parameter in main.js, as described above -->
+				
 
-              <h1>Restaurant</h1>
-              <label for="fullname">Restaurant Name</label><br>
-              <input type="text" placeholder="Enter Restaurant Name" id="fullname" name="name" required><br>
-              <label for="email"><b>Email</b></label><br>
-              <input type="text" id="email" placeholder="Enter Email" name="email" required><br>
-              <label for="psw"><b>Password</b></label><br>
-              <input type="password" id="psw" placeholder="Enter Password" name="psw" required><br>
+				<!-- here we need to call a script to get the lat and longitude --> 
 
-              <label for="phone">Phone Number</label><br>
-              <input type="tel" placeholder="123-456-7890" id="phone" name="phone" required><br>
-
-              <label for="address">Address</label><br>
-              <input type="text" placeholder="Enter Street Address" id="address" name="Raddress" required><br><br>
-
-              <center><button type="submit" class="button2">Sign Up</button></center>
-            </form>
+				<input id="lat1" name="rLat" style="display: none;">
+				<input id="long1" name="rLong" style="display: none;"></input>
+				<input type="submit" value="Submit">
+			</form>
         </div>
       </div> <!-- Restaurant Register Ends -->
 

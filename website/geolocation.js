@@ -47,10 +47,12 @@ function stopWatching()
 }
 function getLatLong(address)
 {
-	var localAddress = address.replace(" ", "+");
+	//var localAddress = encodeURIComponent(address.trim());
+	var localAddress = address.split(" ").join("+");
 	var xmlhttpAddr = new XMLHttpRequest();
 	//Get API key for Google Maps Geocoding API and use it in the place of YOUR-KEY
-	var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + localAddress + "&key=YOUR-KEY";
+	var key = 'AIzaSyDBs8vukxkmG8h2ymdTrmQwIxnr9qCHGIo'
+	var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + localAddress + "&key=" + key;
 	xmlhttpAddr.open("GET", url, false);
 	xmlhttpAddr.send();
 	if (xmlhttpAddr.readyState == 4 && xmlhttpAddr.status == 200)

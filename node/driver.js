@@ -12,7 +12,7 @@ exports.login = function ( email,  password, lat, longitude, callback) {
 // compare to given password 
 // if true, send back their driver id and let them see the drivers' page I guess
 // if false, send them to a "you failed to login" page. 
-console.log("login called: email =" + email + "lat=" + lat + "longitude=" + longitude); 
+console.log("login called: " + email,  password, lat, longitude); 
 	dbSel.driverGet(email, function (result) { 
 					var auth = "bad response";
 					//console.log("driverGet says " + Object.keys(result) );
@@ -153,4 +153,11 @@ exports.SignUp = function ( name, email, password, carMakeModel, licPlate, phone
 						callback(results)});
 	 
 }
+
+exports.getDetails = function (id, callback) { 
+	dbSel.driverGet(id, function (results) { 
+		callback(results);
+	});
+}
+ 
 
