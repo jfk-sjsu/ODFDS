@@ -119,9 +119,10 @@ function createOrder(orderVal, orderComplete, restID, driverID) {
   
   });
 }
+function registerRestaurant(){}; 
 
 module.exports.registerRestaurant = registerRestaurant;
 module.exports.registerDriver = registerDriver;
 module.exports.createOrder = createOrder;
-module.exports.mysql = mysql;
+//module.exports.mysql = mysql;
 

@@ -4,13 +4,16 @@ const port = 3000
 var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); //
-var cookieParser = require('cookie-parser');
-app.use(cookieParser());
+var session = require('express-session');
 
 const driver = require('./node/driver')
 const rest = require('./node/restaurant')
 
+
 app.use(express.static('/website/'))
+app.use(session({secret: 'verySecretP@ssw0rd'}));
+
+var sess = null;
 
 app.post('/driver/Login', function (req,res) { 
 
@@ -20,6 +23,10 @@ app.post('/driver/Login', function (req,res) {
 					function(results) { 
 					console.log(typeof(results ));
 					if(typeof(results) == 'number') {
+						sess=req.session;
+						sess.username = req.body.username;
+						sess.did = results;
+						console.log('sess.did = ' + sess.did);
 						driver.setActive(results, req.body.dLat, req.body.dLong);
 						res.redirect('/mainDriver.html');
 					} else 
@@ -30,24 +37,15 @@ app.post('/driver/Login', function (req,res) {
 
 });
 app.post('/driver/logoff', function (req,res) { 
-		driver.setNotActive(req.body.driverId);
-		res.send("Driver " + req.body.driverId + " not active"); 
+		var id = sess.did;
+		sess=null; 
+		driver.setNotActive(id); 
+		res.send("Driver "  + id + " not active"); 
 	});
 
 app.post('/driver/setActive', function (req,res) { 
 
-	driver.login(req.body.DriverId,
-					req.body.dLat, 
-					req.body.dLong, 
-					function(results) { 
-					console.log(typeof(results ));
-					if(typeof(results) == 'number') {
-						res.redirect('/mainDriver.html');
-					} else 
-					{
-						res.send(results);
-					}
-				});
+ 
 
 });
 app.get('/', (req, res) => req.send(index.html));
@@ -104,8 +102,11 @@ app.post('/rest/login', function (req,res) {
 
 	rest.login(req.body.username,req.body.password,
 					function(results) { 
-					console.log(typeof(results ));
+					if(sess != null) {res.send("already logged in." + sess.username); return);
 					if(typeof(results) == 'number') {
+						sess=req.session;
+						sess.username = req.body.username; 
+						sess.did=results; 
 						res.redirect('/mainRestaurant.html');
 					} else 
 					{
@@ -114,9 +115,25 @@ app.post('/rest/login', function (req,res) {
 				});
 
 });
-app.post('/rest/logoff', function (req,res) { 
-		rest.setNotActive(req.body.driverId);
-		res.send("Driver " + req.body.driverId + " not active"); 
+app.post('/rest/logoff', function (req,res) {
+		var id = sess.id;
+		sess = null; 
+		rest.setNotActive(id);
+		res.send("Restaurant " + id + " not active"); 
 	});
+
+app.post('/driver/getDriverDetails', function (req,res) { 
+		if(sess == null) { 
+						res.send("user not logged in"); 
+						return; 
+		} else 
+		{ 
+			driver.getDetails((sess.username), function (results) {
+				res.send(results);
+			});
+		}
+});
+		
+			
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

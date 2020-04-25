@@ -24,7 +24,8 @@ exports.driverGet = function (dLogin, callback) {
 			console.log("err in driverGet" + err.message);
 			callback(null);
 		}
-		console.log(result[0]);
+		if(result.length == 0) {callback("no such driver")}
+		console.log("driverGet: " + result[0]);
 		callback(result[0]);
 	});
 
