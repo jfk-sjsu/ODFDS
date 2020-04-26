@@ -52,6 +52,9 @@ CREATE TABLE orders (OrderID INT NOT NULL AUTO_INCREMENT,
 					OrderComplete BOOLEAN,
 					RestID INT,
 					DriverID INT,
+					OrderCreationTime BIGINT,
+					OrderPickupTime BIGINT,
+					OrderDeliveryTime BIGINT,
 					PRIMARY KEY (OrderID),
 					FOREIGN KEY (RestID) REFERENCES restaurant(RestID)
 \! cant have foreign key here. causes order to require a driver on creation before one is assigned. 					FOREIGN KEY (DriverID) REFERENCES driver(DriverID)
