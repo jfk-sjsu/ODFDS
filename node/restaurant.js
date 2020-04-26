@@ -39,9 +39,9 @@ function _logoff(email, callback) {
 	callback("_logoffCalled" + email); 
 }
 
-function _SignUp(email,password,name,address,phone,rLong,rLat,callback) {
-		console.log("_SignUp called ",email,password,name,address,phone,rLong,rLat); 
-		dbIns.restReg(email,password,name,address,rLong,rLat,phone, function (results) { 
+function _SignUp(email,password,name,address,phone,callback) {
+		console.log("_SignUp called ",email,password,name,address,phone); 
+		dbIns.restReg(email,password,name,address,phone, function (results) { 
 					callback(results); 
 		});
 		// restLogin, restPW, restName, restAddr, restLong, restLat, restPhone, callback

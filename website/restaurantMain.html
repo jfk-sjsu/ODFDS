@@ -3,16 +3,7 @@
 <link rel="stylesheet" href="mainStyle.css">
   <link rel="stylesheet" href="styles1.css">
   <script src = "script.js" defer></script>
-  <script src = "geolocation.js"></script>
-  <script>
-	function setLatLong(address,zip,toLat,toLong) {
-		var add = document.getElementById(address).value + "," + document.getElementById(zip).value;
-		var latLong = getLatLong(add);
-		document.getElementById(toLat).value = latLong.latitude; 
-		document.getElementById(toLong).value = latLong.longitude;
-		return true;
-	}
-  </script>
+
   <head>
     <meta charset="utf-8">
     <title>ODFDS | Restaurant</title>
@@ -47,7 +38,7 @@
         <div class = "rectangleBackground"> <!-- Restaurant Order Form -->
           <img src="media/rectangleBackground.png" width="250">
           <div class="imageText">
-			<form action="/rest/newOrder" method="post" onsubmit="return setLatLong('address','zip','lat2','long2')"> <!-- action must match route in main.js -->
+			<form action="/rest/newOrder" method="post" "> <!-- action must match route in main.js -->
 				<h1>New Order</h1>
 				<label for="username">Name</label><br>
 				<input type="text" placeholder="Enter name"  name="name" required><br> <!-- name= must match parameter in main.js, as described above -->
@@ -61,10 +52,6 @@
 				<input type="text" placeholder="Enter Zip" id="zip" name="zip" required><br> <!-- name= must match parameter in main.js, as described above -->
 				
 
-				<!-- here we need to call a script to get the lat and longitude --> 
-
-				<input id="lat2" name="cLat" style="display: none;"  >
-				<input id="long2" name="cLong" style="display: none;" ></input>
 				<input type="submit" value="Submit">
 			</form>
         </div>

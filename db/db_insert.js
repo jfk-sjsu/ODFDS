@@ -1,4 +1,4 @@
-exports.restReg = function (restLogin, restPW, restName, restAddr, restLong, restLat, restPhone, callback) {
+exports.restReg = function (restLogin, restPW, restName, restAddr, restPhone, callback) {
   var mysql = require('mysql');
   var con = mysql.createConnection({
 
@@ -8,15 +8,15 @@ exports.restReg = function (restLogin, restPW, restName, restAddr, restLong, res
     database: "odfdsdb"
 
   });
-
+  restAddr = restAddr.split(" ").join("+");
   con.connect(function(err) {
     if (err) throw err;
     console.log("Connected to DB");
   });
     
-  var sql = "INSERT INTO restaurant(RestLogin, RestPW, RestName, RestAddr, RestLong, RestLat, RestPhone) VALUES (?,?,?,?,?,?,?);";
+  var sql = "INSERT INTO restaurant(RestLogin, RestPW, RestName, RestAddr, RestPhone) VALUES (?,?,?,?,?);";
     
-  con.query(sql, [restLogin, restPW, restName, restAddr, restLong, restLat, restPhone], function (err, result) {
+  con.query(sql, [restLogin, restPW, restName, restAddr, restPhone], function (err, result) {
     if (err) throw err;
     console.log("1 record inserted to restaurant, ID: " + result.insertId);
     return callback(result);
@@ -51,8 +51,9 @@ exports.driverReg = function (driverLogin, driverPW, driverName, driverLong, dri
 }
 
 exports.restNewOrder = function (orderVal, customer, custLat, custLong, custAddr, restID, callback) {
-  console.log("restNewOrder called:", orderVal, customer, custLat, custLong, custAddr, restID);
-  
+  console.log("restNewOrder called:", orderVal, customer, custAddr, restID);
+  custAddr = custAddr.split(" ").join('+'); 
+
   var mysql = require('mysql');
   var con = mysql.createConnection({
     host: "172.17.0.2",

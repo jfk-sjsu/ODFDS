@@ -58,8 +58,6 @@ app.post('/rest/SignUp', function (req, res) {
 						req.body.name, 
 						req.body.address + " " + req.body.zip,
 						req.body.phone,
-						req.body.rLat,
-						req.body.rLong,
 						function(results) { 
 						console.log(results);
 						res.redirect('/signin.html')});
