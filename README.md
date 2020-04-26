@@ -18,7 +18,14 @@ Step 4) cd to the project directory
 cd ODFDS
 
 Step 5) Run the script file
-./runme.bat
+	Linux instructions: 
+		./start_db.sh
+		./start_web.sh
+	Windows instructions: 
+		./start_db.bat
+		./start_web.bat
+	Mac instructions: 
+		TBD
 
 Now you have the environment. point your browser at http://localhost:3000 to see the app! 
 
