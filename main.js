@@ -114,7 +114,11 @@ app.post('/rest/newOrder', function (req,res) {
 });
 
 app.post('/rest/getOrders', function (req, res) {
-	res.send("getOrders called"); 
+	if(sess == null) { res.send("no one logged in!"); return; }; 
+	
+	rest.getOrders(sess.did, function (results) { 
+		res.send(results); 
+	});
 });
 
 app.post('/rest/login', function (req,res) { 
@@ -138,7 +142,7 @@ app.post('/rest/logoff', function (req,res) {
 		var id = sess.id;
 		sess = null; 
 		rest.setNotActive(id);
-		res.send("Restaurant " + id + " not active"); 
+		res.send("Restaurant " + id + " logged off. "); 
 	});
 
 app.post('/driver/getDriverDetails', function (req,res) { 

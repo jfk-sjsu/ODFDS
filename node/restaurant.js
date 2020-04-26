@@ -47,7 +47,9 @@ function _SignUp(email,password,name,address,phone,rLong,rLat,callback) {
 		// restLogin, restPW, restName, restAddr, restLong, restLat, restPhone, callback
 }
 function _getOrders(restId, callback) {
-		callback("_getOrders called"); 
+		dbSel.retrieveRestOrder(restId, function (results) { 
+			callback(results);
+		});
 }
 
 exports.newOrder = _newOrder; 
