@@ -100,7 +100,7 @@ function registerDriver(driverLogin, driverPW, driverName, driverLong, driverLat
   });
 }
 
-function createOrder(orderVal, orderComplete, restID, driverID) {
+function createOrder(orderVal, custName, custLat, custLong, custAddr, restID, driverID, creationTime, pickupTime, delivTime) {
   
   var con = mysql.createConnection({
     host: "localhost",
@@ -113,9 +113,9 @@ function createOrder(orderVal, orderComplete, restID, driverID) {
     if (err) throw err;
     console.log("Connected to DB");
     
-    var sql = "INSERT INTO orders() VALUES (:val, :comp, :rest, :driver)";
+    var sql = "INSERT INTO orders(OrderVal, CustName, CustLat, CustLong, CustAddr, OrderPickedUp, OrderComplete, RestID, DriverID, OrderCreationTime, OrderPickupTime, OrderDeliveryTime) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);";
     
-    con.query(sql, { val: orderVal, comp: false, rest: restID, driver: driverID}, function (err, result) {
+    con.query(sql, [orderVal, custName, custLat, custLong, custAddr, false, false, restID, driverID, creationTime, null, null], function (err, result) {
       if (err) throw err;
       console.log("1 record inserted to orders, ID: " + result.insertId);
     });
