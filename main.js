@@ -155,6 +155,14 @@ app.post('/driver/getDriverDetails', function (req,res) {
 		}
 });
 		
+
+app.post('/driver/getOrders', function (req, res) {
+	if(sess == null) { res.send("no one logged in!"); return; }; 
+	
+	driver.getOrders(sess.did, function (results) { 
+		res.send(results); 
+	});
+});
 			
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

@@ -13,10 +13,7 @@ exports.driverGet = function (dLogin, callback) {
     con.connect(function(err) {
         if (err) throw err;
     });
- //   con.query("SELECT * from driver;",function (err, result,fields) { 
-	//	if (err) throw err;
-//		console.log(result);
-//	});
+
 	var sql = "SELECT DriverID, DriverLogin, DriverPW, DriverName from driver WHERE DriverLogin = ?;";
 
 	con.query(sql, [ dLogin ], function (err, result, fields) {
@@ -83,8 +80,9 @@ function orderGet(orderID, callback) {
     });
     con.end();
 }
+exports.retrieveDriverOrder = _retrieveDriverOrder; 
 
-function retrieveDriverOrder(driverID, callback) {
+function _retrieveDriverOrder(driverID, callback) {
     var mysql = require('mysql');
     var con = mysql.createConnection({
 	    host: "172.17.0.2",

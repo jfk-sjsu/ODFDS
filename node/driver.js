@@ -100,17 +100,6 @@ exports.ntfDeliveredOrder = function( id,  dLat,  dLong, orderId) {
 }
 
 
-exports.ntfInactive = function( id,  dLat,  dLong) { 
-/*  purpose: sets the driver as "inactive" letting the system know that the driver is not available for deliveries. 
-  params: 
-    driverID  type:driverID 
-    driverLoc type:web based location coordinates
-  return: 
-    boolean True if no error else Error message. 
-  Notes:
-*/
-	return "ntfInactive stub";
-}
 exports.logout = function ( id){
 /*	
   purpose: sets the driver as "inactive" letting the system know that the driver is not available for deliveries. Also, removes the 
@@ -158,6 +147,11 @@ exports.getDetails = function (id, callback) {
 	dbSel.driverGet(id, function (results) { 
 		callback(results);
 	});
+}
+exports.getOrders(driverId, function (results) { 
+	dbSel.retrieveDriverOrder(driverId, function (results) { 
+		callback(results); 
+	}); 
 }
  
 
