@@ -8,6 +8,7 @@ var session = require('express-session');
 
 const driver = require('./node/driver')
 const rest = require('./node/restaurant')
+const geo = require('./node/geolocation')
 
 
 app.use(express.static('/website/'))
@@ -16,7 +17,9 @@ app.use(session({secret: 'verySecretP@ssw0rd'}));
 var sess = null;
 
 app.post('/driver/Login', function (req,res) { 
-
+	console.log('/driver/Login',req.body.username, req.body.password, 
+				req.body.dLat, req.body.dLong); 
+				
 	driver.login(req.body.username,req.body.password,
 					req.body.dLat, 
 					req.body.dLong, 
@@ -53,16 +56,25 @@ app.get('/', (req, res) => req.send(index.html));
 
 app.post('/rest/SignUp', function (req, res) {
 	//email,password,name,address,phone,rLong,rLat,callback
-	var ret = rest.SignUp(req.body.email,
+	var rLat = 0.0
+	var rLong = 0.0
+	var latLong = geo.getLatLong(req.body.address + " " + req.body.zip, function (results) { 
+		rLat = results.latitude; 
+		rLong = results.longitude; 
+		console.log("rLat " + rLat + " rLong " + rLong); 
+	
+		var ret = rest.registerRestaurant(req.body.email,
 						req.body.password,
 						req.body.name, 
 						req.body.address + " " + req.body.zip,
+						rLat, 
+						rLong,
 						req.body.phone,
 						function(results) { 
 						console.log(results);
 						res.redirect('/signin.html')});
 	 console.log("back to main");
-	 
+	});
 });
 
 app.post('/driver/SignUp', function (req, res) {
@@ -163,6 +175,12 @@ app.post('/driver/getOrders', function (req, res) {
 		res.send(results); 
 	});
 });
-			
+app.post('/driver/reqOpenOrders/', function (req, res) { 
+	if(sess == null) { res.send("no one logged in!"); return; }; 
+	console.log("reqOpenOrders", sess.did);
+	driver.getOpenOrders(sess.did, function (results) { 
+		res.send(results); 
+	});
+});
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

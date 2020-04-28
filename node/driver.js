@@ -143,15 +143,22 @@ exports.SignUp = function ( name, email, password, carMakeModel, licPlate, phone
 	 
 }
 
-exports.getDetails = function (id, callback) { 
+exports.getDetails = _getDetails; 
+function _getDetails(id, callback) { 
 	dbSel.driverGet(id, function (results) { 
 		callback(results);
 	});
 }
-exports.getOrders(driverId, function (results) { 
+exports.getOrders = function(driverId, callback) { 
 	dbSel.retrieveDriverOrder(driverId, function (results) { 
 		callback(results); 
 	}); 
+}
+exports.getOpenOrders = function (driverId, callback) { 
+	console.log("getOpenOrders", driverId); 
+	dbSel.retrieveOpenOrderForDriver(driverId, function (results) { 
+		callback(results); 
+	});
 }
  
 
