@@ -227,5 +227,29 @@ function getRestDelivCount(restID, callback) {
     con.end();
 }
 
+function _retrieveOpenOrderForDriver(driverID, callback) {
+	console.log("_retrieveOpenOrderForDriver", driverID); 
+    var mysql = require('mysql');
+    var con = mysql.createConnection({
+	    host: "172.17.0.2",
+	    user: "dbuser",
+	    password: "example",
+	    database: "odfdsdb"
+    });
+    
+     con.connect(function(err) {
+        if (err) throw err;
+    });
+     
+    var sql = "select * from orders where ABS(CustLat - (select DriverLat from driver)) < 1 AND ABS(CustLong -(select DriverLong from driver)) < 5;";
+    con.query(sql, [ driverID ] , function (err, result, fields) {
+        if (err) throw err;
+            
+        return callback(result);
+            
+    });
+    con.end();
+}
+exports.retrieveOpenOrderForDriver = _retrieveOpenOrderForDriver;
 
 

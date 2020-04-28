@@ -87,7 +87,7 @@ exports.updateDriverLocation =  function(driverID, driverLat, driverLong, callba
     console.log("Connected to DB");
   });
 
-    var sql = "UPDATE driver SET DriverLong = ? AND DriverLat = ? WHERE DriverID = ?;";
+    var sql = "UPDATE driver SET DriverLong = ? , DriverLat = ? WHERE DriverID = ?;";
     console.log("updateDriverLocation called:   " + driverID + "," + driverLat + "," + driverLong);
 	
     con.query(sql, [ driverLong, driverLat, driverID ], function (err, result) {

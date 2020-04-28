@@ -4,6 +4,7 @@ RUN npm install body-parser
 RUN npm install cookie-parser
 RUN npm install express-session
 RUN npm install mysql
+RUN npm install --save request
 EXPOSE 3000/tcp 
 CMD mkdir /website
 CMD mkdir /website/media

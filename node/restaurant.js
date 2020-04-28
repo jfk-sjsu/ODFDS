@@ -18,7 +18,7 @@ function _login(email, password, callback) {
 	console.log("login called: " + email,  password); 
 	dbSel.restGet(email, function (result) { 
 					var auth = "bad response";
-					console.log("restGet says " + result.RestPW);
+					 
 					if(result == null) {
 						callback("No such restaurant: " + email);
 						return; 
@@ -39,9 +39,10 @@ function _logoff(email, callback) {
 	callback("_logoffCalled" + email); 
 }
 
-function _SignUp(email,password,name,address,phone,callback) {
-		console.log("_SignUp called ",email,password,name,address,phone); 
-		dbIns.restReg(email,password,name,address,phone, function (results) { 
+function _SignUp(email,password,name,address,rLat, rLong, phone,callback) {
+		address = address.split(",").join("").split(" ").join("+");
+		console.log("_SignUp called ",email,password,name,address,rLat, rLong,phone); 
+		dbIns.registerRestaurant(email,password,name,address,rLong, rLat, phone, function (results) { 
 					callback(results); 
 		});
 		// restLogin, restPW, restName, restAddr, restLong, restLat, restPhone, callback
@@ -57,3 +58,4 @@ exports.login = _login;
 exports.logoff = _logoff;
 exports.SignUp = _SignUp; 
 exports.getOrders = _getOrders; 
+exports.registerRestaurant = _SignUp; 
