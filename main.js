@@ -17,20 +17,24 @@ app.use(session({secret: 'verySecretP@ssw0rd'}));
 var sess = null;
 
 app.post('/driver/Login', function (req,res) { 
-	console.log('/driver/Login',req.body.username, req.body.password, 
+	console.log('/driver/Login',req.body.email, req.body.psw, 
 				req.body.dLat, req.body.dLong); 
-				
-	driver.login(req.body.username,req.body.password,
-					req.body.dLat, 
-					req.body.dLong, 
+	//if(req.body.email == null) {res.send("invalid username");return};
+	//if(sess != null){res.send("User " + sess.username + " is currently logged in. Please log out and try again")}return; 
+
+	driver.login(req.body.email,req.body.psw, 
 					function(results) { 
-					console.log(typeof(results ));
+					
 					if(typeof(results) == 'number') {
 						sess=req.session;
-						sess.username = req.body.username;
+						sess.username = req.body.email;
 						sess.did = results;
 						console.log('sess.did = ' + sess.did);
-						driver.setActive(results, req.body.dLat, req.body.dLong);
+						console.log('dLat, dLong ',req.body.dLat, req.body.dLong);
+						//if(typeof(req.body.dLat) == 'number' && typeof(req.body.dLong == 'number')) {
+							console.log("main calling driver.setACtive " , req.body.dLat, req.body.dLong);
+							driver.setActive(results, req.body.dLat, req.body.dLong);
+						//}
 						res.redirect('/driverMain.html');
 					} else 
 					{
@@ -46,11 +50,7 @@ app.post('/driver/logoff', function (req,res) {
 		res.send("Driver "  + id + " not active"); 
 	});
 
-app.post('/driver/setActive', function (req,res) { 
 
- 
-
-});
 app.get('/', (req, res) => req.send(index.html));
 
 

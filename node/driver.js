@@ -4,7 +4,7 @@ const dbUpd = require('../db/db_update')
  
 // driver.js all the driver functions in one spot
 
-exports.login = function ( email,  password, lat, longitude, callback) { 
+exports.login = function ( email,  password, callback) { 
 // logs the driver in for work. requires password to be validated 
 	//console.log("login called: " + email + "," + password);
 // connect to db 
@@ -12,23 +12,24 @@ exports.login = function ( email,  password, lat, longitude, callback) {
 // compare to given password 
 // if true, send back their driver id and let them see the drivers' page I guess
 // if false, send them to a "you failed to login" page. 
-console.log("login called: " + email,  password, lat, longitude); 
+console.log("login called: " + email,  password); 
 	dbSel.driverGet(email, function (result) { 
 					var auth = "bad response";
-					//console.log("driverGet says " + Object.keys(result) );
-					if(result == null) {
-						callback("No such driver: " + email);
-						return; 
+					console.log("driverGet results  = ", result);
+					if( result.length == 0) {
+						auth = "no such user " + email;
+					} else {
+					
+						if(result[0].DriverPW == password) {
+							{
+							
+							auth = result[0].DriverID;
+							};
+							
+						}else {
+							auth = "Bad password";
+						}
 					}
-					if(result.DriverPW == password) {
-						{
-							auth = result.DriverID;
-						};
-						
-					}else {
-						auth = "Bad password";
-					}
-					console.log("login Auth = : " + auth.toString());
 					callback(auth);
 	});
 }

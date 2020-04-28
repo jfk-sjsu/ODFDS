@@ -3,11 +3,24 @@
   <link rel="stylesheet" href="styles1.css">
   <link rel="stylesheet" href="mainStyle.css">
   <script src = "script.js" defer></script>
+  <script src = "geolocation.js" ></script>
+  <script> 
+	function setLatLong() { 
+		getPosition('lat1', 'long1','err');
+		getPosition("lat2", "long2","err");
+	} 
+  </script>
+
   <head>
     <meta charset="utf-8">
     <title>ODFDS | Login</title>
   </head>
-  <body>
+  <body onload="setLatLong()">
+    <script>
+	 <!-- this sets the lat and long for the input forms. -->
+	// <!-- this sets the lat and long for the input forms. -->
+    </script>
+    <div id="err"></div>
     <div class="container"> <!-- wrapper -->
       <div class ="main"> <!-- all content goes here -->
         <nav class = "navbar"> <!-- navbar -->
@@ -35,37 +48,36 @@
           <img src="media/squareBackground.png" width="250">
           <div class="imageText">
 
-              <form action="/driver/Login" method="post">
+		<form action="/driver/login" method="post"  > <!-- action must match route in main.js -->
+			<h1>Driver login</h1>
+			<label for="email">email address</label><br>
+		    	<input type="text" placeholder="Enter username"  name="email" required><br> <!-- name= must match parameter in main.js, as described above -->
+			<label for="psw">Password</label><br>
+		    	<input type="password" placeholder="Enter Password" id="psw" name="psw"><br>
 
-                <h1>Driver Login</h1>
+			<!-- here we need to call a script to get the lat and longitude --> 
 
-                <label for="email"><b>Email</b></label><br>
-                <input type="text" placeholder="Enter Email" name="email" required><br><br>
-
-                <label for="psw"><b>Password</b></label><br>
-                <input type="password" placeholder="Enter Password" name="psw" required><br><br>
-
-                <center><button type="submit" class="button2">Login</button></center>
-              </form>
-        </div>
+			<input id="lat1" name="dLat" style="display: none;">
+			<input id="long1" name="dLong" style="display: none;">
+			<input type="submit" value="Submit">
+		</form>        </div>
       </div> <!-- Login  Ends -->
 
       <div class = "squareBackground"> <!-- Login  -->
         <img src="media/squareBackground.png" width="250">
         <div class="imageText">
+		<div id="err"></div>
+		<form action="/rest/login" method="post" > <!-- action must match route in main.js -->
+			<h1>restaurant login</h1>
+			<label for="email">email address</label><br>
+		    <input type="text" placeholder="Enter username"  name="email" required><br> <!-- name= must match parameter in main.js, as described above -->
+			<label for="psw">Password</label><br>
+		    <input type="password" placeholder="Enter Password" id="password" name="psw"><br>
 
-            <form action="/rest/Login" method="post">
+			<!-- here we need to call a script to get the lat and longitude --> 
 
-              <h1>Restaurant Login</h1>
-
-              <label for="email"><b>Email</b></label><br>
-              <input type="text" placeholder="Enter Email" name="email" required><br><br>
-
-              <label for="psw"><b>Password</b></label><br>
-              <input type="password" placeholder="Enter Password" name="psw" required><br><br>
-
-              <center><button type="submit" class="button2">Login</button></center>
-            </form>
+			<input type="submit" value="Submit">
+		</form>
       </div>
     </div> <!-- Login  Ends -->
     </div>
