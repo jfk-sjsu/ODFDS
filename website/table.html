@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <link rel="stylesheet" href="styles1.css">
+  <link rel="stylesheet" href="tables.css">
+  <script src = "script.js" defer></script>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ODFDS | Sample Template</title>
+  </head>
+  <body>
+    <div class="container"> <!-- wrapper -->
+      <div class ="main"> <!-- all content goes here -->
+        <nav class = "navbar"> <!-- navbar -->
+          <div class="logo"><a href="index.html"><img src="media/logo.png" height="50"></a></div>
+          <a href="#" class = "toggle-button">
+          <span class ="bar"></span>
+          <span class ="bar"></span>
+          <span class ="bar"></span>
+          </a>
+          <div class = "navbar-links"> <!-- navbar-links -->
+            <ul>
+              <li><a href="about.html">About</a></li>
+              <li><a href="creatives.html">Creatives</a></li>
+              <li><a class="button1"href="signin.html">Log In</a></li>
+              <li><a class="button1"href="signupOptions.html">Sign Up</a></li>
+            </ul>
+          </div> <!-- end of navbar-links -->
+        </nav> <!-- end of navbar -->
+
+
+
+
+          <!-- WHERE PAGE CONTENT IS INSERTED -->
+          <center>
+          <table class="table">
+              <thead>
+                      <th>Order #</th>
+                      <th>Customer</th>
+                      <th>Address</th>
+                      <th>Delivery Fee</th>
+                      <th>Driver</th>
+                      <th>Picked Up?</th>
+                      <th>Completed?</th>
+              </thead>
+              <tbody>
+                <% if(fetch(‘/driver/getOrders/‘).length!=0){
+                    var i=1;
+                    fetch(‘/driver/getOrders/‘).forEach(function(data){
+                %>
+                <tr>
+                    <td data-label="Order #"=><%=data.OrderVal %></td>
+                    <td data-label="Customer"><%=data.CustName %></td>
+                    <td data-label="Address"><%=data.CustAddr %></td>
+                    <td data-label="Delivery Fee"><%=data.DriverID %></td>
+                    <td data-label="Driver"><%=data.DriverID %></td>
+                    <td data-label="Picked Up?"><%=data.OrderPickedUp %></td>
+                    <td data-label="Completed?"><%=data.OrderComplete %></td>
+                </tr>
+                <%  i++; }) %>
+                <% } else{ %>
+                    <tr>
+                        <td colspan="7">No Order Activity.</td>
+                    </tr>
+                <% } %>
+
+
+              </tbody>
+            </table>
+</center>
+
+
+
+
+      </div> <!-- end of main content -->
+    </div> <!-- end of container -->
+    <footer class="footer"> <!-- footer -->
+      <div class = "bottomLinks">
+        <ul>
+          <li class="headingLinks">Product</li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+        <ul>
+          <li class="headingLinks">Creatives</li>
+          <li><a href="creatives.html">Meet the Team</a></li>
+          <li><a href="https://github.com/jfk-sjsu/ODFDS">View on GitHub</a></li>
+        </ul>
+        <ul>
+          <li class="headingLinks">Legal</li>
+          <li>Terms</li>
+          <li>Privacy</li>
+          <li>Copyright</li>
+        </ul>
+        <ul>
+          <li class="headingLinks">Contact</li>
+          <li>(800) 000-0000</li>
+          <li>odfds@email.com</li>
+        </ul>
+      </div> <!-- end of bottomLinks -->
+    </footer> <!-- end of footer -->
+  </body>
+</html>
