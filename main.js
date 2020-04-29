@@ -168,8 +168,8 @@ app.post('/driver/getDriverDetails', function (req,res) {
 });
 		
 
-app.post('/driver/getOrders', function (req, res) {
-	if(sess == null) { res.send("no one logged in!"); return; }; 
+app.get('/driver/getOrders', function (req, res) {
+	if(sess == null) { res.send("[{'msg':'no one logged in!'}]"); return; }; 
 	
 	driver.getOrders(sess.did, function (results) { 
 		res.send(results); 

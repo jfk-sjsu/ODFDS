@@ -31,7 +31,7 @@ function _login(email, password, callback) {
 					}else {
 						auth = "Bad password";
 					}
-					console.log("login Auth = : " + auth.toString());
+					console.log("login Auth = : " + auth);
 					callback(auth);
 	});
 }

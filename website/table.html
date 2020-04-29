@@ -33,6 +33,7 @@
 
           <!-- WHERE PAGE CONTENT IS INSERTED -->
           <center>
+<!-- 
           <table class="table">
               <thead>
                       <th>Order #</th>
@@ -70,7 +71,23 @@
 </center>
 
 
+--> 
 
+<script>
+	function getOrders() { 
+		fetch('/driver/getOrders/').then( 
+			function (response) {
+				response.text().then(
+					function (text) { 
+						
+						document.getElementById('orders').innerHTML = text;
+					});
+			});
+	}; 
+</script> 
+
+<div id="orders"></div>
+<button onclick="getOrders()">get Orders</button> 
 
       </div> <!-- end of main content -->
     </div> <!-- end of container -->

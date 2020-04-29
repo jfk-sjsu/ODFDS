@@ -48,7 +48,7 @@ exports.restGet = function (rLogin, callback) {
 			console.log("err in restGet" + err.message);
 			callback(null);
 		}
-		if(result.length == 0) {callback("no such restaurant")}
+		if(result.length == 0) {callback("no such restaurant"); return}
 		console.log("restGet: " + result[0]);
 		callback(result[0]);
     con.end();

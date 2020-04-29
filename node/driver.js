@@ -60,8 +60,8 @@ exports.sendLocation = _sendLocation;
 
  function _sendLocation( id,  driverLat,  driverLong) { 
 // sends the drivers location to the database. 
-	if(driverLat == null){driverLat = 0};
-	if(driverLong == null){driverLong = 0};
+	if(driverLat.length == 0){driverLat = 0};
+	if(driverLong.length == 0){driverLong = 0};
 
 	console.log("_sendLocation: " + id + "," + driverLat + "," + driverLong);
 	dbUpd.updateDriverLocation(id,  driverLat,  driverLong, function (results) {
