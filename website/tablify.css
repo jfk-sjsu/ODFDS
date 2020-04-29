@@ -1,0 +1,23 @@
+#tablify{
+  border: 1px solid #CF0015;
+  text-align: left;
+  width: 70%;
+	border-collapse: collapse;
+}
+
+#tablify th, td, {
+  padding:10px;
+  text-align: left;
+  border:1px solid #CF0015;
+  font-size:16px;
+    }
+
+  #tablify  th{
+      text-align: center;
+    	background-color: #C5A173;
+    	color: white;
+    }
+
+#tablify tbody tr:nth-child(even){
+	background-color: #EDEAE6;
+}
