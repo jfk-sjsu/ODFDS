@@ -43,11 +43,11 @@ app.post('/driver/Login', function (req,res) {
 				});
 
 });
-app.post('/driver/logoff', function (req,res) { 
+app.get('/driver/logoff', function (req,res) { 
 		var id = sess.did;
 		sess=null; 
 		driver.setNotActive(id); 
-		res.send("Driver "  + id + " not active"); 
+		res.redirect('/index.html'); 
 	});
 
 
@@ -81,16 +81,14 @@ app.post('/driver/SignUp', function (req, res) {
 
 	try {
 		driver.SignUp(req.body.name, req.body.email, 
-					req.body.password, 
+					req.body.psw, 
 					req.body.carMake, 
 					req.body.license,
 					req.body.phone,
 					req.body.pay,
-					req.body.dLat,
-					req.body.dLong,
 						function(results) { 
 						console.log(results.insertId);
-						driver.setActive(results.insertId,req.body.dLat,req.body.dLong);
+
 						res.redirect('/signin.html');
 						
 					});
@@ -148,11 +146,11 @@ app.post('/rest/login', function (req,res) {
 				});
 
 });
-app.post('/rest/logoff', function (req,res) {
+app.get('/rest/logoff', function (req,res) {
 		var id = sess.id;
 		sess = null; 
 		rest.setNotActive(id);
-		res.send("Restaurant " + id + " logged off. "); 
+		res.redirect('/index.html'); 
 	});
 
 app.post('/driver/getDriverDetails', function (req,res) { 

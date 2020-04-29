@@ -52,7 +52,7 @@ exports.restNewOrder = function (orderVal, customer, custLat, custLong, custAddr
   con.end();
 }
 
-function registerDriver(driverLogin, driverPW, driverName, driverLong, driverLat, drivePhone, driverPay) {
+function registerDriver(driverLogin, driverPW, driverName, driverLong, driverLat, drivePhone, driverPay, driverMake, driverLic, callback) {
   var mysql = require('mysql');
   var con = mysql.createConnection({
     host: "172.17.0.2",
@@ -65,11 +65,11 @@ function registerDriver(driverLogin, driverPW, driverName, driverLong, driverLat
     if (err) throw err;
     console.log("Connected to DB");
     
-    var sql = "INSERT INTO driver(DriverLogin, DriverPW, DriverName, DriverLong, DriverLat, DriverPhone, Available, DriverPay) VALUES (:login, :pw, :name, :rlong, :rlat, :phone, :avail, :pay)";
+    var sql = "INSERT INTO driver(DriverLogin, DriverPW, DriverName, DriverLong, DriverLat, DriverPhone, Available, DriverPay, DriverCar, DriverLicense) VALUES (?,?,?,?,?,?,?,?,?,?);";
     
-    con.query(sql, { login: restLogin, pw: restPW, name: restName, rlong: restLong, rlat: restLat, phone: restPhone, avail: true, pay: driverPay}, function (err, result) {
+    con.query(sql, [driverLogin, driverPW,  driverName,  driverLong,  driverLat, drivePhone,  false,  driverPay,  driverMake,  driverLic ], function (err, result) {
       if (err) throw err;
-      console.log("1 record inserted to drivers, ID: " + result.insertId);
+      callback(result.insertId);
     });
   
   });

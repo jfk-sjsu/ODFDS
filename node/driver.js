@@ -60,6 +60,9 @@ exports.sendLocation = _sendLocation;
 
  function _sendLocation( id,  driverLat,  driverLong) { 
 // sends the drivers location to the database. 
+	if(driverLat == null){driverLat = 0};
+	if(driverLong == null){driverLong = 0};
+
 	console.log("_sendLocation: " + id + "," + driverLat + "," + driverLong);
 	dbUpd.updateDriverLocation(id,  driverLat,  driverLong, function (results) {
 								console.log("updated driver location results" + results)}); 
@@ -117,7 +120,7 @@ exports.logout = function ( id){
 	return "Logout stub";
 }
 
-exports.SignUp = function ( name, email, password, carMakeModel, licPlate, phone, pay, latitude, longitude, callback) {
+exports.SignUp = function ( name, email, password, carMakeModel, licPlate, phone, pay, callback) {
 /*
    Purpose: puts a new user into the database for access
    params: 
@@ -134,10 +137,9 @@ exports.SignUp = function ( name, email, password, carMakeModel, licPlate, phone
       boolean success or fail
       driverId
 */
-	console.log(name, email, password, carMakeModel, licPlate, phone, pay, latitude, longitude);
-	var ret = dbIns.driverReg(email, password, name, latitude, 
-						longitude, phone,
-						false, pay, carMakeModel, licPlate, 
+	console.log(name, email, password, carMakeModel, licPlate, phone, pay);
+	var ret = dbIns.driverReg(email, password, name, 0, 
+						0, phone, pay, carMakeModel, licPlate, 
 						function(results) { 
 						
 						callback(results)});
