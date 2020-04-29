@@ -1,5 +1,6 @@
 <html>
 <script src = "geolocation.js" ></script>
+<script src = "tableify.js"></script>
 <script>
 	function setPos() {
 	getPosition('lat1', 'long1','err'); <!-- this sets the lat and long for the input forms. -->
@@ -62,6 +63,19 @@
 	<label for="orderId">OrderId</label><br>
     	<input type="text" placeholder="Enter OrderID"  name="orderId" required><br> <!-- name= must match parameter in main.js, as described above -->
 	<input type="submit" value="Submit">
+</form>
+<!-- get restaurant for orderid 
+	param: orderId
+	returns: json object with rest information
+-->
+
+<div id="restForOrder"></div>
+<form action="/driver/getRestForOrder/" method="POST" >
+
+	<h1>get Restaurant for order</h1>
+	<label for="orderId">OrderId</label><br>
+    	<input type="text" placeholder="Enter OrderID"  name="orderId" required><br> <!-- name= must match parameter in main.js, as described above -->
+	<input type="submit" value="submit">
 </form>
 <!-- get open orders 
 	params: DriverId (so none) 

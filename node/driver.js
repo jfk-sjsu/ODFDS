@@ -69,7 +69,18 @@ exports.sendLocation = _sendLocation;
 	
 
 }
-
+exports.getRestForOrder = function (orderId, callback) { 
+	console.log("getRestForOrder " + orderId); 
+	dbSel.orderGet(orderId, function (results) {
+		console.log(results);
+		console.log(results[0].RestID); 
+		dbSel.getRestInfo(results[0].RestID, function (results) { 
+			console.log(results);
+			callback(results);
+		});
+	});
+}
+	 
 exports.selectOrder = function( driverId,orderId, callback) {
   //purpose: When a driver wants to select an order, , the drivers calls this function to request delivery. . 
   // returns true or false
@@ -168,7 +179,7 @@ exports.SignUp = function ( name, email, password, carMakeModel, licPlate, phone
 						callback(results)});
 	 
 }
-
+ 
 exports.getDetails = _getDetails; 
 function _getDetails(id, callback) { 
 	dbSel.driverGet(id, function (results) { 

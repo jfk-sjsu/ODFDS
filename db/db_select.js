@@ -54,8 +54,9 @@ exports.restGet = function (rLogin, callback) {
     con.end();
 	});
 }
+exports.orderGet = _orderGet; 
 
-function orderGet(orderID, callback) {
+function _orderGet(orderID, callback) {
     var mysql = require('mysql');
     var con = mysql.createConnection({
 	    host: "172.17.0.2",
@@ -67,13 +68,13 @@ function orderGet(orderID, callback) {
      con.connect(function(err) {
         if (err) throw err;
     });
-     
+     console.log("orderGet " + orderID); 
      var sql = "SELECT * from orders WHERE OrderID = ?;";
      
     con.query(sql, [ orderID ], function (err, result, fields) {
         if (err) throw err;
             
-        return callback(result);
+        callback(result);
             
     });
     con.end();
@@ -128,8 +129,9 @@ function _retrieveRestOrder(restID, callback) {
     });
     con.end();
 }
+exports.getRestInfo = _getRestInfo;
 
-function getRestInfo(restID, callback) {
+function _getRestInfo(restID, callback) {
     var mysql = require('mysql');
     var con = mysql.createConnection({
 	    host: "172.17.0.2",
@@ -142,7 +144,7 @@ function getRestInfo(restID, callback) {
         if (err) throw err;
     });
      
-     var sql = "SELECT RestName, RestAddr from restaurant WHERE RestID = ?;";
+     var sql = "SELECT * from restaurant WHERE RestID = ?;";
      
     con.query(sql, [ restID ], function (err, result, fields) {
         if (err) throw err;

@@ -15,6 +15,16 @@ app.use(express.static('/website/'))
 app.use(session({secret: 'verySecretP@ssw0rd'}));
 
 var sess = null;
+app.post('/driver/getRestForOrder', function (req,res) { 
+		
+		if(sess == null) { 
+		res.send("[]"); 
+	};
+	driver.getRestForOrder(req.body.orderId, function (results) { 
+		console.log(results); 
+		res.send(results); 
+	}); 
+}); 
 
 app.post('/driver/Login', function (req,res) { 
 	console.log('/driver/Login',req.body.email, req.body.psw, 
