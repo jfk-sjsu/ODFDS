@@ -239,8 +239,8 @@ function _retrieveOpenOrderForDriver(driverID, callback) {
         if (err) throw err;
     });
      
-    var sql = "select * from orders where ABS(CustLat - (select DriverLat from driver)) < 1 AND ABS(CustLong -(select DriverLong from driver)) < 5;";
-    con.query(sql, [ driverID ] , function (err, result, fields) {
+    var sql = "select * from orders where ABS(CustLat - (select DriverLat from driver where DriverID = ?)) < 1 AND ABS(CustLong -(select DriverLong from driver where DriverID = ?)) < 1 AND DriverID = 0;";
+    con.query(sql, [ driverID, driverID ] , function (err, result, fields) {
         if (err) throw err;
             
         return callback(result);

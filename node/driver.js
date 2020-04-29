@@ -70,24 +70,47 @@ exports.sendLocation = _sendLocation;
 
 }
 
-exports.ackOrderRequest = function( id,  accept) {
-  //purpose: When an order is sent to a driver, the drivers calls this function to accept of decline. 
-  // if accept, hand back the order id
-  return "accOrderRequest stubb"
+exports.selectOrder = function( driverId,orderId, callback) {
+  //purpose: When a driver wants to select an order, , the drivers calls this function to request delivery. . 
+  // returns true or false
+  // algorithm: 
+  //   get drivers current orders
+  // 	  if two or more, return false. 
+  //   get openOrders(driverId)
+  //      if orderId is amongst the openOrders, 
+  //          assign order to driver. 
+  //          return true;
+  //      else return false; 
+	var ret = null; 
+ 	dbSel.retrieveDriverOrder(driverId, function (results) { 
+					if(results.length > 1){ret = false;
+								console.log("driver " + driverId + " has too many orders");
+								callback(ret);
+								return}
+					
+					dbSel.retrieveOpenOrderForDriver(driverId, function (results) {
+						if(results.length == 0){ret = false;
+									console.log("no open orders available for driverId " + driverId); 
+									callback(ret);
+									return};
+						results.forEach(function (item, index) { 
+							console.log("Processing orderId " + item.OrderID);
+							if(item.OrderID == orderId){ret = true;
+										console.log("found it! OrderID " + orderId + " == " +item.OrderID); 
+										callback(ret);
+										return};
+						console.log("ret1 = " + ret);  
+						});
+					console.log("ret2 = " + ret); 
+					});
+		console.log("ret3 = " + ret); 
+	});
+	console.log("ret4 = " + ret); 
+	
+							
+  
 }
-exports.ackCollectedOrder = function( id,  dLat,  dLong,  ack) {
-/*	
-  purpose: When driver is at restaurant, the system passes the order to the driver. This call acknowledges that the order is received.  
-  params: 
-    driverID  type:driverID 
-    driverLoc type:web based location coordinates
-    acknowledge type:boolean
-  return: 
-    boolean True if no error else Error message. 
-  Notes: IF driver fails to ack, order goes back out for bid. 
-*/ 
-	return "ackCollectedOrder stub"; 
-}
+
 
 exports.ntfDeliveredOrder = function( id,  dLat,  dLong, orderId) { 
 /*

@@ -106,17 +106,21 @@ app.post('/rest/newOrder', function (req,res) {
 	else 
 	{
 		var restId = sess.did; 
-			
-		rest.newOrder(orderVal, req.body.name, req.body.address + " " + req.body.zip, 
-		req.body.cLat, req.body.cLong, restId, function (response) { 
-			if(typeof(response) == 'number') { 
-				res.redirect('/restaurantMain.html');
-			} 
-			else 
-			{
-				res.send(response); 
-			}
-		});
+		geo.getLatLong(req.body.address + req.body.zip, function (latLong) { 
+			var cLat = latLong.latitude; 
+			var cLong = latLong.longitude; 
+			console.log("/ret/newOrder results for cLat and cLong", cLat, cLong)	
+			rest.newOrder(orderVal, req.body.name, req.body.address + " " + req.body.zip, 
+			 	cLat,  cLong, restId, function (response) { 
+				if(typeof(response) == 'number') { 
+					res.redirect('/restaurantMain.html');
+				} 
+				else 
+				{
+					res.send(response); 
+				}
+			});
+		}); 
 	}
 	
 });
@@ -182,5 +186,13 @@ app.post('/driver/reqOpenOrders/', function (req, res) {
 		res.send(results); 
 	});
 });
+
+app.post('/driver/selectOrder/', function (req,res) { 
+	// the driver uses this to select which order they want to take. 
+		if(sess == null) { res.send("[{'msg':'no one logged in!'}]"); return; }; 
+		driver.selectOrder(sess.did, req.body.orderId, function (results) { 
+					res.send(results); 
+	});
+}); 
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

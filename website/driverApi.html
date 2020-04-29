@@ -1,6 +1,11 @@
 <html>
 <script src = "geolocation.js" ></script>
-<body> 
+<script>
+	function setPos() {
+	getPosition('lat1', 'long1','err'); <!-- this sets the lat and long for the input forms. -->
+}
+</script>
+<body onload="setPos()"> 
 
 <!---------------- How to call the driver apis ---------------------------------------------------------->
 <!--           These snippets give the driver apis and examples of how to reach them via HTTP 
@@ -18,9 +23,7 @@
     driverID  type:  "driver ID" identifying the driver in all future comms. Should be randomly generated and unique 
 -->
 <!-- we need to get our geolocation data before we post -->
-<script>
-	getPosition("lat1", "long1","err"); <!-- this sets the lat and long for the input forms. -->
-</script>
+
 <div id="err"></div>
 <form action="/driver/login" method="post" > <!-- action must match route in main.js -->
 	<h1>Driver login</h1>
@@ -44,12 +47,22 @@
   return: 
 	sends the you are logged off page 
 --> 
-<form action="/driver/logoff" method="post" > <!-- action must match route in main.js -->
+<form action="/driver/logoff" method="get" > <!-- action must match route in main.js -->
 	<h1>Driver logoff</h1>
 
 	<input type="submit" value="Submit">
 </form>
-
+<!-- select an order 
+	let's the driver select an order to deliver. 
+	params: orderId
+	return: true or false
+-->
+<form action="/driver/selectOrder/" method="post"> 
+	<h1>Select order</h1>
+	<label for="orderId">OrderId</label><br>
+    	<input type="text" placeholder="Enter OrderID"  name="orderId" required><br> <!-- name= must match parameter in main.js, as described above -->
+	<input type="submit" value="Submit">
+</form>
 <!-- get open orders 
 	params: DriverId (so none) 
 	returns: open orders available to that driver within their lat lang params. 
@@ -63,7 +76,7 @@
 <!-- get orders assigned to driver. 
 
 -->
-<form action="/driver/getOrders/" method="post">
+<form action="/driver/getOrders/" method="get">
 	<h1>Get Driver Orders</h1>
 
 	<input type="submit" value="Submit">
