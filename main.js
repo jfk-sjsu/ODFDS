@@ -121,8 +121,8 @@ app.post('/rest/newOrder', function (req,res) {
 	
 });
 
-app.post('/rest/getOrders', function (req, res) {
-	if(sess == null) { res.send("no one logged in!"); return; }; 
+app.get('/rest/getOrders', function (req, res) {
+	if(sess == null) { res.send("[{'msg':'no one logged in!'}]"); return; }; 
 	
 	rest.getOrders(sess.did, function (results) { 
 		res.send(results); 
@@ -147,9 +147,11 @@ app.post('/rest/login', function (req,res) {
 
 });
 app.get('/rest/logoff', function (req,res) {
+	if(sess != null) {
 		var id = sess.id;
 		sess = null; 
 		rest.setNotActive(id);
+	}
 		res.redirect('/index.html'); 
 	});
 
