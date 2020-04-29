@@ -63,7 +63,8 @@ CREATE USER 'dbuser'@'%' IDENTIFIED WITH mysql_native_password BY 'example';
 GRANT ALL PRIVILEGES ON odfdsdb.* TO 'dbuser'@'%';
 INSERT INTO restaurant(RestLogin, RestPW, RestName, RestAddr, RestLong, RestLat, RestPhone) VALUES ('mama@mia.com', 'asdf', 'mama mia', '200 e. Hamilton ave 95008',-121.9465556, 37.2939405, '408-555-1212');
 INSERT INTO restaurant(RestLogin, RestPW, RestName, RestAddr, RestLong, RestLat, RestPhone) VALUES ('lou@lous.com', 'asdf', 'lous diner', 'far away ',-121.9465556, 34.2939405, '408-555-1212');
-INSERT INTO orders(OrderVal, CustName, CustLong, CustLat, CustAddr, OrderPickedUp, OrderComplete, RestID, DriverID, OrderCreationTime, OrderPickupTime, OrderDeliveryTime) VALUES (1,'cust1',-121, 34, 'far away', 0,0,2,0,0,0,0);
-INSERT INTO orders(OrderVal, CustName, CustLong, CustLat, CustAddr, OrderPickedUp, OrderComplete, RestID, DriverID, OrderCreationTime, OrderPickupTime, OrderDeliveryTime) VALUES (1,'cust2',-121, 37, 'far away', 0,0,2,0,0,0,0);
-INSERT INTO orders(OrderVal, CustName, CustLong, CustLat, CustAddr, OrderPickedUp, OrderComplete, RestID, DriverID, OrderCreationTime, OrderPickupTime, OrderDeliveryTime) VALUES (1,'cust3',-121, 37, 'far away', 0,0,1,0,0,0,0);
 INSERT INTO driver(DriverLogin, DriverPW, DriverName,DriverLong,DriverLat,DriverPhone,Available,DriverPay,DriverCar,DriverLicense)VALUES("john.kennedy@sjsu.edu","asdf","john kennedy",-121,37,'000-000-0000',0,1,'car','license');
+
+INSERT INTO orders(OrderVal, CustName, CustLong, CustLat, CustAddr, OrderPickedUp, OrderComplete, RestID, DriverID, OrderCreationTime, OrderPickupTime, OrderDeliveryTime) VALUES (1,'cust1',-121, 34, 'far away', 0,0,2,1,0,0,0);
+INSERT INTO orders(OrderVal, CustName, CustLong, CustLat, CustAddr, OrderPickedUp, OrderComplete, RestID, DriverID, OrderCreationTime, OrderPickupTime, OrderDeliveryTime) VALUES (1,'cust2',-121, 37, 'far away', 0,0,2,1,0,0,0);
+INSERT INTO orders(OrderVal, CustName, CustLong, CustLat, CustAddr, OrderPickedUp, OrderComplete, RestID, DriverID, OrderCreationTime, OrderPickupTime, OrderDeliveryTime) VALUES (1,'cust3',-121, 37, 'far away', 0,0,1,0,0,0,0);
