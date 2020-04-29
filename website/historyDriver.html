@@ -36,7 +36,21 @@
         <div class = "singular"> <!-- div where content goes -->
           <div> <!-- history div -->
             <h3>Orders</h3>
-            <p>Insert table of orders here!</p>
+            <script>
+	function getOrders() {
+		fetch('/driver/getOrders/').then(
+			function (response) {
+				response.text().then(
+					function (text) {
+
+						tableify(text, document.getElementById('orders'));
+					});
+			});
+	};
+</script>
+
+<div id="orders"></div>
+<body onload='getOrders()'>
           </div> <!-- end of delivery text div -->
           </div> <!-- end of activity div -->
     </div> <!-- end of page content -->
