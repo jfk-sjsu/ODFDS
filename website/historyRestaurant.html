@@ -39,7 +39,7 @@
             <h3>Orders</h3>
            <script>
 	function getOrders() {
-		fetch('/driver/getOrders/').then(
+		fetch('/rest/getOrders/').then(
 			function (response) {
 				response.text().then(
 					function (text) {
