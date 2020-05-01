@@ -1,5 +1,5 @@
 function tableify(text, target) {
-	var scrpt = '<script>
+/*	var scrpt = '<script>
   function reverse(elem) { 
   //	 alert("alert");
   	 elem.innerHTML = elem.innerHTML.split("").reverse().join("");//elem.innerHTML.reverse();
@@ -11,7 +11,7 @@ function tableify(text, target) {
 //    });
   
 </script>'
-
+*/
 	var ret = "<table id='tablify'><tr id='tablify'><th id='tablify'>";
 	var json = JSON.parse(text);
 	var header = json[0];
