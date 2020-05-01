@@ -25,33 +25,6 @@ function _registerRestaurant(restLogin, restPW, restName, restAddr, restLong, re
 }
 
 
-exports.restNewOrder = function (orderVal, customer, custLat, custLong, custAddr, restID, callback) {
-  console.log("restNewOrder called:", orderVal, customer, custAddr, restID);
-  custAddr = custAddr.split(" ").join('+'); 
-	
-  var mysql = require('mysql');
-  var con = mysql.createConnection({
-    host: "172.17.0.2",
-    user: "dbuser",
-    password: "example",
-    database: "odfdsdb"
-  });
-
-  con.connect(function(err) {
-    if (err) throw err;
-    console.log("Connected to DB");
-  });
-    
-    var sql = "INSERT INTO orders(OrderVal, CustName, CustLat, CustLong, CustAddr, OrderPickedUp, OrderComplete, RestID, DriverID) VALUES (?,?,?,?,?,?,?,?,?)";
-    
-    con.query(sql, [orderVal, customer, custLat, custLong, custAddr, false, false, restID, 0], function (err, result, fields) {
-      if (err) throw err;
-      console.log("1 record inserted to orders, ID: " + result.insertId);
-      callback(result);
-    });
-  con.end();
-}
-
 function registerDriver(driverLogin, driverPW, driverName, driverLong, driverLat, drivePhone, driverPay, driverMake, driverLic, callback) {
   var mysql = require('mysql');
   var con = mysql.createConnection({
@@ -75,7 +48,7 @@ function registerDriver(driverLogin, driverPW, driverName, driverLong, driverLat
   });
 }
 
-function createOrder(orderVal, custName, custLat, custLong, custAddr, restID, driverID, creationTime, pickupTime, delivTime) {
+function createOrder(orderVal, custName, custLat, custLong, custAddr, restID) {
   var mysql = require('mysql');
   var con = mysql.createConnection({
     host: "172.17.0.2",
@@ -83,14 +56,15 @@ function createOrder(orderVal, custName, custLat, custLong, custAddr, restID, dr
     password: "example",
     database: "odfdsdb"
   });
-
+  var creationTime = now();
+	
   con.connect(function(err) {
     if (err) throw err;
     console.log("Connected to DB");
     
     var sql = "INSERT INTO orders(OrderVal, CustName, CustLat, CustLong, CustAddr, OrderPickedUp, OrderComplete, RestID, DriverID, OrderCreationTime, OrderPickupTime, OrderDeliveryTime) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);";
     
-    con.query(sql, [orderVal, custName, custLat, custLong, custAddr, false, false, restID, driverID, creationTime, null, null], function (err, result) {
+    con.query(sql, [orderVal, custName, custLat, custLong, custAddr, false, false, restID, 0, creationTime, null, null], function (err, result) {
       if (err) throw err;
       console.log("1 record inserted to orders, ID: " + result.insertId);
     });
