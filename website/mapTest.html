@@ -1,0 +1,80 @@
+<html>
+<head>
+<!--
+    <style>
+       /* Set the size of the div element that contains the map */
+      #map {
+        height: 400px;  /* The height is 400 pixels */
+        width: 100%;  /* The width is the width of the web page */
+       }
+    </style>
+	-->
+<script src="geolocation.js"></script>
+</head>
+<body>
+
+<h2> Time of position: <div id="posUpdateTime"></div></h2>
+<h2> Latitude: <div id="latitude">37</div></h2>
+<h2> Longitude: <div id="longitude">-121</div></h2>
+MODE: <div id='mode'>place</div>
+SRC: <div id="src"></div>
+
+<button onclick="calcRoute()">Update Map</button>
+<div id="end" > Space+Needle,Seattle+WA</div>
+
+
+    <div id="mapholder" style="width:60%;height:400px">
+		<div id="map" style="height:100%;width:50%;float:left">Map goes here</div>
+		<div id="right-panel" style="height:100%;width:50%;float:left"></div>
+	</div>
+
+<script >
+	watchPosition(showPos);
+	function showPos(position) { 
+		document.getElementById('latitude').innerHTML = position.coords.latitude;
+		document.getElementById('longitude').innerHTML = position.coords.longitude;
+		document.getElementById("posUpdateTime").innerHTML = new Date().toLocaleString();
+
+	}
+
+</script>
+<script>
+var directionsService;
+var directionsRenderer;
+
+ function initMap() {
+  directionsService = new google.maps.DirectionsService();
+  directionsRenderer = new google.maps.DirectionsRenderer();
+  var ctrplt = document.getElementById('latitude').innerHTML ;
+  var ctrplo = document.getElementById('longitude').innerHTML;
+  var ctr = new google.maps.LatLng(ctrplt,ctrplo);
+  var mapOptions = {
+	zoom:7,
+	center:  {lat: 41.85, lng: -87.65}
+  }
+  var toput = document.getElementById('map');
+  var map = new google.maps.Map(toput, mapOptions);
+  directionsRenderer.setMap(map);
+  directionsRenderer.setPanel(document.getElementById('right-panel'));
+}
+
+function calcRoute() {
+  var start = document.getElementById('latitude').innerHTML + "," + document.getElementById('longitude').innerHTML;
+  var end = document.getElementById('end').innerHTML;
+  var request = {
+	origin: start,
+	destination: end,
+	travelMode: 'DRIVING'
+  };
+  directionsService.route(request, function(result, status) {
+	if (status == 'OK') {
+	  directionsRenderer.setDirections(result);
+	}
+  });
+}
+</script>
+<script async defer
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4lvECgdIAPYiYvTioiZ360vp_TmsGPsk&callback=initMap">
+</script>
+</body>
+</html>
