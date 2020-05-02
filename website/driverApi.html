@@ -73,9 +73,16 @@
 		<input type="text" placeholder="Enter Order ID" name="orderId"><br>
 		<input type="submit" value="Submit">
 </form>
+
+<form action="/driver/completeOrder/" method="post">
+		<h1>Order delivered</h1>
+		<input type="text" placeholder="Enter Order ID" name="orderId"><br>
+		<input type="submit" value="Submit">
+</form>
+
+
 <div id="restForOrder"></div>
 <form action="/driver/getRestForOrder/" method="POST" >
-
 	<h1>get Restaurant for order</h1>
 	<label for="orderId">OrderId</label><br>
     	<input type="text" placeholder="Enter OrderID"  name="orderId" required><br> <!-- name= must match parameter in main.js, as described above -->

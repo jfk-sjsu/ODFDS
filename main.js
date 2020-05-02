@@ -116,17 +116,23 @@ app.post('/rest/newOrder', function (req,res) {
 	else
 	{
 		var restId = sess.did;
+		var addr = req.body.address + "+" + req.body.zip;
+		addr = addr.split(" ").join("+");
 		// need to get distance from restaurant to cust
+			geo.getLatLong(addr, function (response) {
+				var latitude = response.latitude;
+				var longitude= response.longitude;
 
-			rest.newOrder(orderVal, req.body.name, req.body.address + "+" + req.body.zip,
-			  restId, function (response) {
-				if(typeof(response) == 'number') {
-					res.redirect('/restaurantMain.html');
-				}
-				else
-				{
-					res.send(response);
-				}
+				rest.newOrder(orderVal, req.body.name, addr, latitude, longitude, 
+				  restId, function (response) {
+					if(typeof(response) == 'number') {
+						res.redirect('/restaurantMain.html');
+					}
+					else
+					{
+						res.send(response);
+					}
+				});
 			});
 	}
 
@@ -202,9 +208,17 @@ app.post('/driver/selectOrder/', function (req,res) {
 app.post('/driver/orderPickedUp/', function (req, res) {
 	if(sess == null) { res.send("[{'msg':'no one logged in!'}]"); return; };
 	driver.orderPickedUp(sess.did, req.body.orderId, function (results) {
-		console.log("collectedOrder", sess.did, req.body.orderId);
+		console.log("orderPickedUp", sess.did, req.body.orderId);
 
-					res.send(results.affectedRows == 1);
+					res.send(results.changedRows == 1);
+	});
+});
+app.post('/driver/completeOrder/', function (req, res) {
+	if(sess == null) { res.send("[{'msg':'no one logged in!'}]"); return; };
+	driver.completeOrder(sess.did, req.body.orderId, function (results) {
+		console.log("completeOrder", sess.did, req.body.orderId);
+
+					res.send(results.changedRows == 1);
 	});
 });
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

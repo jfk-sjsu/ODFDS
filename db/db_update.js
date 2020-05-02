@@ -1,4 +1,4 @@
-exports.completeOrder = function (orderID, completedTime, callback) {
+exports.completeOrder = function (driverId, orderID, callback) {
   var mysql = require('mysql');
   var con = mysql.createConnection({
     host: "172.17.0.2",
@@ -11,10 +11,10 @@ exports.completeOrder = function (orderID, completedTime, callback) {
     if (err) throw err;
     console.log("Connected to DB");
   });
+    var completedTime = Date.now();
+    var sql = "UPDATE orders SET OrderComplete = true , OrderDeliveryTime = ? WHERE OrderID = ? AND DriverID = ?;";
 
-    var sql = "UPDATE orders SET OrderComplete = true AND OrderDeliveryTime = ? WHERE OrderID = ?;";
-    completedTime = now();
-    con.query(sql, [completedTime, orderID], function (err, result) {
+    con.query(sql, [completedTime, orderID, driverId], function (err, result) {
       if (err) throw err;
       console.log("Order " + orderID + " completed");
       return callback(result);
@@ -37,11 +37,11 @@ exports.orderPickedUp = function (driverID, orderID, callback) {
     console.log("Connected to DB");
   });
     var pickupTime = Date.now();
-    var sql = "UPDATE orders SET OrderPickedUp = true AND OrderPickupTime = ? WHERE OrderID = ? AND DriverID=?;";
+    var sql = "UPDATE orders SET OrderPickedUp = true , OrderPickupTime = ? WHERE OrderID = ? AND DriverID= ?;";
 
     con.query(sql, [ pickupTime, orderID, driverID ], function (err, result) {
       if (err) throw err;
-      console.log("Order " + orderID + " picked up");
+      console.log("Order " + orderID + " picked up at " + pickupTime);
       return callback(result);
     });
 

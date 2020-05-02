@@ -123,18 +123,11 @@ exports.selectOrder = function( driverId,orderId, callback) {
 }
 
 
-exports.ntfDeliveredOrder = function( id,  dLat,  dLong, orderId) {
-/*
-  purpose: sets the driver as "active" letting the system know that the driver is available for deliveries.
-  params:
-    driverID  type:driverID
-    driverLoc type:web based location coordinates
-    orderID   type:numeric ID for particular order
-  return:
-    boolean True if no error else Error message.
-  Notes:
-*/
-	return "ntfDeliveredOrder stub";
+exports.completeOrder = function( driverId, orderId, callback) {
+
+	dbUpd.completeOrder(driverId, orderId, function (results) {
+      callback(results)
+  });
 }
 
 
@@ -178,7 +171,7 @@ exports.getOrders = function(driverId, callback) {
 exports.getOpenOrders = function (driverId, callback) {
 	console.log("getOpenOrders", driverId);
 	dbSel.retrieveOpenOrderForDriver(driverId, function (results) {
-		callback(results);
+    callback(results);
 	});
 }
 exports.orderPickedUp = function (driverId, orderId, callback) {

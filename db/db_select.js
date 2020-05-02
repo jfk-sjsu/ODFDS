@@ -69,7 +69,7 @@ function _orderGet(orderID, callback) {
         if (err) throw err;
     });
      console.log("orderGet " + orderID);
-     var sql = "SELECT * from orders WHERE OrderID = ?;";
+     var sql = 'SELECT orders.OrderID, orders.OrderVal, orders.CustName, orders.CustAddr, orders.CustName, restaurant.RestName, restaurant.RestAddr FROM orders INNER JOIN restaurant ON orders.RestID=restaurant.RestID WHERE orders.OrderID=?;'
 
     con.query(sql, [ orderID ], function (err, result, fields) {
         if (err) throw err;
@@ -242,8 +242,11 @@ function _retrieveOpenOrderForDriver(driverID, callback) {
         if (err) throw err;
     });
 
-    var sql = "select OrderID, CustAddr as 'Deliver_To', CustName as 'Customer', (select restaurant.RestName, restaurant.RestAddr from restaurant WHERE restaurant.RestID = orders.RestID)  from orders  where ABS(CustLat - (select DriverLat from driver where DriverID = ?)) < 1 AND ABS(CustLong -(select DriverLong from driver where DriverID = ?)) < 1 AND DriverID = 0;";
-    con.query(sql, [ driverID, driverID ] , function (err, result, fields) {
+    var sql = 'SELECT orders.OrderID, orders.OrderVal, orders.CustName, orders.CustAddr, orders.CustName, restaurant.RestName, restaurant.RestAddr FROM '
+		sql += 'orders INNER JOIN restaurant ON orders.RestID=restaurant.RestID WHERE orders.OrderID IN (select OrderID from orders WHERE ABS(CustLat - (select DriverLat from driver where DriverID = ?)) < 1 AND ABS(CustLong -(select DriverLong from driver where DriverID = ?)) < 1 AND DriverID = 0);'
+
+		//var sql = "select OrderID from orders WHERE ABS(CustLat - (select DriverLat from driver where DriverID = ?)) < 1 AND ABS(CustLong -(select DriverLong from driver where DriverID = ?)) < 1 AND DriverID = 0;"
+		con.query(sql, [ driverID, driverID ] , function (err, result, fields) {
         if (err) throw err;
         return callback(result);
 
