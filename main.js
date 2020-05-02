@@ -15,26 +15,26 @@ app.use(express.static('/website/'))
 app.use(session({secret: 'verySecretP@ssw0rd'}));
 
 var sess = null;
-app.post('/driver/getRestForOrder', function (req,res) { 
-		
-		if(sess == null) { 
-		res.send("[]"); 
+app.post('/driver/getRestForOrder', function (req,res) {
+
+		if(sess == null) {
+		res.send("[]");
 	};
-	driver.getRestForOrder(req.body.orderId, function (results) { 
-		console.log(results); 
-		res.send(results); 
-	}); 
-}); 
+	driver.getRestForOrder(req.body.orderId, function (results) {
+		console.log(results);
+		res.send(results);
+	});
+});
 
-app.post('/driver/Login', function (req,res) { 
-	console.log('/driver/Login',req.body.email, req.body.psw, 
-				req.body.dLat, req.body.dLong); 
+app.post('/driver/Login', function (req,res) {
+	console.log('/driver/Login',req.body.email, req.body.psw,
+				req.body.dLat, req.body.dLong);
 	//if(req.body.email == null) {res.send("invalid username");return};
-	//if(sess != null){res.send("User " + sess.username + " is currently logged in. Please log out and try again")}return; 
+	//if(sess != null){res.send("User " + sess.username + " is currently logged in. Please log out and try again")}return;
 
-	driver.login(req.body.email,req.body.psw, 
-					function(results) { 
-					
+	driver.login(req.body.email,req.body.psw,
+					function(results) {
+
 					if(typeof(results) == 'number') {
 						sess=req.session;
 						sess.username = req.body.email;
@@ -46,18 +46,18 @@ app.post('/driver/Login', function (req,res) {
 							driver.setActive(results, req.body.dLat, req.body.dLong);
 						//}
 						res.redirect('/driverMain.html');
-					} else 
+					} else
 					{
 						res.send(results);
 					}
 				});
 
 });
-app.get('/driver/logoff', function (req,res) { 
+app.get('/driver/logoff', function (req,res) {
 		var id = sess.did;
-		sess=null; 
-		driver.setNotActive(id); 
-		res.redirect('/index.html'); 
+		sess=null;
+		driver.setNotActive(id);
+		res.redirect('/index.html');
 	});
 
 
@@ -68,19 +68,19 @@ app.post('/rest/SignUp', function (req, res) {
 	//email,password,name,address,phone,rLong,rLat,callback
 	var rLat = 0.0
 	var rLong = 0.0
-	var latLong = geo.getLatLong(req.body.address + " " + req.body.zip, function (results) { 
-		rLat = results.latitude; 
-		rLong = results.longitude; 
-		console.log("rLat " + rLat + " rLong " + rLong); 
-	
+	var latLong = geo.getLatLong(req.body.address + " " + req.body.zip, function (results) {
+		rLat = results.latitude;
+		rLong = results.longitude;
+		console.log("rLat " + rLat + " rLong " + rLong);
+
 		var ret = rest.registerRestaurant(req.body.email,
 						req.body.password,
-						req.body.name, 
+						req.body.name,
 						req.body.address + " " + req.body.zip,
-						rLat, 
+						rLat,
 						rLong,
 						req.body.phone,
-						function(results) { 
+						function(results) {
 						console.log(results);
 						res.redirect('/signin.html')});
 	 console.log("back to main");
@@ -90,70 +90,67 @@ app.post('/rest/SignUp', function (req, res) {
 app.post('/driver/SignUp', function (req, res) {
 
 	try {
-		driver.SignUp(req.body.name, req.body.email, 
-					req.body.psw, 
-					req.body.carMake, 
+		driver.SignUp(req.body.name, req.body.email,
+					req.body.psw,
+					req.body.carMake,
 					req.body.license,
 					req.body.phone,
 					req.body.pay,
-						function(results) { 
+						function(results) {
 						console.log(results.insertId);
 
 						res.redirect('/signin.html');
-						
+
 					});
 	} catch (err)
 	{
 		res.send( err.message);
 	}
-	
+
 });
 app.post('/rest/newOrder', function (req,res) {
-	var orderVal = 1.00; 
-	if(sess == null) { 
-		res.send("no one logged in!"); 
+	var orderVal = 1.00;
+	if(sess == null) {
+		res.send("no one logged in!");
 	}
-	else 
+	else
 	{
-		var restId = sess.did; 
-		geo.getLatLong(req.body.address + req.body.zip, function (latLong) { 
-			var cLat = latLong.latitude; 
-			var cLong = latLong.longitude; 
-			console.log("/ret/newOrder results for cLat and cLong", cLat, cLong)	
-			rest.newOrder(orderVal, req.body.name, req.body.address + " " + req.body.zip, 
-			 	cLat,  cLong, restId, function (response) { 
-				if(typeof(response) == 'number') { 
+		var restId = sess.did;
+		// need to get distance from restaurant to cust
+
+			rest.newOrder(orderVal, req.body.name, req.body.address + "+" + req.body.zip,
+			  restId, function (response) {
+				if(typeof(response) == 'number') {
 					res.redirect('/restaurantMain.html');
-				} 
-				else 
+				}
+				else
 				{
-					res.send(response); 
+					res.send(response);
 				}
 			});
-		}); 
 	}
-	
+
 });
 
 app.get('/rest/getOrders', function (req, res) {
-	if(sess == null) { res.send("[{'msg':'no one logged in!'}]"); return; }; 
-	
-	rest.getOrders(sess.did, function (results) { 
-		res.send(results); 
+	if(sess == null) { res.send('[{"msg":"no one logged in!"}]'); return; };
+
+	rest.getOrders(sess.did, function (results) {
+		res.send(results);
 	});
 });
 
-app.post('/rest/login', function (req,res) { 
+app.post('/rest/login', function (req,res) {
 
 	rest.login(req.body.email,req.body.psw,
-					function(results) { 
+					function(results) {
 					if(sess != null) {res.send("already logged in." + sess.username); return};
 					if(typeof(results) == 'number') {
 						sess=req.session;
-						sess.username = req.body.email; 
-						sess.did=results; 
+						sess.username = req.body.email;
+						sess.did=results;
 						res.redirect('/restaurantMain.html');
-					} else 
+					} else
 					{
 						res.send(results);
 					}
@@ -162,47 +159,45 @@ app.post('/rest/login', function (req,res) {
 });
 app.get('/rest/logoff', function (req,res) {
 	if(sess != null) {
-		var id = sess.id;
-		sess = null; 
-		rest.setNotActive(id);
+		sess = null;
 	}
-		res.redirect('/index.html'); 
+		res.redirect('/index.html');
 	});
 
-app.post('/driver/getDriverDetails', function (req,res) { 
-		if(sess == null) { 
-						res.send("user not logged in"); 
-						return; 
-		} else 
-		{ 
+app.post('/driver/getDriverDetails', function (req,res) {
+		if(sess == null) {
+						res.send("user not logged in");
+						return;
+		} else
+		{
 			driver.getDetails((sess.username), function (results) {
 				res.send(results);
 			});
 		}
 });
-		
+
 
 app.get('/driver/getOrders', function (req, res) {
-	if(sess == null) { res.send("[{'msg':'no one logged in!'}]"); return; }; 
-	
-	driver.getOrders(sess.did, function (results) { 
-		res.send(results); 
+	if(sess == null) { res.send("[{'msg':'no one logged in!'}]"); return; };
+
+	driver.getOrders(sess.did, function (results) {
+		res.send(results);
 	});
 });
-app.post('/driver/reqOpenOrders/', function (req, res) { 
-	if(sess == null) { res.send("no one logged in!"); return; }; 
+app.post('/driver/reqOpenOrders/', function (req, res) {
+	if(sess == null) { res.send("no one logged in!"); return; };
 	console.log("reqOpenOrders", sess.did);
-	driver.getOpenOrders(sess.did, function (results) { 
-		res.send(results); 
+	driver.getOpenOrders(sess.did, function (results) {
+		res.send(results);
 	});
 });
 
-app.post('/driver/selectOrder/', function (req,res) { 
-	// the driver uses this to select which order they want to take. 
-		if(sess == null) { res.send("[{'msg':'no one logged in!'}]"); return; }; 
-		driver.selectOrder(sess.did, req.body.orderId, function (results) { 
-					res.send(results); 
+app.post('/driver/selectOrder/', function (req,res) {
+	// the driver uses this to select which order they want to take.
+		if(sess == null) { res.send("[{'msg':'no one logged in!'}]"); return; };
+		driver.selectOrder(sess.did, req.body.orderId, function (results) {
+					res.send(results);
 	});
-}); 
+});
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
