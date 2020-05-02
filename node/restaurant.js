@@ -5,7 +5,7 @@ const dbUpd = require('../db/db_update')
 
 
 function _newOrder(orderVal, custName, custAddr, custLat, custLong,  restId, callback)  {
-	console.log("_newOrder called: ",orderVal, custName, custAddr, restId);
+	console.log("_newOrder called: ",orderVal, custName,  custAddr, custLong, custLat, restId);
 
 	dbIns.createOrder(orderVal, custName,  custAddr, custLong, custLat, restId, function (results) {
 		console.log("newOrder  db call results: ", results);

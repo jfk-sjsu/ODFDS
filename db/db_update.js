@@ -23,6 +23,31 @@ exports.completeOrder = function (driverId, orderID, callback) {
   con.end();
 }
 
+exports.assignOrdertoDriver = function (driverID, orderID, callback) {
+  var mysql = require('mysql');
+  var con = mysql.createConnection({
+    host: "172.17.0.2",
+    user: "dbuser",
+    password: "example",
+    database: "odfdsdb"
+  });
+
+  con.connect(function(err) {
+    if (err) throw err;
+    console.log("Connected to DB");
+  });
+
+    var sql = "UPDATE orders SET DriverID = ?   WHERE OrderID = ? ;";
+
+    con.query(sql, [  driverID, orderID ], function (err, result) {
+      if (err) throw err;
+      console.log("Order " + orderID + " assigned to  " + driverID);
+      return callback(result);
+    });
+
+  con.end();
+}
+
 exports.orderPickedUp = function (driverID, orderID, callback) {
   var mysql = require('mysql');
   var con = mysql.createConnection({

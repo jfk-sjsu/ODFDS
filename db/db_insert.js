@@ -64,7 +64,7 @@ function _createOrder(orderVal, custName, custAddr, custLong, custLat, restID, c
 
     var sql = "INSERT INTO orders(OrderVal, CustName, CustLat, CustLong, CustAddr, OrderPickedUp, OrderComplete, RestID, DriverID, OrderCreationTime, OrderPickupTime, OrderDeliveryTime) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);";
 
-    con.query(sql, [orderVal, custName, 0, 0, custAddr, custLong, custLat, restID, 0, creationTime, null, null], function (err, result) {
+    con.query(sql, [orderVal, custName, custLat, custLong, custAddr, false, false, restID, 0, creationTime, null, null], function (err, result) {
       if (err) throw err;
       console.log("1 record inserted to orders, ID: " + result.insertId);
       callback(result.insertId);

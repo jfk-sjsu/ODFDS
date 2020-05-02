@@ -4,20 +4,14 @@
   <link rel="stylesheet" href="styles1.css">
   <script src = "script.js" defer></script>
   <script src = "tableify.js"></script>
-  <script>
-	function getOpenOrders() {
+  <script> 
+	function getOpenOrders() { 
 		fetch('/rest/getOrders/').then(function(response) {
 		  response.text().then(function(text) {
 		      tableify(text,document.getElementById('openOrders'));
 		  });
 		});
 	};
-  function  refreshIframe() {
-    var ordersWin = document.getElementById('orders');
-    ordersWin.contentWindow.location.reload();
-    ordersWin.width  = ordersWin.contentWindow.document.body.scrollWidth;
-  };
-
   </script>
   <head>
     <meta charset="utf-8">
@@ -55,26 +49,24 @@
         </div>
         <div class = "singular"> <!-- div where content goes -->
         <!-- list of open orders -->
-        <iframe id="orders" src='/rest/getOrders/' style="width:50%"></iframe>
-
         <div id="openOrders"></div>
-
+	<input type="button" onclick="getOpenOrders()" value="Change content">
         <div class = "rectangleBackground"> <!-- Restaurant Order Form -->
           <img src="media/rectangleBackground.png" width="250">
           <div class="imageText">
-			<form action="/rest/newOrder" method="post" onSubmit="true refreshIframe()"> <!-- action must match route in main.js -->
+			<form action="/rest/newOrder" method="post" "> <!-- action must match route in main.js -->
 				<h1>New Order</h1>
 				<label for="username">Name</label><br>
 				<input type="text" placeholder="Enter name"  name="name" required><br> <!-- name= must match parameter in main.js, as described above -->
 				<label for="email">email address</label><br>
 				<input type="text" placeholder="Enter email"  name="email" required><br> <!-- name= must match parameter in main.js, as described above -->
-
+				
 				<label for="address">Street Address</label><br>
 				<input type="text" placeholder="Enter Street address" id="address" name="address" required><br> <!-- name= must match parameter in main.js, as described above -->
-
+				
 				<label for="zip">Zip Code</label><br>
 				<input type="text" placeholder="Enter Zip" id="zip" name="zip" required><br> <!-- name= must match parameter in main.js, as described above -->
-
+				
 
 				<input type="submit" value="Submit">
 			</form>

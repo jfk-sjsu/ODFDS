@@ -9,6 +9,7 @@ var session = require('express-session');
 const driver = require('./node/driver')
 const rest = require('./node/restaurant')
 const geo = require('./node/geolocation')
+const tableify = require('./node/tableify.js')
 
 
 app.use(express.static('/website/'))
@@ -54,10 +55,13 @@ app.post('/driver/Login', function (req,res) {
 
 });
 app.get('/driver/logoff', function (req,res) {
-		var id = sess.did;
-		sess=null;
-		driver.setNotActive(id);
-		res.redirect('/index.html');
+		if(sess != null) {
+			var id = sess.did;
+			sess=null;
+			driver.setNotActive(id);
+
+	}
+	res.redirect('/index.html');
 	});
 
 
@@ -123,7 +127,7 @@ app.post('/rest/newOrder', function (req,res) {
 				var latitude = response.latitude;
 				var longitude= response.longitude;
 
-				rest.newOrder(orderVal, req.body.name, addr, latitude, longitude, 
+				rest.newOrder(orderVal, req.body.name, addr, latitude, longitude,
 				  restId, function (response) {
 					if(typeof(response) == 'number') {
 						res.redirect('/restaurantMain.html');
@@ -142,7 +146,8 @@ app.get('/rest/getOrders', function (req, res) {
 	if(sess == null) { res.send('[{"msg":"no one logged in!"}]'); return; };
 
 	rest.getOrders(sess.did, function (results) {
-		res.send(results);
+
+		res.send(tableify.tableify(results));
 	});
 });
 

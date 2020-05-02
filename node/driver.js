@@ -108,18 +108,14 @@ exports.selectOrder = function( driverId,orderId, callback) {
 							console.log("Processing orderId " + item.OrderID);
 							if(item.OrderID == orderId){ret = true;
 										console.log("found it! OrderID " + orderId + " == " +item.OrderID);
-										callback(ret);
-										return};
-						console.log("ret1 = " + ret);
-						});
-					console.log("ret2 = " + ret);
-					});
-		console.log("ret3 = " + ret);
-	});
-	console.log("ret4 = " + ret);
+                    dbUpd.assignOrdertoDriver(driverId, orderId, function (results) {
+                      callback(ret);
+                    });
+							};
 
-
-
+	           });
+           });
+         });
 }
 
 
