@@ -199,5 +199,12 @@ app.post('/driver/selectOrder/', function (req,res) {
 					res.send(results);
 	});
 });
+app.post('/driver/orderPickedUp/', function (req, res) {
+	if(sess == null) { res.send("[{'msg':'no one logged in!'}]"); return; };
+	driver.orderPickedUp(sess.did, req.body.orderId, function (results) {
+		console.log("collectedOrder", sess.did, req.body.orderId);
 
+					res.send(results.affectedRows == 1);
+	});
+});
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
