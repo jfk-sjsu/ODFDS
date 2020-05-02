@@ -28,6 +28,8 @@
 
     function initMap() {
       directionsService = new google.maps.DirectionsService;
+
+
       var chicago = new google.maps.LatLng(41.850033, -87.6500523);
       var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 8,
@@ -40,6 +42,8 @@
     }
 
     function calcRoute() {
+
+// change start as restrant location, and end as coustom location
       var start = "cambridge, ma";
       var end = "boston, ma";
       var request = {
