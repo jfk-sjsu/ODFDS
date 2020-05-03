@@ -4,6 +4,22 @@
   <link rel="stylesheet" href="styles1.css">
   <link rel="stylesheet" href="tablify.css">
   <script src = "script.js" defer></script>
+  <script src = "tableify.js"></script>
+  <script>
+	function getOpenOrders() {
+		fetch('/rest/getOrders/').then(function(response) {
+		  response.text().then(function(text) {
+		      tableify(text,document.getElementById('openOrders'));
+		  });
+		});
+	};
+  function  refreshIframe() {
+    var ordersWin = document.getElementById('orders');
+    ordersWin.contentWindow.location.reload();
+    ordersWin.width  = ordersWin.contentWindow.document.body.scrollWidth;
+  };
+
+  </script>
   <head>
     <meta charset="utf-8">
     <title>ODFDS | Restaurant History</title>
@@ -32,26 +48,14 @@
   <!-- WHERE PAGE CONTENT IS INSERTED -->
 
         <div class="pageTitle"><h2>Restaurant History</h2>
-          <p>Look at all the orders you hav! Nice progress!</p>
+          <p>Look at all the orders you have! Nice progress!</p>
         </div>
         <div class = "singular"> <!-- div where content goes -->
           <div> <!-- history div -->
             <h3>Orders</h3>
-           <script>
-	function getOrders() {
-		fetch('/rest/getOrders/').then(
-			function (response) {
-				response.text().then(
-					function (text) {
+            <iframe id="orders" src='/rest/getOrders/' style="width:80%"></iframe>
 
-						tableify(text, document.getElementById('orders'));
-					});
-			});
-	};
-</script>
-
-<div id="orders"></div>
-<body onload='getOrders()'>
+            <div id="openOrders"></div>
           </div> <!-- end of delivery text div -->
           </div> <!-- end of activity div -->
     </div> <!-- end of page content -->

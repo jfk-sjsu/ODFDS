@@ -4,6 +4,21 @@
   <link rel="stylesheet" href="styles1.css">
 	<link rel="stylesheet" href="tablify.css">
   <script src = "script.js" defer></script>
+  <script>
+  function getOpenOrders() {
+    fetch('/driver/getOrders/').then(function(response) {
+      response.text().then(function(text) {
+          tableify(text,document.getElementById('openOrders'));
+      });
+    });
+  };
+  function  refreshIframe() {
+    var ordersWin = document.getElementById('orders');
+    ordersWin.contentWindow.location.reload();
+    ordersWin.width  = ordersWin.contentWindow.document.body.scrollWidth;
+  };
+
+  </script>
   <head>
     <meta charset="utf-8">
     <title>ODFDS | Driver History</title>
@@ -37,21 +52,10 @@
         <div class = "singular"> <!-- div where content goes -->
           <div> <!-- history div -->
             <h3>Orders</h3>
-<script>
-	function getOrders() {
-		fetch('/driver/getOrders/').then(
-			function (response) {
-				response.text().then(
-					function (text) {
+            <iframe id="orders" src='/driver/getOrders/' style="width:80%"></iframe>
 
-						tableify(text, document.getElementById('orders'));
-					});
-			});
-	};
-</script>
+            <div id="openOrders"></div>
 
-<div id="orders"></div>
-<body onload='getOrders()'>
           </div> <!-- end of delivery text div -->
           </div> <!-- end of activity div -->
     </div> <!-- end of page content -->

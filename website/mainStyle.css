@@ -89,7 +89,7 @@
   width: 200px;
   height: 300px;
   position: relative;
-  z-index: 100;
+  margin-right: 50px;
 }
 
 .driverBlurb{
@@ -125,8 +125,7 @@
   border: 2px solid #C5A173;
   width: 315px;
   height: 375px;
-  position: relative;
-  z-index: -100;
+  float:left;
 }
 
 .profile{
