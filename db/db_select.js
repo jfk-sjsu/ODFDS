@@ -28,7 +28,7 @@ exports.driverGet = function (dLogin, callback) {
 
 }
 
-exports.restGet = function (rLogin, callback) {
+exports.restGet = function (email, callback) {
     var mysql = require('mysql');
     var con = mysql.createConnection({
 	    host: "172.17.0.2",
@@ -43,7 +43,7 @@ exports.restGet = function (rLogin, callback) {
 
         var sql = "SELECT * from restaurant WHERE RestLogin = ?";
 
-        con.query(sql, [ rLogin ], function (err, result, fields) {
+        con.query(sql, [ email ], function (err, result, fields) {
 		if (err) {
 			console.log("err in restGet" + err.message);
 			callback(null);
@@ -120,7 +120,7 @@ function _retrieveRestOrder(restID, callback) {
         if (err) throw err;
     });
 
-     var sql = "SELECT OrderID, CustName as 'Customer', CustAddr AS 'Address', (SELECT DriverName from driver Where DriverID = orders.DriverID) as Driver, OrderCreationTime as 'Entered', OrderPickupTime AS 'EnRoute', OrderDeliveryTime as 'Delivered' from orders WHERE RestID = ?;";
+     var sql = "SELECT OrderID, OrderVal as 'Distance', CustName as 'Customer', CustAddr AS 'Address', (SELECT DriverName from driver Where DriverID = orders.DriverID) as Driver, OrderCreationTime as 'Entered', OrderPickupTime AS 'EnRoute', OrderDeliveryTime as 'Delivered' from orders WHERE RestID = ?;";
 
     con.query(sql, [ restID ] , function (err, result, fields) {
         if (err) throw err;

@@ -19,6 +19,8 @@
 MODE: <div id='mode'>place</div>
 SRC: <div id="src"></div>
 
+<iframe style="width:100%" id="orders" src="/driver/getOrders"></iframe>
+
 <button onclick="calcRoute()">Update Map</button>
 <div id="end" > Space+Needle,Seattle+WA</div>
 
@@ -30,7 +32,7 @@ SRC: <div id="src"></div>
 
 <script >
 	watchPosition(showPos);
-	function showPos(position) { 
+	function showPos(position) {
 		document.getElementById('latitude').innerHTML = position.coords.latitude;
 		document.getElementById('longitude').innerHTML = position.coords.longitude;
 		document.getElementById("posUpdateTime").innerHTML = new Date().toLocaleString();
@@ -50,7 +52,7 @@ var directionsRenderer;
   var ctr = new google.maps.LatLng(ctrplt,ctrplo);
   var mapOptions = {
 	zoom:7,
-	center:  {lat: 41.85, lng: -87.65}
+	center:  ctr
   }
   var toput = document.getElementById('map');
   var map = new google.maps.Map(toput, mapOptions);

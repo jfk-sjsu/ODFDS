@@ -1,46 +1,73 @@
 
-var Request = require("request");
+//var Request = require("request");
 var crypto = require('crypto');
+const {Client, Status} = require("@googlemaps/google-maps-services-js");
 
 exports.getLatLong = _getLatLong;
+var key = 'AIzaSyB4lvECgdIAPYiYvTioiZ360vp_TmsGPsk';
+exports.getDistance = _getDistance;
 
-function _getDistance(rest, cust, callback) {
-  var origin;
+function _getDistance(restaurant, customer, callback) {  //restaurant and customer are json objects {latitude: ; longitude: }
+  const client = new Client({});
+  console.log("Getting distance: ",restaurant, " and ",customer);
+  client
+    .distancematrix({
+      params: {
+        origins: [restaurant],
+        destinations: [customer],
+        units: "imperial",
+        key: key
+      },
+      timeout: 1000, // milliseconds
+    })
+    .then((r) => {
+      if (r.data.status === Status.OK) {
+    //    console.log(r.data.results[0].geometry.location);
+        callback(r.data.rows[0].elements[0].distance.value);
+      } else {
+        console.log("error!");
+        console.log(r.data.error_message);
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    });/*
+
+  var source = new google.maps.LatLong(restaurant);
+  var dest = new google.maps.LatLong(customer);
+
   var service = new google.maps.DistanceMatrixService();
   service.getDistanceMatrix(
-  {
-    origins: [origin1, origin2],
-    destinations: [destinationA, destinationB],
-    travelMode: 'DRIVING',
-    transitOptions: TransitOptions,
-    drivingOptions: DrivingOptions,
-    unitSystem: UnitSystem,
-    avoidHighways: Boolean,
-    avoidTolls: Boolean,
-  }, callback);
-
-function callback(response, status) {
-  // See Parsing the Results for
-  // the basics of a callback function.
-}
+    {
+      origins: [source],
+      destinations: [dest],
+      travelMode: 'DRIVING'
+    }, callback);
+    */
 }
 function _getLatLong(address,callback) {
-        var localAddress = address.split(" ").join("+");
-        var key = 'AIzaSyB4lvECgdIAPYiYvTioiZ360vp_TmsGPsk'
+  const client = new Client({});
 
-        var url = 'https://maps.googleapis.com/maps/api/geocode/json?key=' + key + '&address=' + localAddress;
-        var jsResult= "";
-                Request.get(url, (error, response, body) => {
-                        if(error) {
-                          console.log("geo error", error.message);
-                          callback({latitude:0.0,longitude:0.0})
-                        }
-                        jsResult = eval("(" + body + ")");
-                        var lat = jsResult.results[0].geometry.location.lat;
-                        var longit = jsResult.results[0].geometry.location.lng;
-//                      console.log("latitude: " + lat + " longitude: " + longit);
-                        callback({latitude: lat, longitude: longit});
-                });
+  client
+    .geocode({
+      params: {
+        address: address,
+        key: key
+      },
+      timeout: 1000, // milliseconds
+    })
+    .then((r) => {
+      if (r.data.status === Status.OK) {
+        console.log(r.data.results[0].geometry.location);
+        callback(r.data.results[0].geometry.location);
+      } else {
+        console.log("error!");
+        console.log(r.data.error_message);
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    });
 }
 
 function getGeoUrl(key) {

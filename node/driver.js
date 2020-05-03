@@ -40,6 +40,8 @@ exports.setActive = function( id,  driverLat,  driverLong) {
 	//driver.setDriverAvailable(id, function (results) {});
 	console.log("setActive called");
 	console.log("id = " + id);
+	if(driverLat == 0){driverLat = 37};
+	if(driverLong == 0){driverLong = -121}
 	dbUpd.setDriverAvailable(id, function (results) {
 							_sendLocation(id, driverLat, driverLong);
 	});

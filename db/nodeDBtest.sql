@@ -6,7 +6,7 @@
 
 CREATE DATABASE odfdsdb;
 
-use odfdsdb; 
+use odfdsdb;
 
 SET FOREIGN_KEY_CHECKS = 0;
 DROP table IF EXISTS restaurant;
@@ -21,7 +21,7 @@ SET FOREIGN_KEY_CHECKS = 1;
 CREATE TABLE restaurant (RestID INT NOT NULL AUTO_INCREMENT,
             					RestLogin VARCHAR(30),
             					RestPW VARCHAR(15),
-						RestName VARCHAR(15),
+						RestName VARCHAR(200),
 
 						RestAddr VARCHAR (200),
 						RestLong DOUBLE,

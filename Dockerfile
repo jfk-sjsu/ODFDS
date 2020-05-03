@@ -5,11 +5,13 @@ RUN npm install cookie-parser
 RUN npm install express-session
 RUN npm install mysql
 RUN npm install --save request
-EXPOSE 3000/tcp 
+RUN npm install @googlemaps/google-maps-services-js
+RUN export GOOGLE_MAPS_API_KEY=AIzaSyB4lvECgdIAPYiYvTioiZ360vp_TmsGPsk
+EXPOSE 3000/tcp
 CMD mkdir /website
 CMD mkdir /website/media
 CMD mkdir /node
-CMD mkdir /db 
+CMD mkdir /db
 ADD node/* /node/
 ADD website/* /website/
 ADD website/media/* /website/media/

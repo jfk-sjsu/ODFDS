@@ -73,8 +73,8 @@ app.post('/rest/SignUp', function (req, res) {
 	var rLat = 0.0
 	var rLong = 0.0
 	var latLong = geo.getLatLong(req.body.address + " " + req.body.zip, function (results) {
-		rLat = results.latitude;
-		rLong = results.longitude;
+		rLat = results.lat;
+		rLong = results.lng;
 		console.log("rLat " + rLat + " rLong " + rLong);
 
 		var ret = rest.registerRestaurant(req.body.email,
@@ -113,7 +113,7 @@ app.post('/driver/SignUp', function (req, res) {
 
 });
 app.post('/rest/newOrder', function (req,res) {
-	var orderVal = 1.00;
+
 	if(sess == null) {
 		res.send("no one logged in!");
 	}
@@ -124,22 +124,26 @@ app.post('/rest/newOrder', function (req,res) {
 		addr = addr.split(" ").join("+");
 		// need to get distance from restaurant to cust
 			geo.getLatLong(addr, function (response) {
-				var latitude = response.latitude;
-				var longitude= response.longitude;
-
-				rest.newOrder(orderVal, req.body.name, addr, latitude, longitude,
-				  restId, function (response) {
-					if(typeof(response) == 'number') {
-						res.redirect('/restaurantMain.html');
-					}
-					else
-					{
-						res.send(response);
-					}
+				var latitude = response.lat;
+				var longitude= response.lng;
+				console.log("newOrder sess.latLng: ", sess.latLng);
+				geo.getDistance(sess.latLng, response, function (results) {
+						var orderVal = results;
+						console.log(orderVal);
+						rest.newOrder(orderVal, req.body.name, addr, latitude, longitude,
+						  restId, function (response) {
+							if(typeof(response) == 'number') {
+								res.redirect('/restaurantMain.html');
+							}
+							else
+							{
+								res.send(response);
+							}
 				});
 			});
-	}
+	});
 
+}
 });
 
 app.get('/rest/getOrders', function (req, res) {
@@ -160,6 +164,11 @@ app.post('/rest/login', function (req,res) {
 						sess=req.session;
 						sess.username = req.body.email;
 						sess.did=results;
+						rest.getAddress(sess.did, function (results) {
+							console.log("rest addr: " , results);
+							sess.latLng = {lat: results[0].RestLat, lng: results[0].RestLong};
+							console.log("sess.latlng: ",sess.latLng )
+						});
 						res.redirect('/restaurantMain.html');
 					} else
 					{
@@ -192,14 +201,14 @@ app.get('/driver/getOrders', function (req, res) {
 	if(sess == null) { res.send("[{'msg':'no one logged in!'}]"); return; };
 
 	driver.getOrders(sess.did, function (results) {
-		res.send(results);
+		res.send(tableify.tableify(results));
 	});
 });
 app.post('/driver/reqOpenOrders/', function (req, res) {
 	if(sess == null) { res.send("no one logged in!"); return; };
 	console.log("reqOpenOrders", sess.did);
 	driver.getOpenOrders(sess.did, function (results) {
-		res.send(results);
+		res.send(tableify.tableify(results));
 	});
 });
 

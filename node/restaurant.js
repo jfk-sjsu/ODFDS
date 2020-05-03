@@ -3,7 +3,6 @@ const dbIns = require('../db/db_insert')
 const dbSel = require('../db/db_select')
 const dbUpd = require('../db/db_update')
 
-
 function _newOrder(orderVal, custName, custAddr, custLat, custLong,  restId, callback)  {
 	console.log("_newOrder called: ",orderVal, custName,  custAddr, custLong, custLat, restId);
 
@@ -37,7 +36,9 @@ function _login(email, password, callback) {
 }
 function _SignUp(email,password,name,address,rLat, rLong, phone,callback) {
 		address = address.split(",").join("").split(" ").join("+");
+		name = name.split(" ").join("+");
 		console.log("_SignUp called ",email,password,name,address,rLat, rLong,phone);
+
 		dbIns.registerRestaurant(email,password,name,address,rLong, rLat, phone, function (results) {
 					callback(results);
 		});
@@ -72,9 +73,14 @@ function _getOrders(restId, callback) {
 			callback(results);
 		});
 }
-
+function _getAddress(restId, callback) {
+	dbSel.getRestInfo(restId, function (results) {
+		callback(results);
+	});
+}
 exports.newOrder = _newOrder;
 exports.login = _login;
 exports.SignUp = _SignUp;
 exports.getOrders = _getOrders;
 exports.registerRestaurant = _SignUp;
+exports.getAddress = _getAddress;
