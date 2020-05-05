@@ -21,11 +21,10 @@ Step 5) Run the script file
 	Linux instructions: 
 		./start_db.sh
 		./start_web.sh
-	Windows instructions: 
+	Mac & Windows instructions: 
 		./start_db.bat
 		./start_web.bat
-	Mac instructions: 
-		TBD
+# See the /docs directory for explanatory videos
 
 Now you have the environment. point your browser at http://localhost:3000 to see the app! 
 
