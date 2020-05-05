@@ -3,7 +3,29 @@
 <link rel="stylesheet" href="mainStyle.css">
   <link rel="stylesheet" href="styles1.css">
   <script src = "script.js" defer></script>
+  <script src="geolocation.js"></script>
+
   <head>
+    <script >
+      watchPosition(showPos, failurePosition);
+      function showPos(position) {
+        document.getElementById('latitude').innerHTML = position.coords.latitude;
+        document.getElementById('longitude').innerHTML = position.coords.longitude;
+        document.getElementById("posUpdateTime").innerHTML = new Date().toLocaleString();
+        calcRoute();
+      }
+      function failurePosition(error)
+      {
+      	document.getElementById("posUpdateTime").innerHTML = "Error Code: " +error.code + " Error Message: " + error.message;
+      }
+      function updateOrders() {
+        document.getElementById('toDeliver').contentWindow.location.reload();
+        document.getElementById('openOrders').contentWindow.location.reload();
+        calcRoute();
+
+      }
+
+    </script>
     <meta charset="utf-8">
     <title>ODFDS | Driver</title>
   </head>
@@ -38,42 +60,49 @@
         <div class="pageTitle"><h2>Driver Activity</h2>
           <p>Let's get to work! There are orders to deliver, and not a minute to waste!</p>
         </div>
-        <div class = "singular"> <!-- div where content goes -->
-<div>
-          <div class="activity"> <!-- activity div -->
+<!--        <div class = "singular"> <!-- div where content goes -->
+          <div style="allign-text:center" >
+<!--          <div class="activity"> <!-- activity div -->
+            <div style="float:left;width:50%">
             <h3>Deliveries</h3> <!-- delivery text div -->
-            <div class = "deliveryText">
-              <form action="/driver/reqOpenOrders" method="post" > <!-- action must match route in main.js -->
-              	<p class="deliveryName">Driver getOpenOrders</p>
+    <!--        <div class = "deliveryText">      -->
+              <iframe src="/driver/getOrders" id="toDeliver" style="width=1200px"></iframe><br>
 
-              	<input type="submit" value="Submit">
-              </form>
 
-            <form action="/driver/orderPickedUp/" method="post">
+            <form action="/driver/orderPickedUp/" method="post" onSubmit="updateOrders()">
             		<p class = "deliveryDirection">Order Picked Up</p>
             		<input type="text" placeholder="Enter Order ID" name="orderId"><br>
             		<input type="submit" value="Submit">
             </form>
 
-            <form action="/driver/completeOrder/" method="post">
+            <form action="/driver/completeOrder/" id="openOrders" method="post"  onSubmit="updateOrders()">
             		<p class = "deliveryDirection">Order delivered</p>
             		<input type="text" placeholder="Enter Order ID" name="orderId"><br>
             		<input type="submit" value="Submit">
             </form>
-          </div> <!-- end of delivery text div -->
-          </div> <!-- end of activity div -->
+<!--          </div> <!-- end of delivery text div -->
+<!--          </div> <!-- end of activity div -->
+            </div>
+            <div style="float:left;width:50%">
+                <h3>Orders to get</h3>
+                <iframe src="/driver/reqOpenOrders"  style="width=1200px"></iframe><br>
+                <form action="/driver/selectOrder/" method="post">
+                		<p class = "deliveryDirection">Select order to deliver</p>
+                		<input type="text" placeholder="Enter Order ID" name="orderId"><br>
+                		<input type="submit" value="Submit">
+                </form>
 
-        </div>
+          </div>
+
           <div>
-            <script src="geolocation.js"></script>
-            </head>
-            <body>
 
-            <h2> Time of position: <div id="posUpdateTime"></div></h2>
-            <h2> Latitude: <div id="latitude">37</div></h2>
-            <h2> Longitude: <div id="longitude">-121</div></h2>
-            MODE: <div id='mode'>place</div>
-            SRC: <div id="src"></div>
+
+             <div id="posUpdateTime" style="display:none"></div>
+             <div id="latitude" style="display:none">37</div>
+             <div id="longitude" style="display:none">-121</div>
+
+           <div id='mode' style="display:none">place</div>
+             <div id="src" style="display:none"></div>
 
             <button onclick="calcRoute()">Update Map</button>
             <div id="end" > Space+Needle,Seattle+WA</div>
@@ -84,16 +113,7 @@
             		<div id="right-panel" style="height:100%;width:50%;float:left"></div>
             	</div>
 
-            <script >
-            	watchPosition(showPos);
-            	function showPos(position) {
-            		document.getElementById('latitude').innerHTML = position.coords.latitude;
-            		document.getElementById('longitude').innerHTML = position.coords.longitude;
-            		document.getElementById("posUpdateTime").innerHTML = new Date().toLocaleString();
 
-            	}
-
-            </script>
             <script>
             var directionsService;
             var directionsRenderer;
@@ -115,6 +135,20 @@
             }
 
             function calcRoute() {
+
+              fetch('/driver/getOrdersJson/')
+              .then(response => response.json())
+              .then(body => {
+                  console.log(body);
+                  if(body.length > 0) {
+                    if(!body[0].OrderPickedUp) {
+                    document.getElementById('end').innerHTML = body[0].RestAddr
+                  } else {
+                    document.getElementById('end').innerHTML = body[0].CustAddr}
+                  }
+
+              })
+              .then( msg => {
               var start = document.getElementById('latitude').innerHTML + "," + document.getElementById('longitude').innerHTML;
               var end = document.getElementById('end').innerHTML;
               var request = {
@@ -127,7 +161,8 @@
             	  directionsRenderer.setDirections(result);
             	}
               });
-            }
+            });
+          }
             </script>
             <script async defer
             	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4lvECgdIAPYiYvTioiZ360vp_TmsGPsk&callback=initMap">

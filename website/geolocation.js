@@ -30,8 +30,9 @@ function getPosition(htmlLat, htmlLong, err)
 
 }
 
-function watchPosition(successPosition)
+function watchPosition(successPosition, failurePosition)
 {
+
 	if(navigator.geolocation)
 	{
 	  watchId = navigator.geolocation.watchPosition(successPosition, failurePosition,
@@ -43,10 +44,7 @@ function watchPosition(successPosition)
 	else
 	  document.getElemetById("result").innerHTML = "Your browser does not support Geolocation"
 }
-function failurePosition(error)
-{
-	alert("Error Code: " +error.code + " Error Message: " + error.message);
-}
+
 function stopWatching()
 {
 	clearWatch(watchId);

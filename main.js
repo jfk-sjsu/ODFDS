@@ -197,14 +197,21 @@ app.post('/driver/getDriverDetails', function (req,res) {
 });
 
 
-app.get('/driver/getOrders', function (req, res) {
+app.get('/driver/getOrders/', function (req, res) {
 	if(sess == null) { res.send("[{'msg':'no one logged in!'}]"); return; };
 
 	driver.getOrders(sess.did, function (results) {
 		res.send(tableify.tableify(results));
 	});
 });
-app.post('/driver/reqOpenOrders/', function (req, res) {
+app.get('/driver/getOrdersJson/', function (req, res) {
+	if(sess == null) { res.send("[{'msg':'no one logged in!'}]"); return; };
+
+	driver.getOrders(sess.did, function (results) {
+		res.send(results);
+	});
+});
+app.get('/driver/reqOpenOrders/', function (req, res) {
 	if(sess == null) { res.send("no one logged in!"); return; };
 	console.log("reqOpenOrders", sess.did);
 	driver.getOpenOrders(sess.did, function (results) {
