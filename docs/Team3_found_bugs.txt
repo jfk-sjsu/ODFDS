@@ -1,0 +1,32 @@
+
+Login Page
+Login error handler for bad input sends user to another page rather than an alert and stay on the same page
+
+Sign Up Page
+No error handler for driver bad inputs, throws an exception and crashes the web page (typed q for all inputs)
+No error handler for restaurant bad inputs, accepts bad input ( typed q for all inputs)
+No error handler for creating an account with existing account information
+Before you enter the password in restaurant sign up, it says “Enter full name”
+Border of sign in does not line up with the box image
+
+
+Restaurant
+New orders do not have constraints for location (Ex. can be sent to Seattle from SJ)
+New orders have no error handling for bad address
+New orders have no error handling for bad zip code
+There is no map to view the drivers
+When there is existing restaurant login session, it does not let another restaurant login (No option to logout)
+No cost display in history
+
+Driver
+There is no constraints when choosing a 2nd order from a second restaurant
+No constraint when choosing a 2nd order from the same restaurant
+The map does not route from restaurant to delivery location
+There is no error handling when submitting a bad ID to choose an order
+There is no error handling when submitting a bad
+There is a feature that says the address is too far away but the driver can still accept the order?
+Accepting an order takes you to another page, need to press back to return to previous page
+Driver can submit that order has been delivered before it is even picked up
+There is no cost display for delivery
+Cannot see delivered order in driver history
+
