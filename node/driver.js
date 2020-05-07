@@ -122,10 +122,14 @@ exports.selectOrder = function( driverId,orderId, callback) {
 
 
 exports.completeOrder = function( driverId, orderId, callback) {
-
-	dbUpd.completeOrder(driverId, orderId, function (results) {
+	// check to see if the order has been picked up
+	dbSel.orderGetById(orderId, function (results) {
+		if(results.OrderPickedUp) {
+			dbUpd.completeOrder(driverId, orderId, function (results) {
       callback(results)
-  });
+  		});
+		}
+	});
 }
 
 
@@ -163,6 +167,11 @@ function _getDetails(id, callback) {
 }
 exports.getOrders = function(driverId, callback) {
 	dbSel.retrieveDriverOrder(driverId, function (results) {
+		callback(results);
+	});
+}
+exports.getAllOrders = function(driverId, callback) {
+	dbSel.retrieveDriverAllOrder(driverId, function (results) {
 		callback(results);
 	});
 }

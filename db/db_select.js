@@ -54,6 +54,31 @@ exports.restGet = function (email, callback) {
     con.end();
 	});
 }
+exports.orderGetById = _orderGetById;
+
+function _orderGetById(orderID, callback) {
+    var mysql = require('mysql');
+    var con = mysql.createConnection({
+	    host: "172.17.0.2",
+	    user: "dbuser",
+	    password: "example",
+	    database: "odfdsdb"
+    });
+
+     con.connect(function(err) {
+        if (err) throw err;
+    });
+     console.log("orderGet " + orderID);
+     var sql = 'SELECT * FROM orders WHERE orders.OrderID=?;'
+
+    con.query(sql, [ orderID ], function (err, result, fields) {
+        if (err) throw err;
+
+        callback(result);
+
+    });
+    con.end();
+}
 exports.orderGet = _orderGet;
 
 function _orderGet(orderID, callback) {
@@ -94,6 +119,33 @@ function _retrieveDriverOrder(driverID, callback) {
         if (err) throw err;
     });
      var sql = 'SELECT orders.OrderID, orders.OrderVal, orders.CustName, orders.CustAddr, orders.CustName, restaurant.RestName, restaurant.RestAddr, orders.OrderPickedUp FROM orders INNER JOIN restaurant ON orders.RestID=restaurant.RestID WHERE orders.DriverID=? AND orders.OrderComplete = false;'
+
+    // var sql = "SELECT * from orders WHERE DriverID = ?;";
+
+    con.query(sql, [ driverID ] , function (err, result, fields) {
+        if (err) throw err;
+
+        return callback(result);
+
+    });
+    con.end();
+}
+
+exports.retrieveDriverAllOrder = _retrieveDriverAllOrder;
+
+function _retrieveDriverAllOrder(driverID, callback) {
+    var mysql = require('mysql');
+    var con = mysql.createConnection({
+	    host: "172.17.0.2",
+	    user: "dbuser",
+	    password: "example",
+	    database: "odfdsdb"
+    });
+
+     con.connect(function(err) {
+        if (err) throw err;
+    });
+     var sql = 'SELECT orders.OrderID, orders.OrderVal, orders.CustName, orders.CustAddr, orders.CustName, restaurant.RestName, restaurant.RestAddr, orders.OrderPickedUp FROM orders INNER JOIN restaurant ON orders.RestID=restaurant.RestID WHERE orders.DriverID=?;'
 
     // var sql = "SELECT * from orders WHERE DriverID = ?;";
 
