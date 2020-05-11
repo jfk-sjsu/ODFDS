@@ -124,11 +124,19 @@ exports.selectOrder = function( driverId,orderId, callback) {
 exports.completeOrder = function( driverId, orderId, callback) {
 	// check to see if the order has been picked up
 	dbSel.orderGetById(orderId, function (results) {
-		if(results.OrderPickedUp) {
-			dbUpd.completeOrder(driverId, orderId, function (results) {
-      callback(results)
-  		});
-		}
+		if(results.length == 0) {
+			callback("alert(No such Order)")
+		} else if (results[0].DriverID != driverId) {
+			callback("alert(order does not belong to this driver)");
+
+		} else if(results[0].OrderPickedUp != 1) {
+			callback("alert(Order has not been picked up yet!)");
+		} else {
+				console.log("order", orderId, " has been delivered");
+				dbUpd.completeOrder(driverId, orderId, function (results) {
+	      callback(results)
+	  		});
+			}
 	});
 }
 
@@ -182,9 +190,19 @@ exports.getOpenOrders = function (driverId, callback) {
 	});
 }
 exports.orderPickedUp = function (driverId, orderId, callback) {
-   dbUpd.orderPickedUp(driverId, orderId, function (results) {
-            callback(results);
-   });
+	dbSel.orderGetById(orderId, function (results) {
+		if(results.length == 0) {
+			callback("alert(No such Order)")
+		} else if (results[0].DriverID != driverId) {
+			callback("alert(order does not belong to this driver)");
 
-
+		} else if(results[0].OrderPickedUp != 0) {
+			callback("alert(Order has already been picked up yet!)");
+		} else {
+				console.log("order", orderId, " has been Picked up.");
+				dbUpd.orderPickedUp(driverId, orderId, function (results) {
+	      callback(results)
+	  		});
+			}
+	});
 }

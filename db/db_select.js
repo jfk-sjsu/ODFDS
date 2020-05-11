@@ -118,7 +118,7 @@ function _retrieveDriverOrder(driverID, callback) {
      con.connect(function(err) {
         if (err) throw err;
     });
-     var sql = 'SELECT orders.OrderID, orders.OrderVal, orders.CustName, orders.CustAddr, orders.CustName, restaurant.RestName, restaurant.RestAddr, orders.OrderPickedUp FROM orders INNER JOIN restaurant ON orders.RestID=restaurant.RestID WHERE orders.DriverID=? AND orders.OrderComplete = false;'
+     var sql = 'SELECT orders.OrderID, orders.OrderVal, orders.CustName, orders.CustAddr, orders.CustName, restaurant.RestName, restaurant.RestAddr, orders.OrderPickedUp, orders.OrderComplete FROM orders INNER JOIN restaurant ON orders.RestID=restaurant.RestID WHERE orders.DriverID=? AND orders.OrderComplete = false;'
 
     // var sql = "SELECT * from orders WHERE DriverID = ?;";
 

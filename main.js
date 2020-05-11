@@ -15,7 +15,7 @@ const tableify = require('./node/tableify.js')
 app.use(express.static('/website/'))
 app.use(session({secret: 'verySecretP@ssw0rd'}));
 
-//var sess = null;
+/*
 app.post('/driver/getRestForOrder', function (req,res) {
 
 		if(req.session.did == null) {
@@ -26,6 +26,7 @@ app.post('/driver/getRestForOrder', function (req,res) {
 		res.send(results);
 	});
 });
+*/
 
 app.post('/driver/Login', function (req,res) {
 	console.log('/driver/Login',req.body.email, req.body.psw,
@@ -39,6 +40,7 @@ app.post('/driver/Login', function (req,res) {
 					if(typeof(results) == 'number') {
 						var sess=req.session;
 						sess.username = req.body.email;
+						sess.loginType = "d";
 						sess.did = results;
 						console.log('sess.did = ' + sess.did);
 						console.log('dLat, dLong ',req.body.dLat, req.body.dLong);
@@ -55,11 +57,12 @@ app.post('/driver/Login', function (req,res) {
 
 });
 app.get('/driver/logoff', function (req,res) {
-		if(req.session.did != null) {
-			var id = req.session.did;
-			req.session.did = null;
-			driver.setNotActive(id);
-
+		if(req.session != null) {
+			if(req.session.loginType == "d") {
+				var id = req.session.did;
+				driver.setNotActive(id);
+				req.session.destroy();
+			}
 	}
 	res.redirect('/index.html');
 	});
@@ -147,7 +150,7 @@ app.post('/rest/newOrder', function (req,res) {
 });
 
 app.get('/rest/getOrders', function (req, res) {
-	if(req.session.did == null) { res.send('[]'); return; };
+	if(req.session.did == null || req.session.loginType != "r") { res.send('[]'); return; };
 
 	rest.getOrders(req.session.did, function (results) {
 
@@ -162,6 +165,7 @@ app.post('/rest/login', function (req,res) {
 					if(req.session.did != null) {res.send("already logged in." + req.session.username); return};
 					if(typeof(results) == 'number') {
 						var sess=req.session;
+						sess.loginType = "r";
 						sess.username = req.body.email;
 						sess.did=results;
 						rest.getAddress(sess.did, function (results) {
@@ -178,12 +182,12 @@ app.post('/rest/login', function (req,res) {
 
 });
 app.get('/rest/logoff', function (req,res) {
-	if(req.session.did != null) {
-		req.session.did = null;
+	if(req.session.loginType == "r") {
+		req.session.destroy();
 	}
-		res.redirect('/index.html');
+	res.redirect('/index.html');
 	});
-
+/*
 app.post('/driver/getDriverDetails', function (req,res) {
 		if(req.session.username == null) {
 						res.send("[]]");
@@ -195,9 +199,10 @@ app.post('/driver/getDriverDetails', function (req,res) {
 			});
 		}
 });
+*/
 
 app.get('/driver/getAllOrders/', function (req, res) {
-	if(req.session.did == null) { res.send("[]"); return; };
+	if(req.session.did == null || req.session.loginType != "d") { res.send("[]"); return; };
 
 	driver.getAllOrders(req.session.did, function (results) {
 		res.send(tableify.tableify(results));
@@ -205,21 +210,21 @@ app.get('/driver/getAllOrders/', function (req, res) {
 });
 
 app.get('/driver/getOrders/', function (req, res) {
-	if(req.session.did == null) { res.send("[]"); return; };
+	if(req.session.did == null || req.session.loginType != "d") { res.send("[]"); return; };
 
 	driver.getOrders(req.session.did, function (results) {
 		res.send(tableify.tableify(results));
 	});
 });
 app.get('/driver/getOrdersJson/', function (req, res) {
-	if(req.session.did == null) { res.send("[]"); return; };
+	if(req.session.did == null || req.session.loginType != "d") { res.send("[]"); return; };
 
 	driver.getOrders(req.session.did, function (results) {
 		res.send(results);
 	});
 });
 app.get('/driver/reqOpenOrders/', function (req, res) {
-	if(req.session.did == null) { res.send("[]"); return; };
+	if(req.session.did == null || req.session.loginType != "d") { res.send("[]"); return; };
 	console.log("reqOpenOrders", req.session.did);
 	driver.getOpenOrders(req.session.did, function (results) {
 		res.send(tableify.tableify(results));
@@ -228,13 +233,13 @@ app.get('/driver/reqOpenOrders/', function (req, res) {
 
 app.post('/driver/selectOrder/', function (req,res) {
 	// the driver uses this to select which order they want to take.
-	if(req.session.did == null) { res.send("[]"); return; };
+	if(req.session.did == null || req.session.loginType != "d") { res.send("[]"); return; };
 		driver.selectOrder(req.session.did, req.body.orderId, function (results) {
 					res.redirect('/driverMain.html');
 	});
 });
 app.post('/driver/orderPickedUp/', function (req, res) {
-	if(req.session.did == null) { res.send("[]"); return; };
+	if(req.session.did == null || req.session.loginType != "d") { res.send("[]"); return; };
 	driver.orderPickedUp(req.session.did, req.body.orderId, function (results) {
 		console.log("orderPickedUp", req.session.did, req.body.orderId);
 
@@ -242,10 +247,10 @@ app.post('/driver/orderPickedUp/', function (req, res) {
 	});
 });
 app.post('/driver/completeOrder/', function (req, res) {
-	if(req.session.did == null) { res.send("[]"); return; };
+	if(req.session.did == null || req.session.loginType != "d") { res.send("[]"); return; };
 	driver.completeOrder(req.session.did, req.body.orderId, function (results) {
 		console.log("completeOrder", req.session.did, req.body.orderId);
-
+					console.log(results);
 					res.redirect('/driverMain.html');
 	});
 });
