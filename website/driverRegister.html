@@ -40,20 +40,20 @@
 
               <h1>Driver</h1>
               <label for="fullname">Name</label><br>
-              <input type=text placeholder="Enter Full Name" id="fullname" name="name" required><br>
+              <input type=text placeholder="Enter Full Name" id="fullname" name="name" pattern="[A-Za-z]+" required><br>
               <label for="email"><b>Email</b></label><br>
-              <input type=text id="email" placeholder="Enter Email" name="email" required><br>
+              <input type=email id="email" placeholder="Enter Email" name="email"  required><br>
               <label for="psw"><b>Password</b></label><br>
               <input type=password id="psw" placeholder="Enter Password" name="psw" required><br>
               <label for="phone">Phone Number</label><br>
-              <input type=tel placeholder="123-456-7890" id="phone" name="phone" minlength=10 maxlength=11 required><br>
+              <input type=tel placeholder="123-456-7890" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"  required><br>
 
               <label for="makeModel">Make and Model of Car</label><br>
               <input type=text placeholder="Enter Make and Model" id="makeModel" name="carMake" required><br>
               <label for="licenseplate">License Plate</label><br>
-              <input type=text placeholder="Enter License Plate" id="licenseplate" name="license" minlength=2 maxlength=7 required><br>
+              <input type=text placeholder="Enter License Plate" id="licenseplate" name="license" minlength=2 maxlength=7 pattern="[A-Za-z0-9]+" required><br>
               <label for="pay">Payment Number</label><br>
-              <input type=text placeholder="Enter Payment #" id="pay" name="pay" minlength=5 required><br><br>
+              <input type=text placeholder="Enter Payment #" id="pay" name="pay" minlength=5 pattern="[0-9]+" required><br><br>
               <center><button type="submit" class="button2">Sign Up</button></center><br>
 
             </form>
