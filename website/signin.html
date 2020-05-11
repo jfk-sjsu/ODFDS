@@ -51,7 +51,7 @@
 		<form action="/driver/login" method="post"  > <!-- action must match route in main.js -->
 			<h1>Driver login</h1>
 			<label for="email">email address</label><br>
-		    	<input type="text" placeholder="Enter username"  name="email" required><br> <!-- name= must match parameter in main.js, as described above -->
+		    	<input type="text" placeholder="Enter username"  name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required><br> <!-- name= must match parameter in main.js, as described above -->
 			<label for="psw">Password</label><br>
 		    	<input type="password" placeholder="Enter Password" id="psw" name="psw"><br>
 
