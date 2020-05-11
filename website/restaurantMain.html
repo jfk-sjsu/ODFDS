@@ -67,13 +67,16 @@
       				<label for="username">Name</label><br>
       				<input type="text" placeholder="Enter name"  name="name" required><br> <!-- name= must match parameter in main.js, as described above -->
       				<label for="email">email address</label><br>
-      				<input type="text" placeholder="Enter email"  name="email" required><br> <!-- name= must match parameter in main.js, as described above -->
+      				<input type="text" placeholder="Enter email"  name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required><br> <!-- name= must match parameter in main.js, as described above -->
 
       				<label for="address">Street Address</label><br>
-      				<input type="text" placeholder="Enter Street address" id="address" name="address" required><br> <!-- name= must match parameter in main.js, as described above -->
+      				<input type="text" placeholder="Enter Street address" id="address" name="address"  pattern="^(\d{1,})\s?(\w{0,5})\s([a-zA-Z]{2,40})\s([a-zA-Z]{2,15})\.?\s?(\w{0,5})$" oninvalid="setCustomValidity('Must enter street address')" required><br> <!-- name= must match parameter in main.js, as described above -->
 
+				<label for="city">City</label><br>
+        <input type="text" placeholder="Enter city"  name="city" pattern="^(san jose|San Jose)$" oninvalid="setCustomValidity('Must be in San Jose')" required><br>
+				
       				<label for="zip">Zip Code</label><br>
-      				<input type="text" placeholder="Enter Zip" id="zip" name="zip" required><br> <!-- name= must match parameter in main.js, as described above -->
+      				<input type="text" placeholder="Enter Zip" id="zip" name="zip"  pattern="^(9510[1-9]|^951[1-3][0-9]|^95141$|^95148$|^9515[0-9]|^9516[0-4]|^95170$|^95172$|^95173$|^9519[0-6])$"  oninvalid="setCustomValidity('Must enter San Jose Zip Code')" required><br> <!-- name= must match parameter in main.js, as described above -->
 
 
       				<input type="submit" value="Submit">
