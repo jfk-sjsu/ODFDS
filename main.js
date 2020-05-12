@@ -122,6 +122,7 @@ app.post('/rest/newOrder', function (req,res) {
 	}
 	else
 	{
+
 		var restId = req.session.did;
 		var addr = req.body.address + "+" + req.body.zip;
 		addr = addr.split(" ").join("+");
@@ -129,8 +130,9 @@ app.post('/rest/newOrder', function (req,res) {
 			geo.getLatLong(addr, function (response) {
 				var latitude = response.lat;
 				var longitude= response.lng;
-				console.log("newOrder sess.latLng: ", sess.latLng);
-				geo.getDistance(sess.latLng, response, function (results) {
+				console.log("newOrder req.session.latLng: ", req.session.latLng);
+				console.log("newOrder req.session.username: ", req.session.username);
+				geo.getDistance(req.session.latLng, response, function (results) {
 						var orderVal = results;
 						console.log(orderVal);
 						rest.newOrder(orderVal, req.body.name, addr, latitude, longitude,
@@ -165,15 +167,16 @@ app.post('/rest/login', function (req,res) {
 					if(req.session.did != null) {res.send("already logged in." + req.session.username); return};
 					if(typeof(results) == 'number') {
 						var sess=req.session;
-						sess.loginType = "r";
-						sess.username = req.body.email;
-						sess.did=results;
+						req.session.loginType = "r";
+						req.session.username = req.body.email;
+						req.session.did=results;
 						rest.getAddress(sess.did, function (results) {
 							console.log("rest addr: " , results);
-							sess.latLng = {lat: results[0].RestLat, lng: results[0].RestLong};
-							console.log("sess.latlng: ",sess.latLng )
+							req.session.latLng = {lat: results[0].RestLat, lng: results[0].RestLong};
+							console.log("req.session.latLng: ",req.session.latLng )
+							res.redirect('/restaurantMain.html');
 						});
-						res.redirect('/restaurantMain.html');
+
 					} else
 					{
 						res.send(results);

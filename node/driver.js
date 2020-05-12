@@ -71,7 +71,9 @@ exports.sendLocation = _sendLocation;
 
 
 }
-exports.getRestForOrder = function (orderId, callback) {
+exports.getRestForOrder = _getRestForOrder
+
+function _getRestForOrder(orderId, callback) {
 	console.log("getRestForOrder " + orderId);
 	dbSel.orderGet(orderId, function (results) {
 		console.log(results);
@@ -95,30 +97,42 @@ exports.selectOrder = function( driverId,orderId, callback) {
   //          return true;
   //      else return false;
 	var ret = null;
- 	dbSel.retrieveDriverOrder(driverId, function (results) {
-					if(results.length > 1){ret = false;
-								console.log("driver " + driverId + " has too many orders");
-								callback(ret);
-								return}
+	var restaurant = 0;
 
-					dbSel.retrieveOpenOrderForDriver(driverId, function (results) {
-						if(results.length == 0){ret = false;
-									console.log("no open orders available for driverId " + driverId);
-									callback(ret);
-									return};
-						results.forEach(function (item, index) {
-							console.log("Processing orderId " + item.OrderID);
-							if(item.OrderID == orderId){ret = true;
-										console.log("found it! OrderID " + orderId + " == " +item.OrderID);
-                    dbUpd.assignOrdertoDriver(driverId, orderId, function (results) {
-                      callback(ret);
-                    });
-							};
+	dbSel.retrieveOpenOrderForDriver(driverId, function (results) {
+		if(results.length == 0){ret = false;
+					console.log("no open orders available for driverId " + driverId);
+					callback(ret);
+					return};
+		results.forEach(function (item, index) {
+			console.log("Processing orderId " + item.OrderID);
+			if(item.OrderID == orderId){ret = true;
+						console.log("found it! OrderID " + orderId + " == " +item.OrderID);
+						dbSel.retrieveDriverOrder(driverId, function (driverOrders) {
+							if(driverOrders.length > 1){ret = false;
+										console.log("driver " + driverId + " has too many orders");
+										callback(ret);
+										return
+									} else if(driverOrders.length == 1) {
+											console.log("checking order restaurant ", item.RestID, " vs driver order  ", driverOrders[0].RestID);
+												if(item.RestID != driverOrders[0].RestID){
+													console.log("Can't pick up orders from two different restaurants");
+													callback(ret);
+													return;
+												}
+									} else {
+										dbUpd.assignOrdertoDriver(driverId, orderId, function (results) {
+	            			callback(ret);
+							 			});
+									}
+								});
+							}
+			});
+		});
 
-	           });
-           });
-         });
-}
+	 }
+
+
 
 
 exports.completeOrder = function( driverId, orderId, callback) {

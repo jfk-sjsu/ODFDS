@@ -118,7 +118,7 @@ function _retrieveDriverOrder(driverID, callback) {
      con.connect(function(err) {
         if (err) throw err;
     });
-     var sql = 'SELECT orders.OrderID, orders.OrderVal, orders.CustName, orders.CustAddr, orders.CustName, restaurant.RestName, restaurant.RestAddr, orders.OrderPickedUp, orders.OrderComplete FROM orders INNER JOIN restaurant ON orders.RestID=restaurant.RestID WHERE orders.DriverID=? AND orders.OrderComplete = false;'
+     var sql = 'SELECT orders.OrderID, orders.OrderVal, orders.CustName, orders.CustAddr, orders.CustName, restaurant.RestID, restaurant.RestName, restaurant.RestAddr, orders.OrderPickedUp, orders.OrderComplete FROM orders INNER JOIN restaurant ON orders.RestID=restaurant.RestID WHERE orders.DriverID=? AND orders.OrderComplete = false;'
 
     // var sql = "SELECT * from orders WHERE DriverID = ?;";
 
@@ -294,7 +294,7 @@ function _retrieveOpenOrderForDriver(driverID, callback) {
         if (err) throw err;
     });
 
-    var sql = 'SELECT orders.OrderID, orders.OrderVal, orders.CustName, orders.CustAddr, orders.CustName, restaurant.RestName, restaurant.RestAddr FROM '
+    var sql = 'SELECT orders.OrderID, orders.OrderVal, orders.CustName, orders.CustAddr, orders.CustName, restaurant.RestID, restaurant.RestName, restaurant.RestAddr FROM '
 		sql += 'orders INNER JOIN restaurant ON orders.RestID=restaurant.RestID WHERE orders.OrderID IN (select OrderID from orders WHERE ABS(CustLat - (select DriverLat from driver where DriverID = ?)) < 1 AND ABS(CustLong -(select DriverLong from driver where DriverID = ?)) < 1 AND DriverID = 0);'
 
 		//var sql = "select OrderID from orders WHERE ABS(CustLat - (select DriverLat from driver where DriverID = ?)) < 1 AND ABS(CustLong -(select DriverLong from driver where DriverID = ?)) < 1 AND DriverID = 0;"
