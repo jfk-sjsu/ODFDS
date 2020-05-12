@@ -71,13 +71,13 @@
 
             <form action="/driver/orderPickedUp/" method="post" onSubmit="updateOrders()">
             		<p class = "deliveryDirection">Order Picked Up</p>
-            		<input type="text" placeholder="Enter Order ID" name="orderId"><br>
+            		<input type="text" placeholder="Enter Order ID" name="orderId" pattern="^\d{1,5}$"><br>
             		<input type="submit" value="Submit">
             </form>
 
             <form action="/driver/completeOrder/" id="openOrders" method="post"  onSubmit="updateOrders()">
             		<p class = "deliveryDirection">Order delivered</p>
-            		<input type="text" placeholder="Enter Order ID" name="orderId"><br>
+            		<input type="text" placeholder="Enter Order ID" name="orderId" pattern="^\d{1,5}$"><br>
             		<input type="submit" value="Submit">
             </form>
 <!--          </div> <!-- end of delivery text div -->
@@ -88,7 +88,7 @@
                 <iframe src="/driver/reqOpenOrders"  style="width=1200px"></iframe><br>
                 <form action="/driver/selectOrder/" method="post">
                 		<p class = "deliveryDirection">Select order to deliver</p>
-                		<input type="text" placeholder="Enter Order ID" name="orderId"><br>
+                		<input type="text" placeholder="Enter Order ID" name="orderId" pattern="^\d{1,5}$" ><br>
                 		<input type="submit" value="Submit">
                 </form>
 
